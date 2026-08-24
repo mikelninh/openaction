@@ -1,0 +1,141 @@
+{
+  "openaction": "1.0-rc1",
+  "id": "careos-pilot-rollout-v5",
+  "synthetic": true,
+  "disclaimer": "Illustrative hospital pilot planning model. Not a measured deployment timeline, legal approval, MDR classification, gematik confirmation or clinical authorization.",
+  "goal": "Run a 30-day bounded CareOS pilot with up to 20 staff using read-only access, human review and no autonomous clinical decisions.",
+  "principles": [
+    "one shared case",
+    "one next action per stakeholder",
+    "independent reviews start in parallel",
+    "passport is evidence, not approval",
+    "nothing-to-do is a valid stakeholder state",
+    "real-data use starts only after the required organisational decisions",
+    "scope changes reopen only affected reviews"
+  ],
+  "roles": ["sponsor","clinical","first_users","privacy","security","regulatory","integration","workforce_change","procurement_legal","operations"],
+  "phases": [
+    {
+      "id": "discovery",
+      "label": "Discovery",
+      "next_milestone": "Scope ready",
+      "goal": "Choose one real workflow, name a sponsor and identify the first users.",
+      "careos": ["observe the workflow","capture pain points","show the first prototype"],
+      "openaction": ["open Case #001","name owners","prepare intended-use questions"],
+      "blocking_tasks": [
+        {"id":"sponsor_named","role":"sponsor","action":"Name the accountable pilot sponsor"},
+        {"id":"workflow_bounded","role":"clinical","action":"Bound one concrete clinical workflow"},
+        {"id":"first_users_named","role":"first_users","action":"Name the first 3–5 users"}
+      ]
+    },
+    {
+      "id": "scope_synthetic",
+      "label": "Scope + Synthetic",
+      "next_milestone": "Reviews ready to start",
+      "goal": "Freeze intended use/non-goals and build safety evidence without patient data.",
+      "careos": ["run 100–500 synthetic cases","show source provenance","measure critical omissions"],
+      "openaction": ["fill Trust Passport","record non-goals","prepare reviewer evidence packets"],
+      "blocking_tasks": [
+        {"id":"intended_use_frozen","role":"sponsor","action":"Freeze intended use and explicit non-goals"},
+        {"id":"gold_cases_ready","role":"clinical","action":"Define gold cases and critical-error taxonomy"},
+        {"id":"regulatory_precheck","role":"regulatory","action":"Prepare MDR/AI/system-role pre-classification"}
+      ]
+    },
+    {
+      "id": "parallel_reviews",
+      "label": "Parallel Reviews",
+      "next_milestone": "Readiness Review",
+      "goal": "Run independent organisational reviews in parallel where dependencies allow.",
+      "careos": ["concretize architecture","connect a test environment","iterate evaluations"],
+      "openaction": ["orchestrate Approval Path","show missing evidence","reuse shared facts across reviewers"],
+      "blocking_tasks": [
+        {"id":"privacy_scope","role":"privacy","action":"Resolve data scope and DPIA screening"},
+        {"id":"security_review","role":"security","action":"Review identity, permissions, audit and rollback"},
+        {"id":"regulatory_memo","role":"regulatory","action":"Complete scoped regulatory memo"},
+        {"id":"integration_path","role":"integration","action":"Classify KIS/FHIR/system role and allowed read-only path"},
+        {"id":"vendor_terms","role":"procurement_legal","action":"Resolve DPA/AVV, subprocessors, licences and exit"},
+        {"id":"incident_owner","role":"operations","action":"Name incident owner, stop conditions and rollback runbook"}
+      ],
+      "non_blocking_but_early": [
+        {"id":"workforce_review","role":"workforce_change","action":"Review workflow impact, training and feedback loop"}
+      ]
+    },
+    {
+      "id": "readiness",
+      "label": "Readiness",
+      "next_milestone": "Real-data Shadow Mode",
+      "goal": "Turn the remaining evidence into one bounded, scoped organisational pilot decision.",
+      "careos": ["freeze the shadow-pilot build","publish release notes"],
+      "openaction": ["generate Adoption Package","collapse open gates to real blockers","record pilot conditions"],
+      "blocking_tasks": [
+        {"id":"shadow_decision","role":"sponsor","action":"Decide the bounded shadow pilot scope, conditions, owners and rollback"}
+      ]
+    },
+    {
+      "id": "shadow_mode",
+      "label": "Shadow Mode",
+      "next_milestone": "5-user Pilot",
+      "goal": "Use real data in parallel without letting CareOS affect care decisions yet.",
+      "careos": ["generate in parallel","measure critical omissions","analyse source errors"],
+      "openaction": ["watch scope","record incidents/changes","collect Go/No-Go evidence"],
+      "blocking_tasks": [
+        {"id":"shadow_cases_reviewed","role":"clinical","action":"Review about 50 real-data shadow cases against predefined thresholds"},
+        {"id":"rollback_drill","role":"operations","action":"Run incident and rollback drill"}
+      ]
+    },
+    {
+      "id": "pilot_5",
+      "label": "5 Users",
+      "next_milestone": "20-user Pilot",
+      "goal": "Run a tightly bounded first active pilot with 3–5 trained users and human review.",
+      "careos": ["support the live workflow","capture accept/edit/reject","measure time and errors"],
+      "openaction": ["hold user scope","collect feedback/incidents","trigger Change Impact when assumptions change"],
+      "blocking_tasks": [
+        {"id":"five_user_run","role":"first_users","action":"Complete the first 5-user pilot"},
+        {"id":"five_user_review","role":"clinical","action":"Review critical incidents, edit rate, source accuracy and workflow outcome"}
+      ]
+    },
+    {
+      "id": "pilot_20",
+      "label": "20 Users",
+      "next_milestone": "Scale Review",
+      "goal": "Expand only after the 5-user evidence supports it and Change Impact identifies what must be rechecked.",
+      "careos": ["measure broader real use","improve UX","observe stability"],
+      "openaction": ["reopen only affected gates","update training scope","record expansion conditions"],
+      "blocking_tasks": [
+        {"id":"expand_20_decision","role":"sponsor","action":"Decide scoped expansion from 5 to 20 users"},
+        {"id":"training_20","role":"workforce_change","action":"Scale onboarding, support and feedback"},
+        {"id":"monitor_20","role":"operations","action":"Monitor incidents, overrides and stop conditions"}
+      ]
+    },
+    {
+      "id": "scale_decision",
+      "label": "Scale Decision",
+      "next_milestone": "Stop / Repeat / Scale",
+      "goal": "Use measured outcomes to stop, repeat the bounded pilot or prepare a larger production step.",
+      "careos": ["produce outcome report","document limitations","propose next product scope"],
+      "openaction": ["produce decision packet","combine stakeholder conditions","record receipts and change assumptions"],
+      "blocking_tasks": [
+        {"id":"clinical_outcome","role":"clinical","action":"Complete clinical outcome review"},
+        {"id":"privacy_outcome","role":"privacy","action":"Verify real operation stayed within data assumptions"},
+        {"id":"scale_scope_decision","role":"sponsor","action":"Decide stop, repeat or next scoped expansion"}
+      ]
+    }
+  ],
+  "real_pilot_metrics": [
+    "time to discover all required gates",
+    "time from complete review packet to decision",
+    "avoidable waiting time",
+    "duplicate evidence requests",
+    "evidence reuse rate",
+    "late blockers",
+    "critical clinical omissions",
+    "unsupported claims",
+    "source accuracy",
+    "edit/reject rate",
+    "time-to-task",
+    "user adoption",
+    "workflow outcome",
+    "incidents and rollback events"
+  ]
+}
