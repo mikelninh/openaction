@@ -1,1 +1,101 @@
-<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f3f1eb"><meta name="description" content="OpenAction Approval Workspace — shared approval graph, trust passport and adoption package for safe organisational pilots."><title>OpenAction Workspace — CareOS Pilot</title><link rel="stylesheet" href="./styles.css"></head><body><main class="shell"><header class="topbar"><a class="brand" href="../">OpenAction<span>.</span></a><div class="top-actions"><span class="badge synthetic">1.0-RC1 · synthetic</span><button class="ghost small" id="shareBtn">Share view</button></div></header><section class="hero"><p class="eyebrow">Approval Workspace · CareOS</p><h1>One shared view.<br><span>No hidden blockers.</span></h1><p class="lead">Von der AI-Demo zum sicheren Pilot: alle Beteiligten sehen denselben Gesamtpfad, dieselben Nachweise und dieselben offenen Entscheidungen.</p><div class="hero-note">Keine Patientendaten · kein Backend · vollständig synthetisches Beispiel</div></section><section class="metrics"><article class="metric primary"><small>Pilot readiness</small><strong id="readinessValue">—</strong><div class="progress"><span id="readinessBar"></span></div></article><article class="metric"><small>Blocking gates offen</small><strong id="blockerCount">—</strong><span>transparent statt überraschend</span></article><article class="metric"><small>Evidence ready</small><strong id="evidenceValue">—</strong><span>wiederverwendbare Nachweise</span></article><article class="metric"><small>Parallel review</small><strong id="parallelValue">—</strong><span>Tracks können gleichzeitig starten</span></article></section><section class="role-section"><div><p class="eyebrow">Perspective</p><h2>Alle sehen alles. Du siehst sofort, was dich betrifft.</h2></div><div class="role-pills" id="rolePills"></div></section><nav class="tabs"><button class="tab active" data-tab="graph">Approval Graph</button><button class="tab" data-tab="passport">Trust Passport</button><button class="tab" data-tab="package">Adoption Package</button><button class="tab" data-tab="benefits">Benefits & Proof</button></nav><section class="panel active" id="panel-graph"><div class="section-head"><div><p class="eyebrow">Shared approval graph</p><h2>Was muss passieren, bevor wir sicher pilotieren?</h2></div><button class="secondary" id="focusBlockersBtn">Nur Blocker zeigen</button></div><div class="graph-summary" id="graphSummary"></div><div class="gate-grid" id="gateGrid"></div><div class="final-gate"><div><small>Final gate</small><h3>Bounded pilot</h3><p>Erst wenn blocking reviews geschlossen sind: Sponsor bestätigt Scope, Menschen, Stop Conditions und Rollback.</p></div><span id="finalGateState" class="state todo">To do</span></div></section><section class="panel" id="panel-passport"><div class="section-head"><div><p class="eyebrow">Reusable evidence</p><h2>Trust Passport</h2><p class="muted">Einmal sauber beantworten. Für Datenschutz, Security, Einkauf, Clinical und spätere Organisationen wiederverwenden.</p></div><button class="secondary" id="exportPassportBtn">JSON exportieren</button></div><div class="passport-hero"><div><span class="badge synthetic">Synthetic</span><h3 id="passportProduct">CareOS</h3><p id="passportPurpose"></p></div><div class="passport-score"><small>Passport completeness</small><strong id="passportScore">—</strong></div></div><div class="passport-grid" id="passportGrid"></div></section><section class="panel" id="panel-package"><div class="section-head"><div><p class="eyebrow">Ready for the next conversation</p><h2>CareOS Adoption Package</h2><p class="muted">Nicht „hier ist unsere AI“. Sondern: hier ist Zweck, Architektur, Evidenz, offene Entscheidungen und der sichere nächste Schritt.</p></div><button class="primary-btn" id="downloadPackageBtn">Adoption Package erzeugen</button></div><div class="package-preview" id="packagePreview"></div><div class="conversation-card"><div><small>Suggested opener</small><h3>„Welche dieser Entscheidungen müssen Sie treffen — und welche Nachweise fehlen Ihnen dafür noch?“</h3></div><button class="ghost" id="copyOpenerBtn">Copy</button></div></section><section class="panel" id="panel-benefits"><div class="section-head"><div><p class="eyebrow">Benefits without hype</p><h2>Was könnte besser werden — und was müssen wir beweisen?</h2></div></div><div class="benefit-compare" id="benefitCompare"></div><p class="synthetic-warning" id="benefitWarning"></p><div class="proof-card"><p class="eyebrow">Real pilot scoreboard</p><h3>Diese Zahlen veröffentlichen wir erst, wenn echte Menschen sie erzeugt haben.</h3><div class="proof-grid" id="proofGrid"></div></div></section><footer><strong>OpenAction 1.0-RC1</strong> verbindet Menschen, Organisationen und Software, damit gute Handlungen sicher schneller stattfinden können.<span>AI prepares. Humans decide. Evidence stays visible.</span></footer></main><dialog id="gateDialog"><div class="dialog-card"><button class="dialog-close" id="closeDialog">×</button><div id="gateDetail"></div></div></dialog><div class="toast" id="toast"></div><script src="./app.js"></script></body></html>
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f6f3ec">
+  <meta name="description" content="CareOS mit OpenAction: Was fehlt, wer entscheidet und was blockiert den sicheren Pilot?">
+  <title>OpenAction Workspace — CareOS einfach erklärt</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="../">OpenAction<span>.</span></a>
+      <div class="top-actions"><span class="badge synthetic">Synthetisches Beispiel</span><button class="ghost small" id="shareBtn">Link teilen</button></div>
+    </header>
+
+    <section class="hero-simple">
+      <p class="eyebrow">CAREOS · KRANKENHAUS-BEISPIEL</p>
+      <h1>Was hält den sicheren<br><span>Pilot gerade auf?</span></h1>
+      <p class="lead">OpenAction zeigt in einer gemeinsamen Ansicht, <strong>was noch fehlt, wer entscheiden muss und was als Nächstes passieren sollte.</strong></p>
+      <p class="hero-note">Keine Patientendaten · kein Backend · vollständig synthetisches Beispiel</p>
+    </section>
+
+    <section class="mode-switch" aria-label="Ansicht wählen">
+      <span>Ansicht:</span>
+      <button class="mode active" data-mode="simple">Einfach</button>
+      <button class="mode" data-mode="reviewer">Für Reviewer</button>
+      <button class="mode" data-mode="builder">Für Builder</button>
+    </section>
+
+    <section class="decision-cards" aria-label="Das Wichtigste">
+      <article class="decision-card status-card"><small>WO STEHEN WIR?</small><strong id="plainStatus">—</strong><p id="plainStatusNote">—</p></article>
+      <article class="decision-card blocker-card"><small>WAS BLOCKIERT GERADE?</small><strong id="plainBlocker">—</strong><p id="plainBlockerNote">—</p></article>
+      <article class="decision-card next-card"><small>WAS IST DER NÄCHSTE SCHRITT?</small><strong id="plainNext">—</strong><p id="plainNextNote">—</p></article>
+    </section>
+
+    <section class="simple-section">
+      <div class="section-head-simple"><div><p class="eyebrow">DER GEMEINSAME WEG</p><h2>Vom Prototyp zum sicheren Pilot</h2></div><p>Nicht jede Prüfung ist kompliziert. Entscheidend ist, dass alle denselben Stand sehen.</p></div>
+      <div class="journey" id="journey"></div>
+      <div class="journey-legend"><span><i class="dot done"></i> erledigt</span><span><i class="dot doing"></i> in Arbeit</span><span><i class="dot open"></i> offen</span></div>
+    </section>
+
+    <section class="simple-section focus-section">
+      <div class="section-head-simple"><div><p class="eyebrow">AKTUELLER FOKUS</p><h2>Diese Punkte brauchen jetzt Aufmerksamkeit.</h2></div><button class="quiet-button reviewer-jump" data-go="reviewer">Alle Prüfungen ansehen</button></div>
+      <div class="focus-grid" id="focusGrid"></div>
+    </section>
+
+    <section class="simple-section evidence-simple">
+      <div class="section-head-simple"><div><p class="eyebrow">NACHWEISE</p><h2>Was haben wir schon vorbereitet?</h2><p class="muted-label">OpenAction Trust Passport</p></div><p>Einmal sauber aufbereitet, können dieselben Nachweise in mehreren Reviews wiederverwendet werden.</p></div>
+      <div class="evidence-simple-grid" id="evidenceSimpleGrid"></div>
+    </section>
+
+    <section class="simple-section package-simple">
+      <div class="package-simple-copy"><p class="eyebrow">NÄCHSTES GESPRÄCH</p><h2>Was nehmen wir mit?</h2><p>Nicht „Bitte genehmigen Sie unsere AI“. Sondern: <strong>Das soll CareOS tun. Das soll es nicht tun. Diese Entscheidungen sind noch offen.</strong></p></div>
+      <div class="package-simple-card"><div id="packageSimple"></div><button class="primary-btn" id="downloadPackageBtn">Gesprächspaket exportieren</button></div>
+    </section>
+
+    <section class="simple-section benefit-simple">
+      <div><p class="eyebrow">WAS KÖNNTE BESSER WERDEN?</p><h2>Weniger verlorene Zeit zwischen den Entscheidungen.</h2><p>Unser erstes Modell fragt nicht „wie schnell ist AI?“, sondern: Wie viel Wartezeit entsteht durch späte Blocker, serielle Prüfungen und wiederholte Nachfragen?</p></div>
+      <div class="benefit-number-card">
+        <div class="benefit-number"><strong id="todayWeeks">31</strong><span>→</span><strong id="oaWeeks">8</strong><small>Wochen</small></div>
+        <p><b>Nur ein synthetisches CareOS-Modell.</b> Kein gemessener Krankenhauswert und keine Garantie.</p>
+        <details><summary>Woher kommen die Zahlen?</summary><p id="benefitExplanation">—</p></details>
+      </div>
+    </section>
+
+    <section class="simple-section real-proof">
+      <p class="eyebrow">WAS WIR REAL MESSEN WOLLEN</p>
+      <h2>Die wichtigen Zahlen entstehen erst mit echten Menschen.</h2>
+      <div class="real-proof-grid" id="realProofGrid"></div>
+    </section>
+
+    <section class="expert-panel reviewer-panel" data-view="reviewer" hidden>
+      <div class="section-head-simple"><div><p class="eyebrow">REVIEWER VIEW</p><h2>Alle sehen alles. Deine Prüfungen werden hervorgehoben.</h2></div></div>
+      <div class="role-pills" id="rolePills"></div>
+      <div class="review-summary" id="reviewSummary"></div>
+      <div class="gate-grid" id="gateGrid"></div>
+    </section>
+
+    <section class="expert-panel builder-panel" data-view="builder" hidden>
+      <div class="section-head-simple"><div><p class="eyebrow">BUILDER VIEW</p><h2>Die menschliche Ansicht hat ein maschinenlesbares Fundament.</h2></div><p>Bestehende Fachsysteme bleiben Source of Truth. OpenAction standardisiert den Weg zwischen Evidence, Action, Approval und Outcome.</p></div>
+      <div class="builder-grid">
+        <a href="../spec/1.0/openaction.schema.json"><b>Action Core</b><span>JSON Schema</span></a>
+        <a href="../spec/1.0/approval-path.schema.json"><b>Approval Path</b><span>Owner, Dependencies, SLA</span></a>
+        <a href="../spec/1.0/trust-passport.schema.json"><b>Trust Passport</b><span>Reusable evidence</span></a>
+        <a href="../spec/1.0/approval-receipt.schema.json"><b>Approval Receipt</b><span>Scoped decision receipt</span></a>
+        <a href="../openapi.yaml"><b>HTTP API</b><span>OpenAPI contract</span></a>
+        <a href="../README.md"><b>Integration Guide</b><span>SDK, CLI, conformance</span></a>
+      </div>
+      <div class="builder-actions"><button class="secondary" id="exportPassportBtn">Trust Passport JSON exportieren</button><a class="secondary link-button" href="https://github.com/mikelninh/openaction">GitHub öffnen ↗</a></div>
+    </section>
+
+    <footer><strong>OpenAction 1.0-RC1</strong><span>AI bereitet vor. Menschen entscheiden. Nachweise bleiben sichtbar.</span></footer>
+  </main>
+
+  <dialog id="gateDialog"><div class="dialog-card"><button class="dialog-close" id="closeDialog" aria-label="Schließen">×</button><div id="gateDetail"></div></div></dialog>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="./app.js"></script>
+</body>
+</html>

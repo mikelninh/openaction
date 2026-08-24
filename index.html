@@ -1,3 +1,138 @@
-<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f5f2ea"><meta name="description" content="OpenAction macht Handlungen, Nachweise und Genehmigungen zwischen Menschen, Organisationen und Software interoperabel."><title>OpenAction — alle sehen denselben Weg</title><link rel="stylesheet" href="./styles.css"><link rel="stylesheet" href="./v1.css"></head><body><header class="nav"><a class="brand" href="#top">OpenAction<span>.</span></a><div><a href="./workspace/">Workspace</a><a href="#leverage">Hebel</a><a href="#examples">Beispiele</a><a href="https://github.com/mikelninh/openaction">GitHub ↗</a></div></header><main id="top"><section class="hero wrap"><div class="eyebrow">OPENACTION · 1.0-RC1</div><h1>Jeder sieht heute<br><em>nur seinen Ausschnitt.</em></h1><p class="hero-answer">OpenAction gibt allen <strong>denselben Weg</strong>: Was fehlt? Wer entscheidet? Welche Nachweise gibt es schon? Was blockiert gerade?</p><div class="hero-grid"><div class="mess"><span class="person p1">👤 Bürger</span><span class="person p2">⚖️ Legal</span><span class="person p3">🔐 Datenschutz</span><span class="person p4">🏛️ Behörde</span><span class="person p5">🛡️ Security</span><span class="person p6">👥 Beteiligte</span><div class="mess-label"><b>HEUTE</b><span>E-Mails · PDFs · Nachfragen · Warten</span></div></div><div class="arrow">→</div><div class="shared"><div class="shared-core"><small>ONE SHARED PATH</small><b>Evidence</b><span>↓</span><b>Approvals</b><span>↓</span><b>Outcome</b></div><div class="shared-label"><b>OPENACTION</b><span>sichtbar · parallel · nachvollziehbar</span></div></div></div><div class="thesis">Nicht weniger Kontrolle. <strong>Weniger Reibung, gute Kontrolle richtig zu machen.</strong></div><p style="margin-top:22px"><a class="button" href="./workspace/">Interaktiven CareOS Approval Workspace öffnen →</a></p></section><section class="wrap explain"><p class="eyebrow">DAS PRINZIP IN 10 SEKUNDEN</p><div class="three"><article><span>1</span><h2>Was fehlt?</h2><p>Preflight prüft Vollständigkeit bevor Zeit in Schleifen verloren geht.</p></article><article><span>2</span><h2>Wer entscheidet?</h2><p>Approval Graph zeigt Owner, Blocker, SLA und was parallel laufen kann.</p></article><article><span>3</span><h2>Was wissen wir schon?</h2><p>Trust Passport macht Nachweise wiederverwendbar. Receipts machen Entscheidungen scoped und nachvollziehbar.</p></article></div></section><section class="status-band" id="status"><div class="wrap"><p class="eyebrow">WAS KANN MAN HEUTE SCHON MACHEN?</p><h2 class="section-title dark-title">Vom Diagramm zum testbaren Vertrag.</h2><div class="status-grid"><article><b>Action Core</b><span>Action · Evidence · Permission · Outcome</span><em>✓ gebaut</em></article><article><b>Approval Path</b><span>Owner · Blocker · Dependencies · SLA</span><em>✓ gebaut</em></article><article><b>Trust Passport</b><span>wiederverwendbare Entscheidungsgrundlage</span><em>✓ gebaut</em></article><article><b>Approval Receipt</b><span>Scope · Approver · Conditions · Expiry · Proof</span><em>✓ RC</em></article><article><b>Change Impact</b><span>nur betroffene Gates wieder öffnen</span><em>✓ RC</em></article><article><b>Bounded Pilot</b><span>kleinster sicherer Test statt Big-Bang-Freigabe</span><em>✓ RC</em></article></div><p class="status-note"><strong>Noch nicht bewiesen:</strong> reale Zeitersparnis, Organisations-Ground-Truth und unabhängige Interoperabilität.</p></div></section><section class="leverage-band" id="leverage"><div class="wrap"><div class="leverage-title"><div><p class="eyebrow light">SYNTHETIC PILOT LAB</p><h2>Wo steckt vermutlich der größte Hebel?</h2></div><div class="pilot-count"><strong id="pilotCount">60</strong><span>reproduzierbare synthetische Pilots</span></div></div><p class="section-lead">Explizite Modellannahmen, keine gemessenen Behörden- oder Krankenhauszeiten.</p><div class="median-flow" id="medianFlow"></div><div class="leverage-grid" id="leverageGrid"></div><div class="finding"><b>Vorläufige Hypothese</b><p><strong>Parallelisierung unabhängiger Reviews</strong> ist im Modell der größte Hebel. Danach: Vollständigkeits-Preflight und sichtbare Reviewer-Queues/SLAs.</p><a href="./pilots/synthetic/model.json">Modell →</a> <a href="./scripts/simulate.mjs">Simulation →</a></div></div></section><section class="dark" id="examples"><div class="wrap"><p class="eyebrow light">DEUTSCHLAND · SYNTHETISCHE SZENARIEN</p><h2 class="section-title">Wo würde das im Alltag helfen?</h2><p class="section-lead">Einbürgerung, Migration, Wohngeld, Gründung, Bauen, Industrie, Anerkennung, Gesundheit und Verwaltung.</p><div class="filters" id="filters"></div><div class="case-grid" id="caseGrid"></div></div></section><section class="wrap speed"><div><p class="eyebrow">DER FAST LANE</p><h2>Wir komprimieren den <em>kritischen Pfad</em>, nicht Verantwortung.</h2></div><div class="speed-flow"><div><b>Minuten</b><span>Use Case + Vollständigkeit</span></div><div><b>Stunden</b><span>Reviewer-Pakete vorbereiten</span></div><div><b>Tag 1</b><span>unabhängige Reviews parallel</span></div><div><b>Reviewer SLA</b><span>Queue sichtbar + fokussierte Fragen</span></div><div><b>Change Diff</b><span>nur betroffene Gates neu prüfen</span></div></div><a class="text-link" href="./docs/FAST_LANE.md">Bottlenecks →</a></section><section class="passport-band"><div class="wrap passport-grid"><div><p class="eyebrow">TRUST PASSPORT + RECEIPT</p><h2>Evidence wiederverwenden.<br>Entscheidungen nicht vortäuschen.</h2><p>Passport beantwortet Fragen. Receipt hält fest, wer was für welchen Scope unter welchen Bedingungen freigegeben hat.</p></div><div class="passport-card"><div class="passport-head"><b>Approval Receipt</b><span>1.0-rc1</span></div><ul><li><i>✓</i> Approver + identity</li><li><i>✓</i> Scope + environment</li><li><i>✓</i> Evidence snapshot</li><li><i>✓</i> Conditions</li><li><i>✓</i> Expiry / revocation</li><li><i>○</i> Organisation supplies trusted proof</li></ul><div class="reuse"><b>Rule</b><span>Passport ≠ approval</span></div></div></div></section><section class="wrap adoption"><p class="eyebrow">WAS FEHLT BIS STABLE 1.0?</p><h2>Technik können wir selbst bauen. Vertrauen müssen andere mit testen.</h2><div class="adoption-grid"><article><b>External reality</b><span>5+ Review-Workshops</span></article><article><b>Independent interop</b><span>2+ unabhängige Adapter</span></article><article><b>Real evidence</b><span>Lead time · reuse · blockers</span></article><article><b>Open governance</b><span>weitere Reviewer/Maintainer</span></article></div><p class="center"><a class="button" href="./ROADMAP_V1.md">Graduation Gates →</a></p></section><section class="quickstart"><div class="wrap quick-grid"><div><p class="eyebrow light">INTEGRATE NOW</p><h2>Keine Plattformmigration.</h2><p>Bestehende Systeme bleiben Source of Truth. OpenAction ist die dünne Handlung-/Genehmigungsschicht dazwischen.</p></div><pre>node bin/openaction.mjs validate examples/v1/action.json
-node bin/openaction.mjs receipt examples/v1/approval-receipt.json
-node bin/openaction.mjs simulate</pre></div></section><section class="cta"><div class="wrap cta-inner"><div><p class="eyebrow light">RC1 · READY TO CHALLENGE</p><h2>Zerleg es, bevor wir 1.0 nennen.</h2><p>Welches Gate fehlt? Wer entscheidet wirklich? Welche Evidenz wird doppelt verlangt?</p></div><div class="cta-links"><a href="./workspace/">Approval Workspace →</a><a href="./docs/PILOT_PLAYBOOK.md">Pilot Workshop →</a><a href="https://github.com/mikelninh/openaction">Source / Issues →</a></div></div></section></main><footer><div class="wrap"><b>OpenAction 1.0-rc1</b><span>Release candidate · not an official standard</span></div></footer><dialog id="caseDialog"><div class="modal"><button class="close" id="closeDialog">×</button><div id="modalContent"></div></div></dialog><script src="./app.js"></script></body></html>
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f6f3ec">
+  <meta name="description" content="OpenAction zeigt, was noch fehlt, wer entscheiden muss und was gerade blockiert — damit gute Projekte sicher schneller vorankommen.">
+  <title>OpenAction — alle sehen denselben Weg</title>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./v1.css">
+</head>
+<body>
+  <header class="nav">
+    <a class="brand" href="#top">OpenAction<span>.</span></a>
+    <div>
+      <a href="#how">So funktioniert’s</a>
+      <a href="./workspace/">Beispiel</a>
+      <a href="#expert">Für Expert:innen</a>
+      <a href="https://github.com/mikelninh/openaction">GitHub ↗</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero-v2 wrap">
+      <p class="eyebrow">OPENACTION · 1.0-RC1</p>
+      <h1>Heute sieht jeder nur<br><em>seinen Ausschnitt.</em></h1>
+      <p class="hero-v2-sub">OpenAction zeigt allen <strong>denselben Weg</strong>: Was fehlt noch? Wer muss entscheiden? Was blockiert gerade?</p>
+      <div class="benefit-row" aria-label="Die drei wichtigsten Vorteile">
+        <span>Weniger Überraschungen</span><span>Weniger doppelte Nachfragen</span><span>Schnellere, sichere Entscheidungen</span>
+      </div>
+      <div class="hero-actions">
+        <a class="button primary-action" href="./workspace/">CareOS Beispiel ansehen</a>
+        <a class="quiet-link" href="#how">In 30 Sekunden verstehen ↓</a>
+      </div>
+    </section>
+
+    <section class="problem-strip" id="how">
+      <div class="wrap">
+        <p class="eyebrow">DAS PROBLEM</p>
+        <h2>Ein Prozess. Viele Beteiligte. Niemand sieht das Ganze.</h2>
+        <div class="before-after-simple">
+          <article class="simple-lane today-lane">
+            <span class="lane-label">HEUTE</span>
+            <div class="people-line"><b>Fachbereich</b><b>Datenschutz</b><b>Security</b><b>Einkauf</b></div>
+            <p>E-Mails, PDFs, Nachfragen, unterschiedliche Stände — und oft wird ein Blocker erst spät entdeckt.</p>
+          </article>
+          <div class="simple-arrow">→</div>
+          <article class="simple-lane oa-lane">
+            <span class="lane-label">MIT OPENACTION</span>
+            <div class="shared-path-mini"><b>Was fehlt?</b><b>Wer entscheidet?</b><b>Was kommt als Nächstes?</b></div>
+            <p>Alle sehen denselben Stand. Nachweise werden wiederverwendet. Unabhängige Prüfungen können parallel starten.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap three-v2">
+      <p class="eyebrow">DIE LÖSUNG IN 3 SCHRITTEN</p>
+      <div class="three-v2-grid">
+        <article><span>1</span><h3>Was fehlt?</h3><p>Fehlende Informationen und Nachweise werden früh sichtbar — bevor Wochen in Schleifen verloren gehen.</p></article>
+        <article><span>2</span><h3>Wer entscheidet?</h3><p>Jede offene Entscheidung bekommt eine verantwortliche Rolle, einen klaren Scope und sichtbare Abhängigkeiten.</p></article>
+        <article><span>3</span><h3>Was jetzt?</h3><p>Statt „wir warten“ gibt es einen konkreten nächsten Schritt und einen nachvollziehbaren Weg zum Ergebnis.</p></article>
+      </div>
+    </section>
+
+    <section class="example-band">
+      <div class="wrap example-v2">
+        <div class="example-copy">
+          <p class="eyebrow light">EIN KONKRETES BEISPIEL</p>
+          <h2 id="featuredTitle">CareOS im Krankenhaus</h2>
+          <p id="featuredPain">Ein AI-Prototyp kann schnell gebaut sein. Die Einführung hängt aber an Datenschutz, Security, Clinical, Einkauf und weiteren Entscheidungen.</p>
+          <div class="example-switcher" id="exampleSwitcher" aria-label="Beispiel auswählen"></div>
+          <a class="button light-button" id="featuredCta" href="./workspace/">Interaktives CareOS Beispiel öffnen</a>
+        </div>
+        <div class="example-card-v2" id="featuredExample">
+          <div><small>HEUTE</small><p>Viele Beteiligte sehen jeweils nur ihren Teil.</p></div>
+          <span>→</span>
+          <div><small>OPENACTION</small><p>Ein gemeinsamer Weg zeigt Blocker, Nachweise und nächste Schritte.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap one-number" id="proof">
+      <div>
+        <p class="eyebrow">ERSTE HYPOTHESE</p>
+        <h2>Wo könnte der größte Hebel liegen?</h2>
+        <p>In unserem synthetischen CareOS-Beispiel modellieren wir einen seriellen Review-Pfad gegen einen früh geklärten, parallelisierten Pfad.</p>
+      </div>
+      <div class="number-card">
+        <div class="big-compare"><strong id="beforeWeeks">31</strong><span>→</span><strong id="afterWeeks">8</strong><small>Wochen</small></div>
+        <p><b>Illustratives Modell.</b> Kein gemessener Krankenhauswert und keine Garantie.</p>
+        <details>
+          <summary>Woher kommen diese Zahlen?</summary>
+          <div class="number-explain">
+            <p>Sie stammen aus dem synthetischen CareOS-Workspace. Den Gates wurden Beispiel-Dauern zugeordnet. „Heute“ addiert sie weitgehend seriell; OpenAction nutzt frühe Vollständigkeit, wiederverwendbare Nachweise und parallele Reviews.</p>
+            <p>Das breitere Synthetic Pilot Lab enthält 60 reproduzierbare Modellfälle. In diesem Modell ist <strong>Parallelisierung unabhängiger Reviews</strong> der größte Hebel. Reale Piloten müssen das bestätigen oder widerlegen.</p>
+            <a href="./pilots/synthetic/results.json">Synthetische Ergebnisse ansehen →</a>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section class="status-v2">
+      <div class="wrap">
+        <p class="eyebrow">WO STEHEN WIR?</p>
+        <h2>Gebaut, modelliert, noch zu beweisen.</h2>
+        <div class="truth-grid">
+          <article class="truth built"><span>✓</span><h3>Heute nutzbar</h3><p>Gemeinsamer Freigabeweg, strukturierte Nachweise, scoped Freigaben, Change Impact, bounded Pilot Profile, SDK/API/CLI.</p></article>
+          <article class="truth synthetic"><span>◇</span><h3>Synthetisch gelernt</h3><p>60 modellierte Pilots. Erste Hypothese: Parallelisierung, Vollständigkeits-Preflight und sichtbare Reviewer-Queues bieten den größten Hebel.</p></article>
+          <article class="truth unknown"><span>?</span><h3>Noch zu beweisen</h3><p>Reale Zeitersparnis, echte Behörden- und Krankenhauspfade, Evidence-Reuse und unabhängige Implementierungen.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="usecases-v2 wrap" id="examples">
+      <p class="eyebrow">WEITERE BEISPIELE</p>
+      <h2>Dasselbe Muster taucht überall auf.</h2>
+      <div class="mini-cases" id="miniCases"></div>
+      <button class="text-button" id="showMoreCases">Weitere Beispiele zeigen</button>
+    </section>
+
+    <section class="expert-v2" id="expert">
+      <div class="wrap expert-grid-v2">
+        <div><p class="eyebrow light">FÜR REVIEWER & BUILDER</p><h2>Die Details sind da — aber erst, wenn du sie brauchst.</h2><p>OpenAction bleibt eine dünne, offene Interoperabilitätsschicht. Bestehende Fachsysteme, Identitäten und Domänenstandards bleiben maßgeblich.</p></div>
+        <div class="expert-links-v2">
+          <a href="./README.md"><b>Spec & README</b><span>Was OpenAction genau standardisiert</span></a>
+          <a href="./workspace/"><b>Approval Workspace</b><span>CareOS als gemeinsamer Freigabeweg</span></a>
+          <a href="./ROADMAP_V1.md"><b>Roadmap zu 1.0</b><span>Was noch extern bewiesen werden muss</span></a>
+          <a href="https://github.com/mikelninh/openaction"><b>GitHub</b><span>Source, Schemas, SDKs, Tests</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="wrap"><b>OpenAction 1.0-rc1</b><span>Release Candidate · open · provider-neutral · not an official standard</span></div></footer>
+  <script src="./app.js"></script>
+</body>
+</html>
