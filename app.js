@@ -1,18 +1,56 @@
-const grid=document.getElementById('caseGrid');
-const filters=document.getElementById('filters');
-const dialog=document.getElementById('caseDialog');
-const modal=document.getElementById('modalContent');
-const close=document.getElementById('closeDialog');
-const leverageGrid=document.getElementById('leverageGrid');
-const medianFlow=document.getElementById('medianFlow');
-const pilotCount=document.getElementById('pilotCount');
-let cases=[];
-const groups={all:'Alle',citizen:'Bürger',business:'Unternehmen',health:'Gesundheit',government:'Verwaltung'};
-const groupFor=id=>id==='careos-hospital'?'health':['gmbh-formation','industrial-permit'].includes(id)?'business':['building-permit','public-ai-procurement'].includes(id)?'government':'citizen';
 const esc=(s='')=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function renderFilter(active='all'){filters.innerHTML=Object.entries(groups).map(([id,label])=>`<button class="filter ${id===active?'active':''}" data-filter="${id}">${label}</button>`).join('');filters.querySelectorAll('button').forEach(b=>b.onclick=()=>{renderFilter(b.dataset.filter);renderCases(b.dataset.filter)});}
-function renderCases(group='all'){const list=group==='all'?cases:cases.filter(c=>groupFor(c.id)===group);grid.innerHTML=list.map(c=>`<article class="case-card" tabindex="0" role="button" data-id="${esc(c.id)}"><div class="case-top"><div><h3 class="case-title">${esc(c.title)}</h3><div class="audience">${esc(c.audience)}</div></div><div class="emoji">${esc(c.emoji)}</div></div><p class="pain">${esc(c.pain)}</p><div class="target"><b>Zielbild</b><span>${esc(c.synthetic_scenario.target)}</span></div><span class="synthetic-tag">SYNTHETISCH · NICHT GEMESSEN</span></article>`).join('');grid.querySelectorAll('.case-card').forEach(card=>{card.onclick=()=>openCase(card.dataset.id);card.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openCase(card.dataset.id)}}});}
-function openCase(id){const c=cases.find(x=>x.id===id);if(!c)return;modal.innerHTML=`<div class="emoji">${esc(c.emoji)}</div><h2>${esc(c.title)}</h2><div class="meta">${esc(c.audience)}</div><p>${esc(c.pain)}</p><div class="compare"><div class="lane"><h3>Heute</h3><ol>${c.today.map(x=>`<li>${esc(x)}</li>`).join('')}</ol></div><div class="lane after"><h3>Mit OpenAction</h3><ol>${c.openaction.map(x=>`<li>${esc(x)}</li>`).join('')}</ol></div></div><div class="scenario"><b>Synthetisches Zielbild</b><div><strong>Heute:</strong> ${esc(c.synthetic_scenario.before)}</div><div><strong>Ziel:</strong> ${esc(c.synthetic_scenario.target)}</div><p><strong>Annahmen:</strong> ${c.synthetic_scenario.assumptions.map(esc).join(' · ')}</p><small>Zu messen: ${esc(c.synthetic_scenario.measure)}</small></div><div class="sources"><h3>Aktuelle Evidenz</h3>${c.current_evidence.map(s=>`<p>${esc(s.claim)}${s.source.startsWith('http')?`<a href="${esc(s.source)}" target="_blank" rel="noreferrer">Quelle ↗</a>`:''}</p>`).join('')}</div>`;dialog.showModal();}
-function renderLeverage(data){if(!data)return;pilotCount.textContent=data.pilot_count;const m=data.overall_median_working_days;medianFlow.innerHTML=[['Baseline',m.baseline_days],['Preflight',m.after_preflight],['Parallel',m.after_parallel],['Evidence reuse',m.after_reuse],['Reviewer SLA',m.after_sla],['Bounded profile',m.after_bounded_profile]].map(([label,val],i)=>`<div class="median-step ${i===0?'baseline':''}"><small>${label}</small><strong>${val}</strong><span>Arbeitstage · Median</span></div>`).join('');const labels={parallel:'Parallel reviews',preflight:'Preflight',reviewer_sla:'Reviewer queues / SLA',evidence_reuse:'Evidence reuse',bounded_profile:'Bounded profile'};const entries=Object.entries(data.marginal_leverage).sort((a,b)=>b[1].share_of_total_gain_pct-a[1].share_of_total_gain_pct);leverageGrid.innerHTML=entries.map(([id,x],i)=>`<article class="lever ${i===0?'top-lever':''}"><div class="lever-head"><b>${esc(labels[id]||id)}</b><strong>${x.share_of_total_gain_pct}%</strong></div><div class="lever-bar"><span style="width:${Math.min(100,x.share_of_total_gain_pct)}%"></span></div><p>synthetischer Anteil am modellierten Gewinn · Median ${x.median_days} Tage</p></article>`).join('');}
-close.onclick=()=>dialog.close();dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close()});
-Promise.all([fetch('./examples/use-cases.json').then(r=>r.json()),fetch('./pilots/synthetic/results.json').then(r=>r.json())]).then(([caseData,pilotData])=>{cases=caseData.use_cases||[];renderFilter();renderCases();renderLeverage(pilotData)}).catch(()=>{if(grid)grid.innerHTML='<p>Die Beispieldaten konnten gerade nicht geladen werden.</p>'});
+const switcher=document.getElementById('exampleSwitcher');
+const featuredTitle=document.getElementById('featuredTitle');
+const featuredPain=document.getElementById('featuredPain');
+const featuredExample=document.getElementById('featuredExample');
+const featuredCta=document.getElementById('featuredCta');
+const miniCases=document.getElementById('miniCases');
+const showMore=document.getElementById('showMoreCases');
+const beforeWeeks=document.getElementById('beforeWeeks');
+const afterWeeks=document.getElementById('afterWeeks');
+let cases=[];
+let expanded=false;
+const featuredIds=['careos-hospital','naturalisation-berlin','gmbh-formation'];
+const shortLabels={'careos-hospital':'CareOS','naturalisation-berlin':'Einbürgerung','gmbh-formation':'Gründung'};
+
+function renderFeatured(id){
+  const c=cases.find(x=>x.id===id)||cases[0];
+  if(!c)return;
+  featuredTitle.textContent=c.title;
+  featuredPain.textContent=c.pain;
+  const today=c.today.slice(0,4).join(' → ');
+  const after=c.openaction.slice(0,4).join(' → ');
+  featuredExample.innerHTML=`<div><small>HEUTE</small><p>${esc(today)}</p></div><span>→</span><div><small>MIT OPENACTION</small><p>${esc(after)}</p></div>`;
+  featuredCta.style.display=id==='careos-hospital'?'inline-flex':'none';
+  switcher.querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.id===id));
+}
+
+function renderSwitcher(){
+  switcher.innerHTML=featuredIds.filter(id=>cases.some(c=>c.id===id)).map(id=>`<button data-id="${id}">${shortLabels[id]||id}</button>`).join('');
+  switcher.querySelectorAll('button').forEach(b=>b.onclick=()=>renderFeatured(b.dataset.id));
+}
+
+function renderMiniCases(){
+  const list=expanded?cases:cases.filter(c=>featuredIds.includes(c.id)).slice(0,3);
+  miniCases.innerHTML=list.map(c=>`<article><span>${esc(c.emoji)}</span><div><h3>${esc(c.title)}</h3><p>${esc(c.pain)}</p></div></article>`).join('');
+  showMore.textContent=expanded?'Weniger zeigen':'Weitere Beispiele zeigen';
+}
+
+showMore?.addEventListener('click',()=>{expanded=!expanded;renderMiniCases();});
+
+Promise.all([
+  fetch('./examples/use-cases.json').then(r=>{if(!r.ok)throw new Error('use cases');return r.json()}),
+  fetch('./workspace/data/careos-pilot.json').then(r=>{if(!r.ok)throw new Error('careos');return r.json()})
+]).then(([caseData,careos])=>{
+  cases=caseData.use_cases||[];
+  renderSwitcher();
+  renderFeatured('careos-hospital');
+  renderMiniCases();
+  if(careos?.synthetic_benefits){
+    beforeWeeks.textContent=careos.synthetic_benefits.today.weeks;
+    afterWeeks.textContent=careos.synthetic_benefits.openaction.weeks;
+  }
+}).catch(err=>{
+  console.error(err);
+  if(miniCases)miniCases.innerHTML='<p>Die Beispieldaten konnten gerade nicht geladen werden.</p>';
+});
