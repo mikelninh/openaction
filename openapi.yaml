@@ -1,8 +1,8 @@
 openapi: 3.1.0
 info:
   title: OpenAction Gateway
-  version: 0.2.0
-  description: Minimal HTTP contract for proposing, approving and completing OpenAction actions. Implement in any stack; no central OpenAction server is required.
+  version: 1.0.0-rc1
+  description: Minimal provider-neutral HTTP contract for OpenAction actions, scoped approvals and outcomes.
 servers:
   - url: https://example.org/openaction
 paths:
@@ -14,46 +14,41 @@ paths:
         required: true
         content:
           application/vnd.openaction+json:
-            schema: { $ref: ./spec/0.2/openaction.schema.json }
+            schema: {$ref: ./spec/1.0/openaction.schema.json}
       responses:
-        '202': { description: Action accepted for policy/approval processing }
+        '202': {description: Accepted for policy / approval processing}
   /v1/actions/{actionId}:
     get:
-      summary: Read current action state
+      summary: Read action state
       operationId: getAction
       parameters:
-        - { name: actionId, in: path, required: true, schema: { type: string } }
+        - {name: actionId, in: path, required: true, schema: {type: string}}
       responses:
-        '200': { description: Current OpenAction object }
-  /v1/actions/{actionId}/approve:
+        '200':
+          description: Current action
+          content:
+            application/vnd.openaction+json:
+              schema: {$ref: ./spec/1.0/openaction.schema.json}
+  /v1/actions/{actionId}/approval-receipts:
     post:
-      summary: Record explicit approval
-      operationId: approveAction
+      summary: Attach an accountable approval decision receipt
+      operationId: attachApprovalReceipt
       parameters:
-        - { name: actionId, in: path, required: true, schema: { type: string } }
+        - {name: actionId, in: path, required: true, schema: {type: string}}
       requestBody:
         required: true
         content:
           application/json:
-            schema:
-              type: object
-              required: [by]
-              properties:
-                by:
-                  type: object
-                  required: [type, id]
-                  properties:
-                    type: { enum: [human, qualified_human] }
-                    id: { type: string }
+            schema: {$ref: ./spec/1.0/approval-receipt.schema.json}
       responses:
-        '200': { description: Approved action }
-        '409': { description: Approval policy not satisfied }
+        '200': {description: Receipt accepted and scope/policy checked}
+        '409': {description: Receipt scope, proof or policy does not satisfy this action}
   /v1/actions/{actionId}/complete:
     post:
       summary: Record a real-world outcome
       operationId: completeAction
       parameters:
-        - { name: actionId, in: path, required: true, schema: { type: string } }
+        - {name: actionId, in: path, required: true, schema: {type: string}}
       requestBody:
         required: true
         content:
@@ -62,20 +57,31 @@ paths:
               type: object
               required: [status, summary]
               properties:
-                status: { enum: [succeeded, failed, partial, unknown] }
-                summary: { type: string }
-                receipt: { type: string }
-                metrics: { type: object, additionalProperties: true }
+                status: {enum: [succeeded, failed, partial, unknown]}
+                summary: {type: string}
+                receipt: {type: string}
+                metrics: {type: object, additionalProperties: true}
       responses:
-        '200': { description: Completed action with outcome }
+        '200': {description: Outcome recorded}
+  /v1/change-impact:
+    post:
+      summary: Evaluate declared changes against gate dependencies
+      operationId: evaluateChangeImpact
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: ./spec/1.0/change-impact.schema.json}
+      responses:
+        '200': {description: Change impact accepted for human review}
 webhooks:
   actionEvent:
     post:
-      summary: Optional CloudEvents-style delivery of OpenAction lifecycle changes
+      summary: Optional CloudEvents-compatible action lifecycle delivery
       requestBody:
         required: true
         content:
           application/cloudevents+json:
-            schema: { type: object }
+            schema: {type: object}
       responses:
-        '204': { description: Event accepted }
+        '204': {description: Event accepted}

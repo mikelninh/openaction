@@ -1,0 +1,26 @@
+name: OpenAction v1 checks
+on:
+  push:
+    branches: [main, 'feat/**']
+  pull_request:
+jobs:
+  conformance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: 22}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - uses: actions/setup-java@v4
+        with: {distribution: temurin, java-version: '21'}
+      - run: node --check app.js
+      - run: node --check workspace/app.js
+      - run: node --check sdk/openaction.js
+      - run: node --check bin/openaction.mjs
+      - run: node tests/conformance-v1.mjs
+      - run: node tests/workspace-v1.mjs
+      - run: node bin/openaction.mjs validate examples/v1/action.json
+      - run: node bin/openaction.mjs receipt examples/v1/approval-receipt.json
+      - run: python -m py_compile sdk/python/openaction.py
+      - run: javac sdk/java/OpenAction.java
