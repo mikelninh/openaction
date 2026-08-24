@@ -1,1 +1,152 @@
-(()=>{const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];let pilot,passport,activeRole=new URLSearchParams(location.search).get('role')||'all',onlyBlockers=false;const statusLabel={approved:'Approved',in_review:'In review',todo:'To do',blocked:'Blocked'},roleNames={},readinessWeight={approved:1,in_review:.55,todo:.2,blocked:0};async function load(){[pilot,passport]=await Promise.all([fetch('./data/careos-pilot.json').then(r=>r.json()),fetch('./data/careos-trust-passport.json').then(r=>r.json())]);pilot.roles.forEach(r=>roleNames[r.id]=r.label);if(!roleNames[activeRole])activeRole='all';renderAll();bind()}function renderAll(){renderMetrics();renderRoles();renderGraph();renderPassport();renderPackage();renderBenefits()}function renderMetrics(){const b=pilot.gates.filter(g=>g.blocking),read=Math.round(b.reduce((s,g)=>s+readinessWeight[g.status],0)/b.length*100),open=b.filter(g=>g.status!=='approved').length,ready=pilot.gates.reduce((s,g)=>s+g.ready,0),total=pilot.gates.reduce((s,g)=>s+g.total,0),parallel=pilot.gates.filter(g=>g.parallel&&g.status!=='approved').length;$('#readinessValue').textContent=read+'%';$('#readinessBar').style.width=read+'%';$('#blockerCount').textContent=open;$('#evidenceValue').textContent=`${ready}/${total}`;$('#parallelValue').textContent=parallel}function renderRoles(){$('#rolePills').innerHTML=pilot.roles.map(r=>`<button class="role-pill ${r.id===activeRole?'active':''}" data-role="${r.id}">${r.label}</button>`).join('');$$('.role-pill').forEach(b=>b.onclick=()=>{activeRole=b.dataset.role;history.replaceState(null,'',activeRole==='all'?location.pathname:`?role=${encodeURIComponent(activeRole)}`);renderRoles();renderGraph()})}function renderGraph(){const open=pilot.gates.filter(g=>g.status!=='approved').length,blockers=pilot.gates.filter(g=>g.blocking&&g.status!=='approved').length,ready=pilot.gates.reduce((s,g)=>s+g.ready,0),total=pilot.gates.reduce((s,g)=>s+g.total,0);$('#graphSummary').innerHTML=`<span class="summary-chip"><strong>${pilot.gates.length}</strong> gates</span><span class="summary-chip"><strong>${open}</strong> open</span><span class="summary-chip"><strong>${blockers}</strong> blocking</span><span class="summary-chip"><strong>${ready}/${total}</strong> evidence ready</span>`;$('#gateGrid').innerHTML=pilot.gates.filter(g=>g.id!=='pilot_governance').map(g=>{const match=activeRole==='all'||g.roles.includes(activeRole),hidden=onlyBlockers&&(!g.blocking||g.status==='approved'),pct=Math.round(g.ready/g.total*100);return `<article class="gate-card ${!match&&activeRole!=='all'?'dimmed':''} ${hidden?'hidden-gate':''}" data-gate="${g.id}" tabindex="0"><div class="gate-top"><div><p class="eyebrow">${g.category.replaceAll('_',' ')}</p><h3>${g.title}</h3></div><span class="state ${g.status}">${statusLabel[g.status]}</span></div><p>${g.question}</p><div class="gate-meta"><span>${g.ready}/${g.total}</span><div class="mini-progress"><span style="width:${pct}%"></span></div><span>${g.parallel?'parallel':'dependent'}</span></div><div class="owner">Owner · <strong>${g.owner}</strong></div></article>`}).join('');$$('.gate-card').forEach(c=>{const o=()=>showGate(c.dataset.gate);c.onclick=o;c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();o()}}});const f=pilot.gates.find(g=>g.id==='pilot_governance');$('#finalGateState').textContent=statusLabel[f.status];$('#finalGateState').className='state '+f.status;$('#focusBlockersBtn').textContent=onlyBlockers?'Alle Gates zeigen':'Nur Blocker zeigen'}function showGate(id){const g=pilot.gates.find(x=>x.id===id),deps=(g.depends_on||[]).map(id=>pilot.gates.find(x=>x.id===id)?.title).filter(Boolean);$('#gateDetail').innerHTML=`<span class="state ${g.status}">${statusLabel[g.status]}</span><h2>${g.title}</h2><p>${g.question}</p><div class="detail-grid"><div class="detail-box"><small>Owner</small><strong>${g.owner}</strong></div><div class="detail-box"><small>Blocking</small><strong>${g.blocking?'Yes':'No'}</strong></div><div class="detail-box"><small>Relevant for</small><strong>${g.roles.map(r=>roleNames[r]||r).join(', ')}</strong></div><div class="detail-box"><small>Mode</small><strong>${g.parallel?'Parallel':'Dependent'}</strong></div></div><h3>Evidence needed</h3><ul>${g.evidence.map((e,i)=>`<li>${i<g.ready?'✓':'○'} ${e}</li>`).join('')}</ul>${deps.length?`<p><strong>Depends on:</strong> ${deps.join(', ')}</p>`:''}<div class="next-step"><strong>Next best step</strong><br>${g.next}</div>`;$('#gateDialog').showModal()}function sections(){return [{title:'Purpose',status:'ready',items:[passport.intended_use,...passport.explicit_non_goals.slice(0,2)]},{title:'Architecture',status:'review',items:[passport.architecture.summary,...passport.dependencies.map(d=>d.name)]},{title:'Data & privacy',status:passport.data.dpia_status==='approved'?'ready':'review',items:[`DPA: ${passport.data.dpa_status}`,`DPIA: ${passport.data.dpia_status}`]},{title:'Models',status:'todo',items:passport.models.map(m=>`${m.name} · ${m.provider}`)},{title:'Security',status:passport.security.security_review_status==='approved'?'ready':'review',items:[passport.security.authn,passport.security.authz,passport.security.logging]},{title:'Regulation / TI',status:'review',items:(passport.domain_regulation||[]).map(d=>`${d.framework}: ${d.status}`)},{title:'Workforce',status:'todo',items:[`Consultation: ${passport.workforce?.consultation_status||'todo'}`,passport.workforce?.training_plan||'TBD']},{title:'Procurement',status:'todo',items:[`Route: ${passport.procurement?.route||'TBD'}`,`Vendor review: ${passport.procurement?.vendor_review_status||'todo'}`]},{title:'Evaluations',status:'todo',items:passport.evaluations.map(e=>`${e.name}: ${e.status}`)}]}function renderPassport(){const s=sections(),w={ready:1,review:.55,todo:.2},score=Math.round(s.reduce((a,x)=>a+w[x.status],0)/s.length*100);$('#passportProduct').textContent=`${passport.product.name} ${passport.product.version}`;$('#passportPurpose').textContent=passport.intended_use;$('#passportScore').textContent=score+'%';$('#passportGrid').innerHTML=s.map(x=>`<article class="passport-card"><h3>${x.title}</h3><ul>${x.items.map(i=>`<li>${esc(String(i))}</li>`).join('')}</ul><div class="passport-status">${x.status.toUpperCase()}</div></article>`).join('')}function renderPackage(){const b=pilot.gates.filter(g=>g.blocking&&g.status!=='approved'),reusable=pilot.gates.reduce((s,g)=>s+g.ready,0);$('#packagePreview').innerHTML=`<div class="package-section"><p class="eyebrow">01 · Purpose</p><h3>${pilot.name}</h3><p>${pilot.intended_use}</p></div><div class="package-section"><p class="eyebrow">02 · Safe boundary</p><p>${pilot.pilot_boundary}</p></div><div class="package-section"><p class="eyebrow">03 · Reusable evidence</p><h3>${reusable} evidence items prepared</h3></div><div class="package-section"><p class="eyebrow">04 · Decisions still required</p><div class="package-list">${b.map(g=>`<div class="package-item"><strong>${g.title}</strong><br>${g.owner}</div>`).join('')}</div></div>`}function renderBenefits(){const b=pilot.synthetic_benefits;$('#benefitCompare').innerHTML=`<article class="benefit-card"><span class="badge synthetic">Synthetic today</span><h3>${b.today.model}</h3><div class="benefit-stat"><span>Illustrative lead time</span><strong>${b.today.weeks} wk</strong></div><div class="benefit-stat"><span>Questionnaires</span><strong>${b.today.duplicate_questionnaires}</strong></div><div class="benefit-stat"><span>Late blockers</span><strong>${b.today.late_blockers}</strong></div></article><article class="benefit-card after"><span class="badge synthetic">Synthetic OpenAction</span><h3>${b.openaction.model}</h3><div class="benefit-stat"><span>Illustrative path</span><strong>${b.openaction.weeks} wk</strong></div><div class="benefit-stat"><span>Core packs</span><strong>${b.openaction.duplicate_questionnaires}</strong></div><div class="benefit-stat"><span>Late blockers</span><strong>${b.openaction.late_blockers}</strong></div></article>`;$('#benefitWarning').textContent=b.label+'. '+b.assumption;$('#proofGrid').innerHTML=pilot.pilot_metrics.map((m,i)=>`<div class="proof-item"><strong>${String(i+1).padStart(2,'0')}</strong>${m}</div>`).join('')}function markdown(){const b=pilot.gates.filter(g=>g.blocking&&g.status!=='approved');return `# CareOS Adoption Package — OpenAction 1.0-RC1\n\n> Synthetic conversation prototype. Not an approval.\n\n## Intended use\n${pilot.intended_use}\n\n## Pilot boundary\n${pilot.pilot_boundary}\n\n## Blocking decisions\n${b.map(g=>`- **${g.title}** — ${g.owner}: ${g.next}`).join('\n')}\n\n## First meeting objective\nConfirm the path, owners, dependencies and missing evidence. Agree the smallest safe pilot.\n\n## Real metrics\n${pilot.pilot_metrics.map(m=>`- ${m}`).join('\n')}` }function download(name,content,type='text/plain'){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}function toast(m){const e=$('#toast');e.textContent=m;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),1500)}function esc(s){return s.replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c]||c))}function bind(){$$('.tab').forEach(b=>b.onclick=()=>{$$('.tab').forEach(x=>x.classList.toggle('active',x===b));$$('.panel').forEach(p=>p.classList.toggle('active',p.id===`panel-${b.dataset.tab}`))});$('#focusBlockersBtn').onclick=()=>{onlyBlockers=!onlyBlockers;renderGraph()};$('#closeDialog').onclick=()=>$('#gateDialog').close();$('#exportPassportBtn').onclick=()=>download('careos-trust-passport.synthetic.json',JSON.stringify(passport,null,2),'application/json');$('#downloadPackageBtn').onclick=()=>download('careos-adoption-package.synthetic.md',markdown(),'text/markdown');$('#copyOpenerBtn').onclick=async()=>{await navigator.clipboard.writeText('Welche dieser Entscheidungen müssen Sie treffen — und welche Nachweise fehlen Ihnen dafür noch?');toast('Copied')};$('#shareBtn').onclick=async()=>{await navigator.clipboard.writeText(location.href);toast('Link copied')}}load().catch(e=>{console.error(e);document.body.innerHTML='<main style="font-family:system-ui;padding:40px"><h1>Workspace could not load.</h1></main>'})})();
+(()=>{
+  const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+  let pilot,passport;
+  let mode=new URLSearchParams(location.search).get('view')||'simple';
+  let activeRole='all';
+  const roleNames={};
+  const statusLabel={approved:'Erledigt',in_review:'In Arbeit',todo:'Offen',blocked:'Blockiert'};
+  const statusClass={approved:'done',in_review:'doing',todo:'open',blocked:'blocked'};
+  const blockerPriority=['privacy','clinical_safety','security','ti_scope','procurement'];
+  const nextHeadline={privacy:'DPIA-Screening abschließen',clinical_safety:'Clinical-Eval definieren',security:'Threat Model reviewen',ti_scope:'Systemrolle klassifizieren',procurement:'Vendor-Paket vervollständigen'};
+  const metricNames={
+    'Days from first pilot conversation to approved bounded pilot':'Zeit vom ersten Gespräch bis zum sicheren Pilot',
+    '% reviewer questions answered from Trust Passport':'Anteil der Reviewer-Fragen, die vorhandene Nachweise beantworten',
+    'Duplicate evidence requests':'Doppelte Nachfragen nach denselben Nachweisen',
+    'Blockers discovered after pilot design freeze':'Blocker, die erst spät entdeckt werden',
+    'Reviewer turnaround by gate':'Warte- und Bearbeitungszeit pro Prüfung',
+    'Gates reopened after a change':'Prüfungen, die nach Änderungen neu geöffnet werden',
+    'End-user workflow outcomes':'Ergebnis und Nutzbarkeit im echten Arbeitsablauf'
+  };
+
+  async function load(){
+    [pilot,passport]=await Promise.all([
+      fetch('./data/careos-pilot.json').then(r=>{if(!r.ok)throw new Error('pilot');return r.json()}),
+      fetch('./data/careos-trust-passport.json').then(r=>{if(!r.ok)throw new Error('passport');return r.json()})
+    ]);
+    pilot.roles.forEach(r=>roleNames[r.id]=r.label);
+    if(!['simple','reviewer','builder'].includes(mode))mode='simple';
+    render();bind();setMode(mode,false);
+  }
+
+  function openBlocking(){return pilot.gates.filter(g=>g.blocking&&g.status!=='approved'&&g.id!=='pilot_governance')}
+  function orderedBlockers(){return openBlocking().sort((a,b)=>blockerPriority.indexOf(a.id)-blockerPriority.indexOf(b.id))}
+
+  function render(){
+    renderTopDecisions();renderJourney();renderFocus();renderEvidence();renderPackage();renderBenefit();renderRealProof();renderRoles();renderReviewerGates();
+  }
+
+  function renderTopDecisions(){
+    const blockers=orderedBlockers();
+    const top=blockers.slice(0,2),first=top[0];
+    $('#plainStatus').textContent=blockers.length?'Noch nicht pilotbereit':'Bereit für den bounded Pilot';
+    $('#plainStatusNote').textContent=blockers.length?`${blockers.length} notwendige Entscheidungen sind noch offen. Wir sehen jetzt genau welche.`:'Alle blocking Prüfungen sind geschlossen; der Pilot-Sponsor kann die finale scoped Entscheidung treffen.';
+    $('#plainBlocker').textContent=top.length?top.map(g=>shortGate(g)).join(' + '):'Kein blocking Gate offen';
+    $('#plainBlockerNote').textContent=top.length>1&&top.every(g=>g.parallel)?'Diese Prüfungen können bereits parallel weiterlaufen — keine muss auf die andere warten.':'Der aktuelle Blocker ist sichtbar und hat einen benannten Owner.';
+    $('#plainNext').textContent=first?(nextHeadline[first.id]||'Offenen Blocker schließen'):'Pilot-Governance bestätigen';
+    $('#plainNextNote').textContent=first?first.next:'Scope, Stop Conditions, Erfolgskriterien und Rollback als finale Pilotentscheidung bestätigen.';
+  }
+
+  function shortGate(g){return ({privacy:'Datenschutz',clinical_safety:'Clinical Safety',security:'Security',ti_scope:'Interoperabilität / TI',procurement:'Einkauf / Legal'}[g.id]||g.title)}
+
+  function combinedStatus(ids){
+    const states=ids.map(id=>pilot.gates.find(g=>g.id===id)?.status).filter(Boolean);
+    if(states.includes('blocked'))return'blocked';
+    if(states.includes('todo'))return'todo';
+    if(states.includes('in_review'))return'in_review';
+    return'approved';
+  }
+
+  function renderJourney(){
+    const steps=[
+      ['Zweck klar',['purpose']],
+      ['Datenschutz',['privacy']],
+      ['Sicherheit',['security']],
+      ['Clinical Safety',['clinical_safety']],
+      ['Organisation & TI',['ti_scope','workforce','procurement']],
+      ['Sicherer Pilot',['pilot_governance']]
+    ];
+    $('#journey').innerHTML=steps.map(([label,ids],i)=>{const st=combinedStatus(ids);return `<div class="journey-step ${statusClass[st]}"><span class="journey-index">${i+1}</span><b>${label}</b><small>${statusLabel[st]}</small></div>${i<steps.length-1?'<span class="journey-arrow">→</span>':''}`}).join('');
+  }
+
+  function renderFocus(){
+    const top=orderedBlockers().slice(0,2);
+    $('#focusGrid').innerHTML=top.length?top.map(g=>`<article class="focus-card"><span class="state ${g.status}">${statusLabel[g.status]}</span><h3>${shortGate(g)}</h3><p>${g.question}</p><div><b>Nächster Schritt</b><span>${g.next}</span></div></article>`).join(''):'<article class="focus-card"><h3>Keine blocking Prüfung offen</h3><p>Der nächste Schritt ist die finale bounded-pilot Entscheidung.</p></article>';
+  }
+
+  function renderEvidence(){
+    const items=[
+      ['Zweck beschrieben','ready','Intended use + klare Non-goals'],
+      ['Architektur','partial','Grundprinzip dokumentiert; Deployment-Details offen'],
+      ['Daten & Datenschutz','partial',`DPIA: ${passport.data.dpia_status}`],
+      ['Sicherheitskonzept','partial',`Security Review: ${passport.security.security_review_status}`],
+      ['Evaluationsplan','open',passport.evaluations.every(e=>e.status==='planned')?'Noch nicht ausgeführt':'Teilweise ausgeführt']
+    ];
+    $('#evidenceSimpleGrid').innerHTML=items.map(([title,status,note])=>`<article class="evidence-chip-card ${status}"><span>${status==='ready'?'✓':status==='partial'?'◐':'○'}</span><div><b>${title}</b><small>${note}</small></div></article>`).join('');
+  }
+
+  function renderPackage(){
+    const blockers=orderedBlockers();
+    $('#packageSimple').innerHTML=`<div><small>1 · DAS SOLL CAREOS TUN</small><p>${pilot.intended_use}</p></div><div><small>2 · DAS SOLL ES NICHT TUN</small><p>${passport.explicit_non_goals.slice(0,3).join(' · ')}</p></div><div><small>3 · OFFENE ENTSCHEIDUNGEN</small><p>${blockers.map(shortGate).join(' · ')}</p></div>`;
+  }
+
+  function renderBenefit(){
+    const b=pilot.synthetic_benefits;
+    $('#todayWeeks').textContent=b.today.weeks;$('#oaWeeks').textContent=b.openaction.weeks;
+    $('#benefitExplanation').textContent=`${b.assumption} „Heute“ ist eine serielle Beispielrechnung; „OpenAction“ nimmt frühe Gate-Erkennung, parallele unabhängige Reviews und wiederverwendbare Evidence an. Reale Pilotdaten müssen diesen Unterschied bestätigen oder widerlegen.`;
+  }
+
+  function renderRealProof(){
+    $('#realProofGrid').innerHTML=pilot.pilot_metrics.slice(0,6).map((m,i)=>`<article><span>${String(i+1).padStart(2,'0')}</span><p>${metricNames[m]||m}</p></article>`).join('');
+  }
+
+  function renderRoles(){
+    $('#rolePills').innerHTML=pilot.roles.map(r=>`<button class="role-pill ${r.id===activeRole?'active':''}" data-role="${r.id}">${r.label}</button>`).join('');
+    $$('.role-pill').forEach(b=>b.onclick=()=>{activeRole=b.dataset.role;renderRoles();renderReviewerGates()});
+  }
+
+  function renderReviewerGates(){
+    const open=pilot.gates.filter(g=>g.status!=='approved').length;
+    const blocking=pilot.gates.filter(g=>g.blocking&&g.status!=='approved').length;
+    $('#reviewSummary').innerHTML=`<span><b>${pilot.gates.length}</b> Prüfungen insgesamt</span><span><b>${open}</b> offen</span><span><b>${blocking}</b> davon blockieren den Pilot</span><span class="synthetic-note">synthetischer Stand</span>`;
+    $('#gateGrid').innerHTML=pilot.gates.map(g=>{
+      const relevant=activeRole==='all'||g.roles.includes(activeRole);
+      return `<article class="gate-card ${!relevant&&activeRole!=='all'?'dimmed':''}" data-gate="${g.id}" tabindex="0"><div class="gate-top"><div><small>${g.category.replaceAll('_',' ')}</small><h3>${g.title}</h3></div><span class="state ${g.status}">${statusLabel[g.status]}</span></div><p>${g.question}</p><div class="gate-bottom"><span><b>${g.ready} von ${g.total}</b> Beispiel-Nachweisen vorhanden</span><span>${g.parallel?'kann parallel laufen':'hat Abhängigkeiten'}</span></div><div class="owner">Owner · <strong>${g.owner}</strong></div></article>`;
+    }).join('');
+    $$('.gate-card').forEach(c=>{const open=()=>showGate(c.dataset.gate);c.onclick=open;c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}}});
+  }
+
+  function showGate(id){
+    const g=pilot.gates.find(x=>x.id===id);if(!g)return;
+    const deps=(g.depends_on||[]).map(id=>pilot.gates.find(x=>x.id===id)?.title).filter(Boolean);
+    $('#gateDetail').innerHTML=`<span class="state ${g.status}">${statusLabel[g.status]}</span><h2>${g.title}</h2><p class="dialog-question">${g.question}</p><div class="detail-grid"><div class="detail-box"><small>Owner</small><strong>${g.owner}</strong></div><div class="detail-box"><small>Blockiert Pilot?</small><strong>${g.blocking?'Ja':'Nein'}</strong></div><div class="detail-box"><small>Arbeitsweise</small><strong>${g.parallel?'Parallel möglich':'Abhängig'}</strong></div><div class="detail-box"><small>Stand</small><strong>${g.ready} / ${g.total} synthetische Nachweise</strong></div></div><h3>Benötigte Nachweise</h3><ul class="evidence-list">${g.evidence.map((e,i)=>`<li>${i<g.ready?'✓':'○'} ${e}</li>`).join('')}</ul>${deps.length?`<p><strong>Hängt ab von:</strong> ${deps.join(', ')}</p>`:''}<div class="next-step"><strong>Nächster sinnvoller Schritt</strong><br>${g.next}</div>`;
+    $('#gateDialog').showModal();
+  }
+
+  function setMode(next,scroll=true){
+    mode=next;
+    $$('.mode').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));
+    $$('[data-view]').forEach(p=>p.hidden=p.dataset.view!==mode);
+    const url=new URL(location.href);if(mode==='simple')url.searchParams.delete('view');else url.searchParams.set('view',mode);history.replaceState(null,'',url);
+    if(scroll&&mode!=='simple')document.querySelector(`[data-view="${mode}"]`)?.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+
+  function markdown(){
+    const blockers=orderedBlockers();
+    return `# CareOS Gesprächspaket — OpenAction 1.0-RC1\n\n> Synthetisches Gesprächsbeispiel. Keine Freigabe und keine Rechts-/Medizinproduktbewertung.\n\n## Das soll CareOS tun\n${pilot.intended_use}\n\n## Das soll CareOS nicht tun\n${passport.explicit_non_goals.map(x=>`- ${x}`).join('\n')}\n\n## Pilotgrenze\n${pilot.pilot_boundary}\n\n## Offene blocking Entscheidungen\n${blockers.map(g=>`### ${shortGate(g)}\nOwner: ${g.owner}\nFrage: ${g.question}\nNächster Schritt: ${g.next}`).join('\n\n')}\n\n## Ziel des nächsten Gesprächs\nFreigabeweg, Owner und fehlende Nachweise korrigieren. Den kleinsten verantwortbaren Pilot definieren.\n`;
+  }
+
+  function download(name,content,type='text/plain'){const url=URL.createObjectURL(new Blob([content],{type}));const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),500)}
+  function toast(msg){const el=$('#toast');el.textContent=msg;el.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove('show'),1700)}
+
+  function bind(){
+    $$('.mode').forEach(b=>b.onclick=()=>setMode(b.dataset.mode));
+    $$('.reviewer-jump').forEach(b=>b.onclick=()=>setMode(b.dataset.go));
+    $('#closeDialog').onclick=()=>$('#gateDialog').close();
+    $('#gateDialog').onclick=e=>{if(e.target===$('#gateDialog'))$('#gateDialog').close()};
+    $('#downloadPackageBtn').onclick=()=>download('careos-gespraechspaket.synthetic.md',markdown(),'text/markdown');
+    $('#exportPassportBtn').onclick=()=>download('careos-trust-passport.synthetic.json',JSON.stringify(passport,null,2),'application/json');
+    $('#shareBtn').onclick=async()=>{try{await navigator.clipboard.writeText(location.href);toast('Link kopiert')}catch{toast('Link steht in der Adresszeile')}};
+  }
+
+  load().catch(err=>{console.error(err);document.body.innerHTML='<main style="font-family:system-ui;padding:40px"><h1>Workspace konnte nicht geladen werden.</h1><p>Bitte Seite neu laden.</p></main>'});
+})();
