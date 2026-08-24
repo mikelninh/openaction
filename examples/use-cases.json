@@ -1,0 +1,244 @@
+{
+  "version": "0.1",
+  "disclaimer": "All before/after target values in synthetic_scenario are illustrative hypotheses, not measured impact or guaranteed processing times. Official/current facts are separated under current_evidence.",
+  "use_cases": [
+    {
+      "id": "naturalisation-berlin",
+      "emoji": "🇩🇪",
+      "title": "Einbürgerung",
+      "audience": "Bürger + LEA",
+      "pain": "Ein digitaler Antrag kann trotzdem lange in einer unsichtbaren Warteschlange liegen. Fehlende oder veraltete Nachweise erzeugen weitere Schleifen.",
+      "current_evidence": [
+        {
+          "claim": "Berlin weist darauf hin, dass digital gestellte Einbürgerungsanträge ein Jahr oder länger dauern können; in Einzelfällen geht es schneller.",
+          "source": "https://willkommenszentrum.berlin.de/aufenthalt/einbuergerung"
+        },
+        {
+          "claim": "Das LEA übernahm zum 01.01.2024 rund 40.000 offene Einbürgerungsvorgänge.",
+          "source": "https://www.berlin.de/einwanderung/einbuergerung/"
+        }
+      ],
+      "today": ["Antrag + PDFs", "Warten", "Behörde prüft", "Nachforderung", "neue Unterlagen", "erneut warten", "Termin", "Entscheidung"],
+      "openaction": ["Eligibility + completeness preflight", "Evidence Passport", "Register-/Nachweischecks parallel anstoßen", "jede offene Entscheidung sichtbar", "nur fehlende Evidenz nachfordern", "qualified-human decision", "Outcome + audit receipt"],
+      "synthetic_scenario": {
+        "before": "12+ Monate können vorkommen",
+        "target": "8–16 Wochen in einem unkomplizierten, vollständig digital angebundenen Pilotpfad",
+        "assumptions": ["vollständige Unterlagen", "digitale Registerzugriffe rechtlich/technisch möglich", "keine ungeklärten Auslandsnachweise", "Reviewer-SLAs", "Termin-/Kapazitätsengpässe adressiert"],
+        "measure": "median time from complete application to decision; rework cycles; missing-document loops"
+      }
+    },
+    {
+      "id": "residence-permit",
+      "emoji": "🌍",
+      "title": "Aufenthaltstitel / Migration",
+      "audience": "Einwandernde + Arbeitgeber + LEA",
+      "pain": "Antrag, Arbeitsvertrag, Qualifikation, Lebensunterhalt, Termin und Dokumentproduktion hängen zusammen, aber der Status des Gesamtpfads ist für Antragstellende oft schwer sichtbar.",
+      "current_evidence": [
+        {
+          "claim": "Berlin stellt immer mehr Aufenthaltstitel auf Online-Anträge um; Termine werden nach Prüfung der eingereichten Dokumente vergeben.",
+          "source": "https://www.berlin.de/einwanderung/"
+        },
+        {
+          "claim": "Nach positiver Prüfung und Vorsprache dauert die Produktion eines elektronischen Aufenthaltstitels häufig rund 4–6 Wochen.",
+          "source": "https://service.berlin.de/dienstleistung/350471/"
+        }
+      ],
+      "today": ["Online-Antrag", "unklare Pre-Review-Wartezeit", "Nachforderung", "Termin", "Vorsprache", "4–6 Wochen eAT-Produktion"],
+      "openaction": ["case classification", "document completeness before submission", "employer/applicant evidence reused", "parallel qualification + employment checks", "status by gate", "appointment only when truly ready", "digital approval receipt while physical card is produced"],
+      "synthetic_scenario": {
+        "before": "variable Vorprüfung + 4–6 Wochen Kartenerstellung",
+        "target": "Vorprüfung auf 3–10 Arbeitstage drücken; physische eAT-Produktion bleibt zunächst eigener Bottleneck",
+        "assumptions": ["standard case", "review capacity", "online evidence accepted", "no unresolved identity/security check"],
+        "measure": "days to positive pre-review; number of document requests; time spent waiting without a visible reason"
+      }
+    },
+    {
+      "id": "wohngeld",
+      "emoji": "🏠",
+      "title": "Wohngeld",
+      "audience": "Haushalte + Wohnungsamt",
+      "pain": "Menschen mit knappen Budgets müssen einen dokumentenreichen Antrag stellen; hohe Eingangszahlen und Medienbrüche erschweren eine schnelle Bearbeitung.",
+      "current_evidence": [
+        {
+          "claim": "Berlin meldet bei einzelnen Wohnungsämtern wegen sehr hohen Antragseingangs höhere Bearbeitungszeiten; Lichtenberg bittet zeitweise um postalische Einreichung und reduzierte Rückfragen.",
+          "source": "https://service.berlin.de/dienstleistung/120656/standort/330748/"
+        },
+        {
+          "claim": "Wohngeld ist antragsgebunden und wird grundsätzlich ab dem Monat des Antragseingangs gewährt, wenn die Voraussetzungen vorliegen.",
+          "source": "https://service.berlin.de/dienstleistung/120656/"
+        }
+      ],
+      "today": ["Anspruch grob prüfen", "Unterlagen zusammensuchen", "Antrag", "Queue", "Nachforderung", "Queue", "Bescheid"],
+      "openaction": ["eligibility precheck", "einmaliger Household Evidence Passport", "Vollständigkeit vor Einreichung", "automatische Wiederverwendung vorhandener Nachweise", "Behörde sieht nur echte Ausnahmen", "Status + fehlender Grund sichtbar"],
+      "synthetic_scenario": {
+        "before": "Wochen bis Monate je nach Auslastung und Fall",
+        "target": "same-day complete submission; 5–15 Arbeitstage bis Erstentscheidung in einem standardisierten Pilot-Queue",
+        "assumptions": ["vollständiger Standardfall", "sufficient authority capacity", "digital acceptance of evidence", "no contested income facts"],
+        "measure": "time to complete application; first-pass completeness; authority touches per case"
+      }
+    },
+    {
+      "id": "gmbh-formation",
+      "emoji": "🚀",
+      "title": "GmbH / Startup gründen",
+      "audience": "Gründer + Notar + Bank + Register + Finanzamt",
+      "pain": "Viele Einzelschritte sind bereits digital, aber die Journey bleibt über Notar, Bank, Handelsregister, Gewerbe und Steuer verteilt.",
+      "current_evidence": [
+        {
+          "claim": "GmbH/UG-Gründungen und Handelsregisteranmeldungen können über das System der Bundesnotarkammer online durchgeführt werden.",
+          "source": "https://online.notar.de/"
+        },
+        {
+          "claim": "Die steuerliche Anmeldung erfolgt separat über ELSTER; Berlin nennt ca. zwei Wochen Bearbeitungszeit nach vollständigem Eingang.",
+          "source": "https://service.berlin.de/dienstleistung/325409/"
+        }
+      ],
+      "today": ["Rechtsform + Name", "Notar", "Bankkonto", "Kapital", "Handelsregister", "Gewerbe", "ELSTER", "Steuernummer"],
+      "openaction": ["Founder Passport", "ein Datensatz erzeugt alle Folgepakete", "Notar + Bank parallel vorbereiten", "Register receipt becomes evidence", "tax form prefilled from same facts", "single status timeline"],
+      "synthetic_scenario": {
+        "before": "mehrere Systeme / Übergaben; Steuerregistrierung allein ~2 Wochen nach vollständigen Unterlagen",
+        "target": "Gründerarbeit auf wenige Stunden reduzieren; legal/registry critical path transparent; 80%+ duplicate data entry eliminate",
+        "assumptions": ["simple cash formation", "eID available", "bank KYC responsive", "register no objections"],
+        "measure": "founder minutes spent; duplicate fields entered; days to registry; days to tax number"
+      }
+    },
+    {
+      "id": "building-permit",
+      "emoji": "🏗️",
+      "title": "Baugenehmigung",
+      "audience": "Bauherren + Planer + Bezirke + Fachbehörden",
+      "pain": "Der eigentliche Entscheidungs-Countdown kann erst sinnvoll laufen, wenn Unterlagen, Stellungnahmen und Nachweise vollständig sind.",
+      "current_evidence": [
+        {
+          "claim": "Die Berliner Bauaufsicht prüft die Vollständigkeit eines Bauantrags grundsätzlich innerhalb von zwei Wochen.",
+          "source": "https://gesetze.berlin.de/bsbe/document/jlr-BauOBE2005V8IVZ/part/X"
+        },
+        {
+          "claim": "Die einmonatige Entscheidungsfrist beginnt erst, wenn alle notwendigen Stellungnahmen und Nachweise vorliegen.",
+          "source": "https://www.berlin.de/ba-lichtenberg/auf-einen-blick/buergerservice/bauen/artikel.280014.php"
+        }
+      ],
+      "today": ["Bauantrag", "Vollständigkeitsprüfung", "Mängel", "Nachreichen", "Fachstellen", "Stellungnahmen", "Nachweise", "Entscheidung"],
+      "openaction": ["machine-readable requirements", "preflight before official submission", "each Fachstelle receives scoped packet immediately", "dependencies visible", "parallel comments", "deadline clock visible", "decision receipt"],
+      "synthetic_scenario": {
+        "before": "kritischer Pfad wird oft erst nach Einreichung sichtbar",
+        "target": "90%+ completeness before submission; all independent Fachstellen Day 1; avoid one full rework cycle",
+        "assumptions": ["standard simplified permit", "machine-readable local rules", "participating agencies integrated"],
+        "measure": "first-pass completeness; days waiting for missing evidence; sequential vs parallel reviewer time"
+      }
+    },
+    {
+      "id": "industrial-permit",
+      "emoji": "🏭",
+      "title": "Anlagen-/Industriegenehmigung",
+      "audience": "Unternehmen + Genehmigungsbehörden + Fachstellen",
+      "pain": "Komplexe Rechtsmaterien, viele Beteiligungen, unzureichende Unterlagen und fehlender digitaler Datenaustausch verlängern den Vollzug.",
+      "current_evidence": [
+        {
+          "claim": "Destatis/NKR nennen unzureichende Antragsunterlagen als größtes Hemmnis in der Genehmigungspraxis.",
+          "source": "https://www.destatis.de/DE/Themen/Staat/Buerokratiekosten/teaser-aktuelles.html"
+        },
+        {
+          "claim": "75% bewerteten fehlenden automatisierten Datenabgleich und 74% fehlende medienbruchfreie Digitalisierung als stark/sehr stark hemmend.",
+          "source": "https://www.normenkontrollrat.bund.de/Webs/NKR/SharedDocs/Downloads/DE/Projektberichte/2025-07-bimsch-projektbericht.pdf"
+        }
+      ],
+      "today": ["Antragskonferenz?", "umfangreicher Antrag", "Mängelschleifen", "viele Fachstellen", "Papier + digital", "weitere Gutachten", "Entscheidung"],
+      "openaction": ["pre-application conference as shared graph", "requirements + evidence matrix", "reuse prior permits/data", "parallel fachliche reviews", "single source of truth", "change impact when plan changes", "outcome metrics"],
+      "synthetic_scenario": {
+        "before": "lange, komplexe Verfahren mit mehreren Rework-Schleifen",
+        "target": "one rework cycle removed + 25–50% shorter coordination critical path in first pilots",
+        "assumptions": ["law unchanged", "authority participation", "quality application data", "digital evidence exchange"],
+        "measure": "coordination lead time; rework rounds; duplicate evidence; reviewer waiting time"
+      }
+    },
+    {
+      "id": "qualification-recognition",
+      "emoji": "🎓",
+      "title": "Berufsanerkennung",
+      "audience": "Fachkräfte + Anerkennungsstellen + Arbeitgeber",
+      "pain": "Die gesetzliche Entscheidungsfrist startet erst mit vollständigen Unterlagen; fehlende oder schwer prüfbare Nachweise stoppen den Takt.",
+      "current_evidence": [
+        {
+          "claim": "Nach dem BQFG wird der Eingang grundsätzlich binnen eines Monats bestätigt; fehlende Unterlagen sind mitzuteilen.",
+          "source": "https://www.gesetze-im-internet.de/bqfg/__6.html"
+        },
+        {
+          "claim": "Über die Gleichwertigkeit ist grundsätzlich innerhalb von drei Monaten nach Eingang vollständiger Unterlagen zu entscheiden; Verlängerungen sind möglich.",
+          "source": "https://www.gesetze-im-internet.de/bqfg/__13.html"
+        }
+      ],
+      "today": ["zuständige Stelle finden", "Dokumente + Übersetzungen", "Eingangsprüfung", "Nachfordern", "Frist startet", "Gleichwertigkeitsprüfung", "Bescheid"],
+      "openaction": ["authority + profession resolver", "evidence checklist per qualification", "authenticity references", "completeness before formal clock", "employer sees same status", "residence process can consume result"],
+      "synthetic_scenario": {
+        "before": "bis zu 1 Monat completeness + grundsätzlich 3 Monate decision clock",
+        "target": "completeness preflight same day; straightforward digital cases 2–6 weeks",
+        "assumptions": ["standard qualification", "documents verifiable", "no compensatory measure needed"],
+        "measure": "days before statutory clock starts; missing-doc rounds; total time to usable decision"
+      }
+    },
+    {
+      "id": "careos-hospital",
+      "emoji": "🏥",
+      "title": "CareOS im Krankenhaus",
+      "audience": "Clinical + IT + DSB + Security + Betriebsrat + Einkauf",
+      "pain": "Der technische Prototyp kann schnell existieren, aber Datenschutz, Security, Fachbereich, Regulatory, Workforce und Procurement entdecken ihre Anforderungen nacheinander.",
+      "current_evidence": [
+        {
+          "claim": "Dieses Beispiel ist ein synthetischer organisationaler Pilot und keine Behauptung über ein konkretes Krankenhaus-Genehmigungsverfahren.",
+          "source": "internal-synthetic"
+        }
+      ],
+      "today": ["Prototype", "Clinical", "Privacy", "rework", "Security", "Betriebsrat", "Regulatory", "Procurement", "Pilot"],
+      "openaction": ["intended-use preflight", "shared Approval Graph", "Trust Passport", "Privacy/Security/Clinical/Workforce parallel", "bounded pilot profile", "only blockers reopen on change", "Adoption Package"],
+      "synthetic_scenario": {
+        "before": "31-week serial-review illustration",
+        "target": "8-week regulated pilot path; 2–4 weeks for a well-bounded repeat pilot is a stretch target",
+        "assumptions": ["no autonomous clinical decision", "named accountable sponsor", "existing hospital review capacity", "evidence prepared", "bounded data scope"],
+        "measure": "time to identify all gates; approval lead time; evidence reuse; late blockers"
+      }
+    },
+    {
+      "id": "public-ai-procurement",
+      "emoji": "🏛️",
+      "title": "Behörden-/AI-Pilot beschaffen",
+      "audience": "Fachbereich + Vergabe + DSB + Security + Personalvertretung",
+      "pain": "Ein sinnvoller digitaler Pilot kann zwischen Bedarf, Vergabe, Datenschutz, Security und interner Governance stecken bleiben, obwohl viele Fragen bei jedem Projekt gleich sind.",
+      "current_evidence": [
+        {
+          "claim": "Der Nationale Normenkontrollrat nennt die Vereinfachung des Vergaberechts und öffentlichen Beschaffungswesens als eigenes Bürokratieabbau-Handlungsfeld.",
+          "source": "https://www.normenkontrollrat.bund.de/Webs/NKR/DE/weniger-buerokratie-und-besseres-recht/verzichtbare_buerokratie_abbauen/unnoetige_buerokratie_abbauen_node.html"
+        }
+      ],
+      "today": ["Bedarf", "Markterkundung", "Vergabe", "Vendor questionnaire", "DSB", "Security", "Personal", "Vertrag", "Pilot"],
+      "openaction": ["standard pilot profile", "machine-readable requirements", "vendor Trust Passport", "evidence reuse", "parallel organisational gates", "decision conditions encoded", "renew/reopen only changed scope"],
+      "synthetic_scenario": {
+        "before": "mehrere serielle interne Prüfschritte",
+        "target": "50%+ questionnaire reuse; first bounded sandbox in days where procurement/legal route permits",
+        "assumptions": ["small reversible sandbox", "no production personal data", "existing procurement route"],
+        "measure": "review questions reused; days to sandbox; procurement touches"
+      }
+    },
+    {
+      "id": "buergeramt",
+      "emoji": "🪪",
+      "title": "Bürgeramt-Alltag",
+      "audience": "alle Bürger + Kommunen",
+      "pain": "Für einfache Anliegen kosten Terminfindung, Reise, Warten und Vor-Ort-Bearbeitung oft mehr Zeit als die eigentliche Verwaltungshandlung.",
+      "current_evidence": [
+        {
+          "claim": "Bitkom ermittelte Ende 2025 durchschnittlich 2h05 für einen Behördenbesuch; 58% berichteten Schwierigkeiten bei der Terminfindung und 43% hielten ihr Anliegen für problemlos online erledigbar.",
+          "source": "https://www.bitkom.org/Presse/Presseinformation/Behoerdenbesuch-dauert-im-Schnitt-2-Stunden"
+        }
+      ],
+      "today": ["Dienstleistung finden", "Termin suchen", "Unterlagen prüfen", "hinfahren", "warten", "Sachbearbeitung", "Folgeschritt"],
+      "openaction": ["intent resolver", "digital-vs-physical decision", "preflight docs", "once-only evidence", "appointment only when legally required", "action receipt + next step"],
+      "synthetic_scenario": {
+        "before": "Ø 2h05 pro physischem Behördenbesuch in der Bitkom-Befragung",
+        "target": "10–20 Minuten Bürgerzeit für standardisierte digitalisierbare Anliegen",
+        "assumptions": ["service can legally be digital", "identity/evidence available", "backend accepts digital action"],
+        "measure": "citizen minutes per completed case; avoided visits; first-pass completion"
+      }
+    }
+  ]
+}
