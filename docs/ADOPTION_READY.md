@@ -1,83 +1,33 @@
-# Adoption-ready checklist
+# Adoption-ready checklist — v1.0 RC1
 
-OpenAction can be useful as a working specification today. For organisations to treat it as a dependable interoperability standard, more must be true than “the JSON looks sensible.”
+An organisation should be able to answer four questions: **Can I understand it? Can I integrate it? Can I trust it? Can I depend on it?**
 
-## The adoption contract
+## Implemented in RC1
+- candidate frozen Core + lifecycle transitions
+- scoped Approval Receipt with conditions, expiry and revocation semantics
+- evidence references + minimum-data guidance
+- Change Impact model
+- JSON Schemas + test vectors
+- JS/Python/Java reference SDKs
+- CLI semantic validator
+- OpenAPI gateway
+- conformance CI
+- Trust Passport + Approval Path + bounded pilot profile
+- threat model
+- synthetic corpus + reproducible leverage lab
+- versioning and bootstrap governance docs
 
-A team should be able to answer **yes** to four questions:
+## External graduation work
+- 5+ real reviewer workshops without a breaking Core change
+- 3+ exercised real domains
+- 2+ independent interoperable adapters/implementations
+- production identity/proof integrations tested
+- real pilot measurements and published failures
+- independent maintainer/reviewer beyond the original author
 
-1. **Can I understand it?** A non-technical stakeholder understands the problem and the approval state in seconds.
-2. **Can I integrate it?** A developer can validate, emit and consume an Action/Approval object without a central vendor.
-3. **Can I trust it?** Identity, evidence, scope, permissions, decision conditions and auditability are explicit.
-4. **Can I depend on it?** Versioning, governance, conformance and backwards compatibility are predictable.
+## Maturity
+**1.0-rc1:** technically testable release candidate.
 
-## Required for 1.0
+**1.0.0:** stable only after the external graduation gates in `ROADMAP_V1.md` are met.
 
-### Semantics
-- freeze a deliberately small core vocabulary
-- define lifecycle/state transitions normatively
-- define scope, conditions, expiry and revocation for approvals
-- define evidence references without copying unnecessary personal data
-- define change-impact semantics
-
-### Developer experience
-- JSON Schemas with test vectors
-- JavaScript/TypeScript, Python and Java reference SDKs
-- CLI + browser validator
-- OpenAPI gateway contract
-- webhook/event profile
-- conformance suite runnable in CI
-- copy-paste quickstarts under 15 minutes
-
-### Security and trust
-- threat model including forged approvals, confused deputy, replay and privilege escalation
-- mandatory identity binding profile for production approvals
-- signed/attributable decision receipts or integration with trusted organisational signatures
-- idempotency/replay rules
-- least-privilege permission vocabulary
-- tamper-evident audit recommendations
-- privacy/data-minimisation profile
-
-### Organisation adoption
-- Approval Graph template library
-- Trust Passport template library
-- Adoption Package generator
-- bounded-pilot profiles
-- domain mappings (health, government, SME) that extend rather than fork the core
-- explicit “not a legal approval” language
-
-### Open standard credibility
-- public RFC process
-- semantic versioning + deprecation windows
-- conformance levels and compatibility matrix
-- neutral naming/namespace governance
-- independent maintainers beyond the original author
-- published decision log
-- protocol/spec licence that encourages independent implementations
-- reference implementation kept separate from normative specification
-
-### Evidence
-- public synthetic corpus
-- adversarial cases
-- at least 3 domains
-- at least 3 independent implementations or adapters
-- real pilot measurements: lead time, reuse, late blockers, errors, outcomes
-- published failures and changes driven by them
-
-## Maturity ladder
-
-**0.2 Working Draft — now**
-: schemas, SDK, OpenAPI, Approval Path, Trust Passport, public examples.
-
-**0.5 Pilot Profile**
-: validator, conformance tests, bounded pilot profiles, first real workshop data.
-
-**0.8 Multi-organisation**
-: independent adapters, signed decision profile, change-impact diff, multiple real organisations.
-
-**1.0 Stable Core**
-: stable semantics, governance, backwards compatibility, security profile, conformance badge and empirical evidence.
-
-## The rule
-
-> **Do not optimise for being called a standard. Optimise for being so useful and easy to interoperate with that independent organisations choose the same contract.**
+> Do not optimise for being called a standard. Optimise for being useful enough that independent organisations choose the same contract.

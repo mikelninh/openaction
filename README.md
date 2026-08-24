@@ -4,184 +4,147 @@
 
 **OpenAction connects people, organisations and software so good actions can happen safely, faster.**
 
-Most difficult digital projects are no longer blocked by whether software can be built. They are blocked by everything around deployment: missing evidence, unclear owners, serial reviews, privacy/security questions, licences, procurement, regulation, workforce participation and repeated requests for the same facts.
+Today each participant often sees only a slice: the citizen sees an application, security sees controls, privacy sees data, legal sees rules and management sees status meetings. OpenAction gives them a shared interoperable path:
 
-OpenAction turns that hidden work into a shared, interoperable path.
-
-```text
-TODAY
-idea → prototype → ??? → emails → meetings → missing document → new reviewer → rework → maybe approval
-
-OPENACTION
-idea → preflight → shared approval graph → reusable evidence → parallel review → accountable approval → action → outcome
-```
-
-## The four objects
-
-1. **Action** — what should happen, why, with which evidence and permissions?
-2. **Approval Path** — who must decide what before it may happen?
-3. **Trust Passport** — which reusable facts and proofs can reviewers reuse?
-4. **Adoption Package** — what does this specific organisation still need to approve a bounded pilot?
-
-AI may prepare evidence, find gaps and route work. **AI never impersonates the authorised approver.**
-
-## See it in 10 seconds
-
-Open `index.html` locally or use the public GitHub Pages deployment when enabled. Pick a use case and compare **Today → OpenAction**.
-
-The first examples deliberately span different systems:
-
-- 🇩🇪 Naturalisation / citizenship
-- 🌍 Residence permits & skilled migration
-- 🏠 Housing benefit (Wohngeld)
-- 🚀 GmbH / startup formation
-- 🏗️ Building permits
-- 🏭 Industrial permits
-- 🎓 Recognition of foreign qualifications
-- 🏥 CareOS hospital adoption
-- 🏛️ Public procurement / government AI pilots
-- 🪪 Everyday Bürgeramt journeys
-
-The numbers shown in the demo are **synthetic scenarios, not measured impact**. Each scenario names the assumptions and the real metric we would collect in a pilot.
-
-## Why this is plausible
-
-German public-sector research already points at the same bottlenecks OpenAction models. A 2025 Destatis/National Regulatory Control Council study of industrial permitting found inadequate application documents to be the biggest practical obstacle. Around three quarters of surveyed permitting staff rated missing automated reuse of existing data and missing end-to-end digital processing as strong or very strong obstacles.
-
-Berlin's naturalisation service says digital applications can still take a year or longer. Berlin building law requires an early completeness check, yet the decision clock depends on all required statements and evidence being available. Company formation can already use online notarisation, while tax registration remains a separate process. These are not primarily “better chatbot” problems. They are **coordination, evidence and interoperability problems**.
-
-Sources and assumptions are linked in [`examples/use-cases.json`](./examples/use-cases.json).
-
-## Three integration levels
-
-### 1. JSON only
-
-Emit an OpenAction object that validates against [`spec/0.2/openaction.schema.json`](./spec/0.2/openaction.schema.json).
-
-### 2. Tiny SDK
-
-```js
-const action = OpenAction.create({
-  kind: "public.citizenship.review",
-  label: "Review naturalisation application",
-  reason: "Application package passed completeness preflight.",
-  evidence: [{ kind: "document", source: "application-package" }],
-  risk: "high",
-  approval: { required: true, mode: "qualified_human", status: "pending" }
-});
-```
-
-### 3. Gateway / existing system adapter
-
-Implement [`openapi.yaml`](./openapi.yaml) or map from the system you already use.
-
-```text
-propose → approve → complete
-```
-
-OpenAction does **not** require a central OpenAction cloud.
-
-## Existing standards stay authoritative
-
-OpenAction is intentionally thin.
-
-- Healthcare keeps FHIR / hospital systems as the clinical source of truth.
-- Government keeps registers and specialist procedures authoritative.
-- SMEs keep ERP, CRM, accounting and email.
-- Identity and access remain with the organisation's trusted identity layer.
-- OpenAction composes with JSON Schema, OpenAPI and CloudEvents-style lifecycle events.
-
-The job of OpenAction is to make **the action, evidence, permission, approval and outcome understandable across those boundaries**.
-
-## The adoption loop
-
-```text
-Organisation A asks 42 questions
-        ↓
-Trust Passport answers 31
-        ↓
-11 organisation-specific decisions remain
-        ↓
-real pilot produces evidence
-        ↓
-Organisation B starts better prepared
-```
-
-That gives us the metrics that matter:
-
-- time to identify all required gates
-- time to first safe pilot
-- evidence reuse rate
-- duplicate evidence requests
-- late blockers discovered
-- review turnaround by gate
-- reopened reviews after a change
-- completed real-world outcomes
-
-## Can “8 weeks” become days?
-
-Sometimes. Not always.
-
-OpenAction can remove **avoidable waiting**: late discovery, missing documents, serial reviews, repeated questionnaires, unclear ownership and unnecessary re-review. It cannot legitimately remove statutory waiting periods, qualified-human judgment, physical document production, external checks or rights of participation.
-
-The fast-lane design is therefore:
-
-```text
-minutes   classify use case + preflight completeness
-hours     generate Trust Passport + reviewer packets
-Day 1     start all independent reviews in parallel
-Day 2-5   reviewers decide / request focused evidence
-Day 5-10  resolve only blocking gaps
-Day 10+   bounded pilot when all mandatory gates are satisfied
-```
-
-For highly regulated healthcare or complex public approvals, the critical path may remain weeks. The win is that **we can finally see exactly what those weeks are waiting for**.
-
-See [`docs/ADOPTION_READY.md`](./docs/ADOPTION_READY.md).
-
-## What must be true before organisations can adopt OpenAction immediately?
-
-We should not ask the world to trust a clever README. A credible open standard needs:
-
-- tiny stable core semantics
-- versioned JSON Schemas
-- conformance tests
-- reference SDKs
-- human-readable validator/playground
-- signed / attributable approval receipts for production profiles
-- security and threat model
-- privacy/data-minimisation profile
-- change-impact semantics
-- domain profiles without forking the core
-- adapters to standards organisations already use
-- public example corpus and adversarial test cases
-- clear compatibility/versioning policy
-- open governance beyond one vendor/person
-- real pilots with published measurements
-
-Until then, OpenAction is an **open working specification and reference implementation**, not an official standard.
-
-## First pilot workshop
-
-Do not ask “do you like it?”
-
-Ask a real organisation:
-
-1. Is this the complete approval path?
-2. Which gate is wrong or missing?
-3. Who actually owns each decision?
-4. Which evidence do you ask every vendor/project for repeatedly?
-5. Which reviews can run in parallel?
-6. What is the smallest bounded pilot you could responsibly approve?
-
-Then update the graph from reality.
-
-See [`docs/PILOT_PLAYBOOK.md`](./docs/PILOT_PLAYBOOK.md).
+`evidence → action → permissions → approval path → scoped decision → execution → outcome`
 
 ## Status
 
-**0.2 / public working draft.** Built to be criticised, corrected and piloted.
+**1.0-rc1 — integration-ready release candidate, not an official standard.**
+
+We have implemented everything we can responsibly validate ourselves. Stable `1.0.0` is deliberately gated on external review, independent interoperability and real pilot evidence. See [`ROADMAP_V1.md`](./ROADMAP_V1.md).
+
+## What exists now
+
+1. **Action Core** — evidence-linked action, explicit permissions, lifecycle and outcome.
+2. **Approval Path** — owners, blockers, dependencies, reviewer SLA, conditions and gates that can run in parallel.
+3. **Trust Passport** — reusable architecture/data/model/security/evaluation evidence. Passport is never itself an approval.
+4. **Approval Receipt** — who decided what, for which scope/environment, using which evidence snapshot, under which conditions and until when.
+5. **Change Impact** — declared system changes reopen only gates whose assumptions changed.
+6. **Bounded Pilot Profile** — smallest useful safe experiment with explicit users/data/side-effects/stop conditions.
+
+Normative candidates live under [`spec/1.0`](./spec/1.0/).
+
+## Quick start
+
+```bash
+node bin/openaction.mjs validate examples/v1/action.json
+node bin/openaction.mjs receipt examples/v1/approval-receipt.json
+node bin/openaction.mjs simulate
+```
+
+Reference SDKs:
+- JavaScript: [`sdk/openaction.js`](./sdk/openaction.js)
+- Python: [`sdk/python/openaction.py`](./sdk/python/openaction.py)
+- Java: [`sdk/java/OpenAction.java`](./sdk/java/OpenAction.java)
+
+HTTP integration: [`openapi.yaml`](./openapi.yaml).
+
+## Synthetic Pilot Lab
+
+We now have a deterministic coordination model covering 10 use-case families × 6 variants = **60 synthetic pilots**. The inputs are explicit in [`pilots/synthetic/model.json`](./pilots/synthetic/model.json); the generator is [`scripts/simulate.mjs`](./scripts/simulate.mjs); the committed summary is [`pilots/synthetic/results.json`](./pilots/synthetic/results.json).
+
+**These are not measured public-sector, hospital or business processing times. They are a prioritisation model, not a forecast.**
+
+Current modeled median:
+
+| Stage | Working days |
+|---|---:|
+| synthetic serial baseline | 138.4 |
+| after completeness preflight | 119.6 |
+| after independent reviews run in parallel | 85.8 |
+| after evidence reuse | 75.4 |
+| after reviewer queue/SLA target | 60.8 |
+| after bounded profile where applicable | 55.5 |
+
+Modeled share of total improvement:
+
+- **parallel independent reviews: 53.1%**
+- completeness preflight: 19.4%
+- reviewer queue/SLA: 16.7%
+- evidence reuse: 8.7%
+- bounded-profile scope reduction: 2.1% overall (only applied to organisational-AI scenarios)
+
+### First leverage hypothesis
+
+> **The biggest coordination lever is not more AI. It is proving which reviews are independent and starting them together.**
+
+The next hypotheses are: prevent incomplete submissions before the official process, then expose reviewer queues and expected response windows. Real pilots must validate or falsify this ranking.
+
+## Germany examples
+
+The public explorer includes 10 deliberately different flows: naturalisation, residence/migration, Wohngeld, company formation, building permits, industrial permits, qualification recognition, CareOS hospital adoption, public AI procurement and Bürgeramt journeys.
+
+Each example separates:
+- current sourced evidence,
+- Today → OpenAction journey,
+- synthetic target,
+- assumptions,
+- metric that a real pilot must collect.
+
+See [`examples/use-cases.json`](./examples/use-cases.json).
+
+## Trust model
+
+High/critical actions require human or qualified-human approval in Core. A Trust Passport answers questions; it never grants authority. An Approval Receipt binds decision, scope, approver, evidence snapshot, conditions and expiry/revocation.
+
+For production, OpenAction intentionally **does not invent a new signature scheme**. The adopter must bind receipts to an identity/proof mechanism it already trusts and verify it before execution. See [`docs/THREAT_MODEL.md`](./docs/THREAT_MODEL.md).
+
+## Change without restarting everything
+
+When model/vendor/data/workflow/hosting/permissions change, a Change Impact object maps those dimensions to each gate's declared `reopen_on` dependencies.
+
+```text
+model changed
+├ AI eval        → reopen
+├ privacy        → verify
+└ clinical flow  → unchanged
+```
+
+This does not auto-approve unchanged gates; it makes the re-review decision explicit and auditable.
+
+## Existing standards stay authoritative
+
+OpenAction remains intentionally thin.
+
+- JSON Schema 2020-12 is the schema dialect.
+- OpenAPI describes the minimal HTTP gateway.
+- CloudEvents-compatible envelopes may transport lifecycle events.
+- FHIR/hospital systems remain authoritative for clinical meaning.
+- Government registers/fachverfahren remain authoritative for official facts.
+- ERP/CRM/accounting remain authoritative for business records.
+- identity/signing remains with the organisation's trusted identity layer.
+
+## Conformance
+
+See [`spec/1.0/CONFORMANCE.md`](./spec/1.0/CONFORMANCE.md). The repository CI checks schema parseability, JS semantics, lifecycle safety, Approval Receipt handling, synthetic model reproducibility, Python syntax and Java compilation.
+
+## What is still missing before stable 1.0
+
+We should not solve social proof with a version number. `1.0.0` requires:
+
+- first 5+ external review workshops without a breaking Core flaw,
+- at least 3 exercised domains,
+- at least 2 independently written interoperable adapters/implementations,
+- real measurements for gate discovery, evidence reuse, late blockers and approval lead time,
+- an independent technical reviewer/maintainer plus domain reviewers,
+- published failures and resulting changes.
+
+See [`ROADMAP_V1.md`](./ROADMAP_V1.md) and [`GOVERNANCE.md`](./GOVERNANCE.md).
+
+## First review
+
+Do not ask someone "do you like it?" Ask:
+
+1. What gate is missing?
+2. Who really owns each decision?
+3. What evidence is repeatedly requested today?
+4. Which reviews truly depend on each other, and which can start together?
+5. What is the smallest bounded pilot you could responsibly approve?
+6. Which wait is legally/physically irreducible and which is just coordination loss?
+
+That feedback is the path from release candidate to stable standard.
 
 ## License
 
-Reference implementation: **AGPL-3.0-or-later**. The protocol is provider-neutral; organisations can run their own infrastructure and build domain integrations without depending on a central OpenAction service.
+Reference implementation: **AGPL-3.0-or-later**. OpenAction does not require a central OpenAction cloud.
