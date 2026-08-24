@@ -1,0 +1,73 @@
+{
+  "version": "v10",
+  "normative": false,
+  "principles": [
+    "one case one shared truth different permissioned views",
+    "submitted is not complete",
+    "green means definition of done plus evidence plus verification",
+    "owner and verifier are distinct for consequential peer-reviewed work",
+    "authoritative receipts may close true authoritative outcomes",
+    "unknown ETA stays unknown",
+    "public internal restricted are projections of the same graph",
+    "money states remain distinct",
+    "material disputes block terminal completion",
+    "change impact reopens only affected nodes"
+  ],
+  "task_states": ["assigned", "in_progress", "submitted", "verified", "rejected", "expired", "reopened"],
+  "money_states": ["approved", "committed", "invoiced", "paid", "reconciled"],
+  "completion_requires": [
+    "all required terminal-path tasks verified",
+    "outcome definition of done satisfied",
+    "required evidence present",
+    "authority and scope valid",
+    "no material unresolved dispute",
+    "required finance reconciliation complete when financially relevant"
+  ],
+  "proof_fields": [
+    "owner",
+    "owner_authority_source",
+    "verifier",
+    "verifier_authority_source",
+    "definition_of_done",
+    "evidence_id",
+    "evidence_source",
+    "integrity_proof",
+    "scope",
+    "validity",
+    "updated_at"
+  ],
+  "time_fields": ["planned_duration", "started_at", "submitted_at", "verified_at", "due_at", "forecast", "forecast_confidence"],
+  "projections": ["public", "internal", "restricted"],
+  "cases": [
+    {
+      "id": "careos",
+      "stakeholders": ["clinical_owner", "clinical_safety", "privacy", "dpo", "security", "security_lead", "procurement", "legal", "finance", "pilot_sponsor"],
+      "has_finance_flow": true,
+      "terminal_outcome": "shadow evaluation verified and five-user pilot decisionable"
+    },
+    {
+      "id": "naturalization",
+      "stakeholders": ["applicant", "case_worker", "specialist_review", "decision_authority"],
+      "has_finance_flow": false,
+      "terminal_outcome": "authoritative decision documented and delivery triggered"
+    },
+    {
+      "id": "housing",
+      "stakeholders": ["applicant", "case_worker", "specialist_review"],
+      "has_finance_flow": false,
+      "terminal_outcome": "authoritative notice created and delivery documented"
+    },
+    {
+      "id": "ug_formation",
+      "stakeholders": ["founder", "notary", "register"],
+      "has_finance_flow": false,
+      "terminal_outcome": "register entry authoritatively verified"
+    },
+    {
+      "id": "government_project",
+      "stakeholders": ["project_owner", "procurement", "finance", "supplier", "independent_qa", "public_observer", "auditor"],
+      "has_finance_flow": true,
+      "terminal_outcome": "delivery accepted, money reconciled, outcome published"
+    }
+  ]
+}
