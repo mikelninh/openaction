@@ -27,6 +27,7 @@ jobs:
       - run: node tests/v10-trust-control.mjs
       - run: node tests/v10-stakeholder-clarity.mjs
       - run: node tests/constraint-set-v12.mjs
+      - run: node tests/ground-truth-g07819.mjs
       - run: node bin/openaction.mjs validate examples/v1/action.json
       - run: node bin/openaction.mjs receipt examples/v1/approval-receipt.json
       - run: python -m py_compile sdk/python/openaction.py
