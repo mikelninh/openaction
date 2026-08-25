@@ -1,0 +1,29 @@
+{
+  "version": "0.1",
+  "principle": "AI may accelerate evidence and coordination; legally consequential authority stays with the competent human or explicitly lawful deterministic system.",
+  "states": ["observed", "proposed", "human_verified", "authoritative"],
+  "agents": [
+    {"id":"source","may_write":["source_record","hash","parse_status"],"requires_human_approval":false,"forbidden":["gate_verified","legal_conclusion"]},
+    {"id":"timeline","may_write":["proposed_event"],"requires_human_approval":true,"forbidden":["authoritative_event_without_source"]},
+    {"id":"preflight","may_write":["completeness_finding","missing_item_proposal"],"requires_human_approval":false,"forbidden":["formal_rejection"]},
+    {"id":"evidence_reuse","may_write":["reuse_candidate"],"requires_human_approval":true,"forbidden":["equivalence_verified_without_rule_or_authority"]},
+    {"id":"change_impact","may_write":["reopen_proposal","unaffected_proposal"],"requires_human_approval":true,"forbidden":["close_required_review"]},
+    {"id":"constraint","may_write":["derived_constraint_view"],"requires_human_approval":false,"forbidden":["change_authoritative_dependency","remove_required_gate"]},
+    {"id":"routing","may_write":["notification","assignment_when_rule_explicit"],"requires_human_approval":"on_ambiguity","forbidden":["invent_authority"]},
+    {"id":"waiting_monitor","may_write":["reminder","sla_warning","escalation_proposal"],"requires_human_approval":false,"forbidden":["substantive_decision"]},
+    {"id":"reviewer_copilot","may_write":["draft_review","evidence_summary","contradiction_list"],"requires_human_approval":true,"forbidden":["final_permit_decision"]},
+    {"id":"communication","may_write":["plain_language_status"],"requires_human_approval":false,"forbidden":["invent_eta","change_case_state"]},
+    {"id":"audit","may_write":["audit_finding","integrity_alert"],"requires_human_approval":false,"forbidden":["silently_fix_authoritative_record"]},
+    {"id":"simulation","may_write":["counterfactual_scenario"],"requires_human_approval":false,"forbidden":["label_counterfactual_as_observed"]}
+  ],
+  "hard_rules": [
+    "No consequential gate becomes verified solely because an LLM says it is complete.",
+    "Every factual event must retain provenance to an authoritative or explicitly classified source.",
+    "Inferred dependency and legal necessity are never promoted to ground truth without competent validation.",
+    "Unknown ETA remains unknown.",
+    "Required public participation, legal review, safety review and authority decisions are not deleted for speed.",
+    "A material scope change triggers change-impact analysis before downstream approvals are reused.",
+    "Public projections are generated from the same graph but must enforce field-level access policy.",
+    "Counterfactual time savings are always labelled counterfactual until measured in a real pilot."
+  ]
+}
