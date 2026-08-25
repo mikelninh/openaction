@@ -1,33 +1,121 @@
 # OpenAction
 
-> **Information is not the goal. Human agency is.**
+> **One case. One shared truth. Different next actions.**
 
-**OpenAction connects people, organisations and software so good actions can happen safely, faster.**
+OpenAction is an open coordination layer for complex work across people, organisations, software and AI.
 
-`evidence → action → permissions → approval path → scoped decision → execution → outcome`
+It answers five questions that are surprisingly hard in real projects:
+
+1. **Where are we now?**
+2. **Who needs to do what next?**
+3. **What counts as actually done?**
+4. **What evidence proves it?**
+5. **What becomes possible afterwards?**
+
+The goal is not fewer responsible decisions. It is **less avoidable waiting, duplicate work and invisible hand-offs on the way to responsible decisions**.
+
+## Try it
+
+**Live Case Room:** https://mikelninh.github.io/openaction/workspace/
+
+Switch between examples such as a hospital AI pilot, naturalisation, housing benefit, company formation and a public digital project. Then switch stakeholder perspective.
+
+The important UX rule is:
+
+> **Shared Now stays the same for everyone. My Action changes by role.**
+
+A clinical owner, privacy reviewer, procurement lead and sponsor should therefore see the same project reality without each having to understand the whole bureaucracy.
+
+## What V10 adds
+
+The current reference UX models a real completion contract rather than a green checkbox:
+
+`assigned → in progress → submitted → verified`
+
+with explicit paths for:
+
+`rejected · reopened · expired`
+
+For consequential work:
+
+- **Owner ≠ Verifier** by default.
+- **Submitted ≠ complete.**
+- Green means **Definition of Done + evidence + valid verification for the current scope**.
+- A relevant change reopens only the decisions whose assumptions changed.
+- Unknown timing remains unknown instead of becoming a fake ETA.
+
+The Case Room has two layers:
+
+- **Simple** — shared state + my next action + visual route.
+- **Proof** — identity/authority, scope, validity, evidence source, integrity proof, history, change impact and disputes.
+
+See [`docs/TRUST_CONTROL_V10.md`](docs/TRUST_CONTROL_V10.md) and the simulated [`V10 stakeholder review`](docs/V10_STAKEHOLDER_REVIEW.md).
+
+## Money is part of project truth
+
+For projects with funding, OpenAction keeps financial states distinct:
+
+`approved → committed → invoiced → paid → reconciled`
+
+A payment is not proof that the expected work was delivered.
+
+Public, internal and restricted views should be **permissioned projections of the same graph**, not separately maintained versions of reality. Authoritative finance, procurement, registry, clinical and identity systems remain authoritative; OpenAction references their evidence rather than becoming another shadow ledger.
+
+## Why this matters
+
+A complex project often looks like this:
+
+```text
+Clinical ───────┐
+Privacy ────────┤
+Security ───────┤
+Legal ──────────┼──→ next milestone
+Procurement ────┤
+Finance ────────┤
+Operations ─────┘
+```
+
+The failure mode is rarely that nobody works.
+
+It is that people cannot reliably see:
+
+- which work can happen in parallel;
+- what another stakeholder has actually done;
+- whether their work was checked;
+- what is blocking the next milestone;
+- which evidence is still valid;
+- or whether the project is truly finished.
+
+OpenAction is an attempt to make that state explicit and interoperable.
 
 ## Status
 
-**1.0-rc1 — integration-ready release candidate, not an official standard.** Everything we can responsibly validate ourselves is implemented; stable `1.0.0` is gated on external review, independent interoperability and real pilot evidence. See [`ROADMAP_V1.md`](./ROADMAP_V1.md).
+**1.0-rc1 — release candidate for external testing, not an official standard.**
 
-## Try it first
+The protocol/reference implementation is substantial, but stable `1.0.0` is intentionally gated on external evidence.
 
-- **10-second public explainer:** [`index.html`](./index.html)
-- **interactive CareOS Approval Workspace:** [`workspace/`](./workspace/)
-- **60-case Synthetic Pilot Lab:** [`pilots/synthetic/`](./pilots/synthetic/)
+Still required:
 
-The workspace lets a reviewer switch roles without hiding the rest of the system, open blockers, inspect evidence, see the Trust Passport, export a synthetic Adoption Package and distinguish illustrative benefits from metrics that must be measured in a real pilot.
+- real approval/process maps from external organisations;
+- observed dependency and waiting-time data;
+- real evidence-reuse measurements;
+- production identity/proof integrations;
+- independent interoperable implementations/adapters;
+- domain reviewers and an independent technical maintainer;
+- published failures and changes caused by those failures.
 
-## Six v1 objects
+No synthetic result is presented as measured public-sector, hospital or business impact.
 
-1. **Action Core** — evidence-linked action, explicit permissions, lifecycle and outcome.
-2. **Approval Path** — owners, blockers, dependencies, reviewer SLA and reopen conditions.
-3. **Trust Passport** — reusable architecture/data/model/security/licensing/workforce/procurement/regulatory/evaluation evidence. Passport is never itself approval.
-4. **Approval Receipt** — who decided what, for which scope/environment, evidence snapshot, conditions and expiry/revocation.
-5. **Change Impact** — declared changes reopen only gates whose assumptions changed.
-6. **Bounded Pilot Profile** — smallest useful safe experiment with explicit users/data/side effects/stop conditions.
+## Protocol objects
 
-Normative candidates: [`spec/1.0`](./spec/1.0/).
+1. **Action Core** — evidence-linked action, permissions, lifecycle and outcome.
+2. **Approval Path** — owners, dependencies, blockers, parallelism and reopen conditions.
+3. **Trust Passport** — reusable evidence; **passport ≠ approval**.
+4. **Approval Receipt** — who decided what, for which scope, under which evidence and conditions.
+5. **Change Impact** — reopen only affected decisions.
+6. **Bounded Pilot Profile** — smallest useful experiment with explicit limits and stop conditions.
+
+Normative candidates: [`spec/1.0`](spec/1.0/).
 
 ## Quick start
 
@@ -37,58 +125,41 @@ node bin/openaction.mjs receipt examples/v1/approval-receipt.json
 node bin/openaction.mjs simulate
 ```
 
-Reference SDKs: JavaScript [`sdk/openaction.js`](./sdk/openaction.js) · Python [`sdk/python/openaction.py`](./sdk/python/openaction.py) · Java [`sdk/java/OpenAction.java`](./sdk/java/OpenAction.java). HTTP: [`openapi.yaml`](./openapi.yaml).
+Reference SDKs: JavaScript [`sdk/openaction.js`](sdk/openaction.js) · Python [`sdk/python/openaction.py`](sdk/python/openaction.py) · Java [`sdk/java/OpenAction.java`](sdk/java/OpenAction.java). HTTP: [`openapi.yaml`](openapi.yaml).
 
-## Synthetic Pilot Lab
+## Current synthetic lab
 
-Deterministic model: 10 use-case families × 6 variants = **60 synthetic pilots**. Inputs are explicit in [`model.json`](./pilots/synthetic/model.json); generator: [`scripts/simulate.mjs`](./scripts/simulate.mjs); committed summary: [`results.json`](./pilots/synthetic/results.json).
+The repository includes a deterministic **60-case Synthetic Pilot Lab** across ten use-case families.
 
-**Not measured public-sector, hospital or business processing times. Prioritisation model, not forecast.**
+It is a prioritisation model, **not a forecast**.
 
-| Stage | Synthetic median working days |
-|---|---:|
-| serial baseline | 138.4 |
-| + completeness preflight | 119.6 |
-| + independent reviews parallel | 85.8 |
-| + evidence reuse | 75.4 |
-| + reviewer queue/SLA | 60.8 |
-| + bounded profile where applicable | 55.5 |
+Its current strongest hypothesis is that a large share of avoidable lead time may come from reviews that could safely start in parallel but do not. Real pilots must validate or falsify that claim.
 
-Modeled share of total improvement: **parallel reviews 53.1%**, preflight 19.4%, reviewer queue/SLA 16.7%, evidence reuse 8.7%, bounded-profile scope reduction 2.1% overall.
+See [`pilots/synthetic/`](pilots/synthetic/) and [`ROADMAP_V1.md`](ROADMAP_V1.md).
 
-> **First leverage hypothesis: prove which reviews are actually independent and start them together.**
+## Best way to review OpenAction
 
-Real pilots must validate or falsify that ranking.
+Please do **not** tell me whether you like it.
 
-## Trust and safety
+Try to break it:
 
-High/critical actions require human or qualified-human approval. Passport ≠ approval. Approval Receipts bind decision, scope, approver, evidence snapshot, conditions and expiry/revocation. Production receipts must use a proof mechanism the adopter already trusts; OpenAction deliberately does not invent a signature scheme. See [`docs/THREAT_MODEL.md`](./docs/THREAT_MODEL.md).
+1. Which decision/gate is missing or wrong?
+2. Who actually owns and verifies it?
+3. Which evidence gets repeatedly requested today?
+4. Which reviews really depend on one another, and which only happen serially by habit?
+5. When is a step genuinely complete?
+6. What would make the shared state misleading or unsafe?
+7. What is the smallest real process we could map and measure?
 
-## Existing standards stay authoritative
+If the model survives that, it gets stronger. If it fails, the failure is useful evidence.
 
-JSON Schema 2020-12 validates the contracts; OpenAPI describes the gateway; CloudEvents-compatible envelopes may transport lifecycle events. FHIR/hospital systems, government registers/fachverfahren, ERP/CRM and organisational identity/signing remain authoritative in their domains.
+## Principles
 
-## What is still missing before stable 1.0
+> **Information is not the goal. Human agency is.**
 
-- 5+ external review workshops without a breaking Core flaw
-- 3+ real exercised domains
-- 2+ independently written interoperable adapters/implementations
-- production identity/proof integrations tested
-- real gate-discovery, evidence-reuse, late-blocker and lead-time measurements
-- an independent technical maintainer/reviewer plus domain reviewers
-- published failures and changes driven by them
+> **AI may prepare and propose. Humans and authoritative systems remain responsible for consequential decisions.**
 
-See [`ROADMAP_V1.md`](./ROADMAP_V1.md), [`GOVERNANCE.md`](./GOVERNANCE.md), and [`docs/ADOPTION_READY.md`](./docs/ADOPTION_READY.md).
-
-## First external workshop
-
-Do not ask “do you like it?” Ask:
-1. Which gate is wrong or missing?
-2. Who actually owns each decision?
-3. What evidence is repeatedly requested today?
-4. Which reviews truly depend on each other?
-5. What is the smallest bounded pilot you could responsibly approve?
-6. Which wait is irreducible and which is coordination loss?
+> **One source of truth does not mean one database. It means one inspectable case state backed by authoritative evidence.**
 
 ## License
 
