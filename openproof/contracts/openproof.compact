@@ -16,7 +16,7 @@ struct FamilyWitness {
 }
 
 struct AgentWitness {
-    capabilityMask: Uint<32>;
+    capabilityCode: Uint<16>;
     approvedAmountEur: Uint<32>;
     requestedAmountEur: Uint<32>;
     humanApproved: Boolean;
@@ -53,15 +53,15 @@ export circuit proveFamilyEligibility(
     return disclose(true);
 }
 
-// capabilityBit is a one-hot bit mask. The proof reveals only that the
-// requested capability was present, the amount stayed inside the approved
-// envelope, a human approved it, and the credential is current.
+// The private credential carries one authority capability code for this
+// prototype. Production can generalise this to an issuer-attested capability
+// collection once the exact Compact representation has been threat-modelled.
 export circuit proveAgentAuthority(
-    capabilityBit: Uint<32>,
+    requiredCapabilityCode: Uint<16>,
     currentDay: Uint<32>
 ): Boolean {
     const authority = getAgentWitness();
-    assert((authority.capabilityMask & capabilityBit) == capabilityBit, "capability missing");
+    assert(authority.capabilityCode == requiredCapabilityCode, "capability missing");
     assert(authority.requestedAmountEur <= authority.approvedAmountEur, "amount exceeds authority");
     assert(authority.humanApproved, "human approval missing");
     assert(authority.credentialValidUntilDay >= currentDay, "authority credential expired");
