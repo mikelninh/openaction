@@ -2,9 +2,6 @@
 // Adapted from Midnight Foundation's Apache-2.0 example-zkloan reference:
 // https://github.com/midnightntwrk/example-zkloan
 // SPDX-License-Identifier: Apache-2.0
-//
-// Temporary polyfill pattern used by the official reference until a standard
-// library Schnorr verifier is available in the pinned Compact line.
 
 module schnorr {
   import CompactStandardLibrary;
@@ -24,20 +21,37 @@ module schnorr {
 
   witness getSchnorrReduction(challengeHash: Field): [Uint<7>, Uint<248>];
 
+  pure circuit challenge<#n>(
+    ann_x: Field,
+    ann_y: Field,
+    pk_x: Field,
+    pk_y: Field,
+    msg: Vector<n, Field>
+  ): Field {
+    return transientHash<SchnorrHashInput<n>>(
+      SchnorrHashInput<n> {
+        ann_x: ann_x,
+        ann_y: ann_y,
+        pk_x: pk_x,
+        pk_y: pk_y,
+        msg: msg
+      }
+    );
+  }
+
   export circuit schnorrVerify<#n>(
                    msg: Vector<n, Field>,
                    signature: SchnorrSignature,
                    pk: JubjubPoint
                    ): [] {
     const {announcement, response} = signature;
-    const cFull: Field =
-            transientHash<SchnorrHashInput<n>>(
-              SchnorrHashInput<n> { ann_x: jubjubPointX(announcement),
-                                    ann_y: jubjubPointY(announcement),
-                                    pk_x: jubjubPointX(pk),
-                                    pk_y: jubjubPointY(pk),
-                                    msg: msg }
-              );
+    const cFull = challenge<n>(
+      jubjubPointX(announcement),
+      jubjubPointY(announcement),
+      jubjubPointX(pk),
+      jubjubPointY(pk),
+      msg
+    );
     const TWO_248: Field =
             452312848583266388373324160190187140051835877600158453279131187530910662656 as Field;
     const [q, cTruncated] = getSchnorrReduction(cFull);
@@ -50,5 +64,26 @@ module schnorr {
     const rhs: JubjubPoint = ecAdd(announcement, ecMul(pk, c));
     assert(jubjubPointX(lhs) == jubjubPointX(rhs) && jubjubPointY(lhs) == jubjubPointY(rhs),
            "Invalid attestation signature");
+  }
+
+  export pure circuit schnorrChallenge9(
+    ann_x: Field, ann_y: Field, pk_x: Field, pk_y: Field,
+    msg: Vector<9, Field>
+  ): Field {
+    return challenge<9>(ann_x, ann_y, pk_x, pk_y, msg);
+  }
+
+  export pure circuit schnorrChallenge13(
+    ann_x: Field, ann_y: Field, pk_x: Field, pk_y: Field,
+    msg: Vector<13, Field>
+  ): Field {
+    return challenge<13>(ann_x, ann_y, pk_x, pk_y, msg);
+  }
+
+  export pure circuit schnorrChallenge12(
+    ann_x: Field, ann_y: Field, pk_x: Field, pk_y: Field,
+    msg: Vector<12, Field>
+  ): Field {
+    return challenge<12>(ann_x, ann_y, pk_x, pk_y, msg);
   }
 }
