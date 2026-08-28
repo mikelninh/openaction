@@ -1,0 +1,82 @@
+// OpenProof / Midnight Compact predicate scaffold
+// Prototype only: privacy predicates are implemented, but trusted issuer
+// signature verification must be added before any real-world credential claim.
+// The intended issuer-binding pattern follows Midnight's official ZK Loan
+// example: private witness + registered attestation provider + in-circuit
+// signature verification.
+
+pragma language_version >= 0.22 && <= 0.23;
+import CompactStandardLibrary;
+
+struct FamilyWitness {
+    residentCountryCode: Uint<16>;
+    childCount: Uint<8>;
+    monthlyIncomeEur: Uint<32>;
+    credentialValidUntilDay: Uint<32>;
+}
+
+struct AgentWitness {
+    capabilityMask: Uint<32>;
+    approvedAmountEur: Uint<32>;
+    requestedAmountEur: Uint<32>;
+    humanApproved: Boolean;
+    credentialValidUntilDay: Uint<32>;
+}
+
+struct CareTrustWitness {
+    licenceActive: Boolean;
+    roleAuthorised: Boolean;
+    consentValid: Boolean;
+    privacyReviewCurrent: Boolean;
+    securityReviewCurrent: Boolean;
+    credentialValidUntilDay: Uint<32>;
+}
+
+witness getFamilyWitness(): FamilyWitness;
+witness getAgentWitness(): AgentWitness;
+witness getCareTrustWitness(): CareTrustWitness;
+
+// Synthetic policy proof: the private household values never need to be
+// disclosed. Policy constants are passed by the caller and should be bound to
+// a versioned policy registry in the production contract.
+export circuit proveFamilyEligibility(
+    requiredCountryCode: Uint<16>,
+    minimumChildren: Uint<8>,
+    maximumIncomeEur: Uint<32>,
+    currentDay: Uint<32>
+): Boolean {
+    const profile = getFamilyWitness();
+    assert(profile.residentCountryCode == requiredCountryCode, "residency predicate failed");
+    assert(profile.childCount >= minimumChildren, "child predicate failed");
+    assert(profile.monthlyIncomeEur <= maximumIncomeEur, "income predicate failed");
+    assert(profile.credentialValidUntilDay >= currentDay, "credential expired");
+    return disclose(true);
+}
+
+// capabilityBit is a one-hot bit mask. The proof reveals only that the
+// requested capability was present, the amount stayed inside the approved
+// envelope, a human approved it, and the credential is current.
+export circuit proveAgentAuthority(
+    capabilityBit: Uint<32>,
+    currentDay: Uint<32>
+): Boolean {
+    const authority = getAgentWitness();
+    assert((authority.capabilityMask & capabilityBit) == capabilityBit, "capability missing");
+    assert(authority.requestedAmountEur <= authority.approvedAmountEur, "amount exceeds authority");
+    assert(authority.humanApproved, "human approval missing");
+    assert(authority.credentialValidUntilDay >= currentDay, "authority credential expired");
+    return disclose(true);
+}
+
+// CareOS Trust Passport proves bounded readiness facts; it does not expose a
+// patient record, diagnosis, medication, note, or raw clinical datum.
+export circuit proveCareTrustPassport(currentDay: Uint<32>): Boolean {
+    const trust = getCareTrustWitness();
+    assert(trust.licenceActive, "professional licence inactive");
+    assert(trust.roleAuthorised, "role not authorised");
+    assert(trust.consentValid, "required consent missing");
+    assert(trust.privacyReviewCurrent, "privacy review not current");
+    assert(trust.securityReviewCurrent, "security review not current");
+    assert(trust.credentialValidUntilDay >= currentDay, "trust credential expired");
+    return disclose(true);
+}
