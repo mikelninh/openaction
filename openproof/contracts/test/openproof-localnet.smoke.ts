@@ -41,12 +41,40 @@ const CONFIG = {
 const PRIVATE_STATE_ID = 'openProofPrivateState';
 const ZK_CONFIG_PATH = path.resolve('managed/openproof');
 const bytes32Type = new CompactTypeBytes(32);
+const DUST_READY_TIMEOUT_MS = 180_000;
+const DUST_RETRY_INTERVAL_MS = 5_000;
 
 function localGenesisSeed(): Buffer {
   // Midnight local-dev genesis master seed: 0x00...001. LOCAL DEV ONLY.
   const seed = Buffer.alloc(32);
   seed[31] = 1;
   return seed;
+}
+
+function isDustBalancingError(error: unknown): boolean {
+  return error instanceof Error && /could not balance dust/i.test(error.message);
+}
+
+// Midnight's maintained local-dev helper documents a short bootstrap window in
+// which DUST is already visible but is not yet spendable by the balancer. The
+// transaction attempt itself is the reliable readiness check, so retry only
+// this exact error and surface every other failure immediately.
+async function withDustRetry<T>(attempt: () => Promise<T>): Promise<T> {
+  const deadline = Date.now() + DUST_READY_TIMEOUT_MS;
+  for (let attemptNumber = 1; ; attemptNumber++) {
+    try {
+      return await attempt();
+    } catch (error) {
+      if (!isDustBalancingError(error)) throw error;
+      if (Date.now() >= deadline) {
+        throw new Error(
+          `DUST was still not spendable after ${DUST_READY_TIMEOUT_MS}ms (${attemptNumber} attempts): ${error.message}`,
+        );
+      }
+      console.log(`DUST visible but not spendable yet; retry ${attemptNumber} after ${DUST_RETRY_INTERVAL_MS}ms`);
+      await new Promise((resolve) => setTimeout(resolve, DUST_RETRY_INTERVAL_MS));
+    }
+  }
 }
 
 async function waitForSync(wallet: WalletFacade) {
@@ -136,12 +164,14 @@ async function createWalletProvider(walletContext) {
     getCoinPublicKey: () => walletContext.shieldedSecretKeys.coinPublicKey,
     getEncryptionPublicKey: () => walletContext.shieldedSecretKeys.encryptionPublicKey,
     async balanceTx(tx, ttl) {
-      const recipe = await walletContext.wallet.balanceUnboundTransaction(
-        tx,
-        { shieldedSecretKeys: walletContext.shieldedSecretKeys, dustSecretKey: walletContext.dustSecretKey },
-        { ttl: ttl ?? new Date(Date.now() + 30 * 60 * 1000) },
-      );
-      return walletContext.wallet.finalizeRecipe(recipe);
+      return withDustRetry(async () => {
+        const recipe = await walletContext.wallet.balanceUnboundTransaction(
+          tx,
+          { shieldedSecretKeys: walletContext.shieldedSecretKeys, dustSecretKey: walletContext.dustSecretKey },
+          { ttl: ttl ?? new Date(Date.now() + 30 * 60 * 1000) },
+        );
+        return walletContext.wallet.finalizeRecipe(recipe);
+      });
     },
     async submitTx(tx) {
       return walletContext.wallet.submitTransaction(tx);
