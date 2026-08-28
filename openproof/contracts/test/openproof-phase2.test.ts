@@ -63,7 +63,7 @@ class OpenProofSimulator {
   }
 }
 
-function familyFixture(sim, providerSecret, overrides = {}) {
+function familyFixture(sim, providerSecret, overrides = {}, providerId = 1n) {
   const claim = {
     credentialId: 1001n,
     revocationHandle: 90001n,
@@ -78,7 +78,7 @@ function familyFixture(sim, providerSecret, overrides = {}) {
   return {
     claim,
     signature: signFamilyAttestation(providerSecret, claim, sim.subjectHash(claim.purposeCode)),
-    providerId: 1n,
+    providerId,
   };
 }
 
@@ -133,6 +133,7 @@ function setupFamily() {
   sim.call('registerProvider', 1n, provider.publicKey);
   sim.call('setFamilyPolicy', 101n, {
     version: 1n,
+    requiredProviderId: 1n,
     requiredCountryCode: 276n,
     minimumChildren: 1n,
     maximumMonthlyIncomeEur: 2_500n,
@@ -146,6 +147,7 @@ function setupAgent() {
   sim.call('registerProvider', 1n, provider.publicKey);
   sim.call('setAgentPolicy', 201n, {
     version: 1n,
+    requiredProviderId: 1n,
     requiredCapabilityCode: 7n,
     maximumActionAmountEur: 1_000n,
     requiredScopeHash: 7007n,
@@ -160,6 +162,7 @@ function setupCare() {
   sim.call('registerProvider', 1n, provider.publicKey);
   sim.call('setCarePolicy', 301n, {
     version: 1n,
+    requiredProviderId: 1n,
     requiredWorkflowScopeHash: 8008n,
     requireLicenceActive: true,
     requireRoleAuthorised: true,
@@ -177,65 +180,100 @@ function expectThrow(fn, contains) {
   });
 }
 
-// 1) CARE family proof succeeds using a registered issuer and private claims.
+function receiptAt(sim, nullifier) {
+  const state = sim.getLedger();
+  assert.equal(state.proofReceipts.member(nullifier), true, 'proof receipt must exist');
+  return state.proofReceipts.lookup(nullifier);
+}
+
+// 1) CARE family proof succeeds and writes a verifier-queryable receipt.
 {
   const { sim, provider } = setupFamily();
+  const requestBinding = 44_001n;
+  const nonce = 11_001n;
   sim.setPrivate({ family: familyFixture(sim, provider.secretKey) });
-  sim.call('proveFamilyEligibility', 101n, 11_001n);
-  assert.equal(sim.getLedger().usedNullifiers.size(), 1n);
+  const nullifier = sim.call('proveFamilyEligibility', 101n, requestBinding, nonce);
+  const state = sim.getLedger();
+  assert.equal(state.usedNullifiers.size(), 1n);
+  assert.equal(state.proofReceipts.size(), 1n);
+
+  const receipt = receiptAt(sim, nullifier);
+  assert.equal(receipt.proofType, 1n);
+  assert.equal(receipt.purposeCode, 101n);
+  assert.equal(receipt.policyVersion, 1n);
+  assert.equal(receipt.providerId, 1n);
+  assert.equal(receipt.bindingHash, requestBinding);
+  assert.equal(receipt.auxiliaryBindingHash, 0n);
+  assert.equal(receipt.verifierChallengeHash, pureCircuits.verifierChallengeHash(nonce));
 }
 
 // 2) Reusing the same verifier challenge is rejected.
 {
   const { sim, provider } = setupFamily();
   sim.setPrivate({ family: familyFixture(sim, provider.secretKey) });
-  sim.call('proveFamilyEligibility', 101n, 11_002n);
-  expectThrow(() => sim.call('proveFamilyEligibility', 101n, 11_002n), 'already used');
+  sim.call('proveFamilyEligibility', 101n, 44_002n, 11_002n);
+  expectThrow(() => sim.call('proveFamilyEligibility', 101n, 44_002n, 11_002n), 'already used');
 }
 
-// 3) A credential signed by an unregistered/forged issuer cannot satisfy the registered issuer key.
+// 3) A credential signed by a forged key cannot satisfy the registered issuer key.
 {
   const { sim } = setupFamily();
   const rogue = generateIssuerKeyPair();
   sim.setPrivate({ family: familyFixture(sim, rogue.secretKey) });
-  expectThrow(() => sim.call('proveFamilyEligibility', 101n, 11_003n), 'signature');
+  expectThrow(() => sim.call('proveFamilyEligibility', 101n, 44_003n, 11_003n), 'signature');
 }
 
-// 4) Revocation is enforced before the proof can complete.
+// 4) Even a globally registered issuer is rejected when this policy pins another issuer.
+{
+  const { sim } = setupFamily();
+  const secondIssuer = generateIssuerKeyPair();
+  sim.call('registerProvider', 2n, secondIssuer.publicKey);
+  sim.setPrivate({ family: familyFixture(sim, secondIssuer.secretKey, {}, 2n) });
+  expectThrow(() => sim.call('proveFamilyEligibility', 101n, 44_004n, 11_004n), 'issuer not authorised');
+}
+
+// 5) Revocation is enforced before the proof can complete.
 {
   const { sim, provider } = setupFamily();
   const attestation = familyFixture(sim, provider.secretKey);
   sim.setPrivate({ family: attestation });
   sim.call('revokeCredential', attestation.claim.revocationHandle);
-  expectThrow(() => sim.call('proveFamilyEligibility', 101n, 11_004n), 'revoked');
+  expectThrow(() => sim.call('proveFamilyEligibility', 101n, 44_005n, 11_005n), 'revoked');
 }
 
-// 5) Policy version changes invalidate stale credentials without exposing private income.
+// 6) Policy version changes invalidate stale credentials without exposing private income.
 {
   const { sim, provider } = setupFamily();
   sim.setPrivate({ family: familyFixture(sim, provider.secretKey) });
   sim.call('setFamilyPolicy', 101n, {
     version: 2n,
+    requiredProviderId: 1n,
     requiredCountryCode: 276n,
     minimumChildren: 1n,
     maximumMonthlyIncomeEur: 2_500n,
   });
-  expectThrow(() => sim.call('proveFamilyEligibility', 101n, 11_005n), 'policy version');
+  expectThrow(() => sim.call('proveFamilyEligibility', 101n, 44_006n, 11_006n), 'policy version');
 }
 
-// 6) Agent proof binds capability, amount, exact action and human approval receipt.
+// 7) Agent proof binds capability, amount, exact action and human approval receipt.
 {
   const { sim, provider } = setupAgent();
   const attestation = agentFixture(sim, provider.secretKey);
+  const nonce = 22_001n;
   sim.setPrivate({ agent: attestation });
-  sim.call(
+  const nullifier = sim.call(
     'proveAgentAuthority',
     201n,
     attestation.claim.actionHash,
     attestation.claim.approvalReceiptHash,
-    22_001n,
+    nonce,
   );
-  assert.equal(sim.getLedger().usedNullifiers.size(), 1n);
+  const receipt = receiptAt(sim, nullifier);
+  assert.equal(receipt.proofType, 2n);
+  assert.equal(receipt.providerId, 1n);
+  assert.equal(receipt.bindingHash, attestation.claim.actionHash);
+  assert.equal(receipt.auxiliaryBindingHash, attestation.claim.approvalReceiptHash);
+  assert.equal(receipt.verifierChallengeHash, pureCircuits.verifierChallengeHash(nonce));
 
   const { sim: wrongActionSim, provider: p2 } = setupAgent();
   const wrong = agentFixture(wrongActionSim, p2.secretKey);
@@ -246,13 +284,19 @@ function expectThrow(fn, contains) {
   );
 }
 
-// 7) CareOS proof succeeds only for the policy-bound workflow trust state.
+// 8) CareOS proof succeeds only for the policy-bound workflow trust state.
 {
   const { sim, provider } = setupCare();
   const attestation = careFixture(sim, provider.secretKey);
+  const nonce = 33_001n;
   sim.setPrivate({ care: attestation });
-  sim.call('proveCareTrustPassport', 301n, attestation.claim.workflowScopeHash, 33_001n);
-  assert.equal(sim.getLedger().usedNullifiers.size(), 1n);
+  const nullifier = sim.call('proveCareTrustPassport', 301n, attestation.claim.workflowScopeHash, nonce);
+  const receipt = receiptAt(sim, nullifier);
+  assert.equal(receipt.proofType, 3n);
+  assert.equal(receipt.providerId, 1n);
+  assert.equal(receipt.bindingHash, attestation.claim.workflowScopeHash);
+  assert.equal(receipt.auxiliaryBindingHash, 0n);
+  assert.equal(receipt.verifierChallengeHash, pureCircuits.verifierChallengeHash(nonce));
 
   const { sim: noConsentSim, provider: p2 } = setupCare();
   const noConsent = careFixture(noConsentSim, p2.secretKey, { consentValid: false });
@@ -264,7 +308,8 @@ function expectThrow(fn, contains) {
 }
 
 console.log('OpenProof Phase 2 simulator: PASS');
-console.log('✓ registered issuer signature');
+console.log('✓ registered + policy-authorised issuer signature');
+console.log('✓ authoritative minimal proof receipts');
 console.log('✓ policy version binding');
 console.log('✓ revocation');
 console.log('✓ verifier-challenge replay rejection');
