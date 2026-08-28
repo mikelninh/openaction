@@ -192,6 +192,7 @@ async function main() {
 
     const policyTx = await deployed.callTx.setFamilyPolicy(101n, {
       version: 1n,
+      requiredProviderId: 1n,
       requiredCountryCode: 276n,
       minimumChildren: 1n,
       maximumMonthlyIncomeEur: 2_500n,
@@ -217,7 +218,12 @@ async function main() {
     };
     await privateStateProvider.set(PRIVATE_STATE_ID, { userSecretKey, family });
 
-    const proofTx = await deployed.callTx.proveFamilyEligibility(101n, 777_001n);
+    const requestBinding = 55_001n;
+    const verifierNonce = 777_001n;
+    const expectedNullifier = pureCircuits.deriveNullifier(userSecretKey, 101n, verifierNonce);
+    const expectedChallengeHash = pureCircuits.verifierChallengeHash(verifierNonce);
+
+    const proofTx = await deployed.callTx.proveFamilyEligibility(101n, requestBinding, verifierNonce);
     console.log(`family proof tx: ${proofTx.public.txId}`);
     console.log(`family proof block: ${proofTx.public.blockHeight}`);
 
@@ -227,19 +233,31 @@ async function main() {
     assert.equal(state.providers.size(), 1n);
     assert.equal(state.familyPolicies.size(), 1n);
     assert.equal(state.usedNullifiers.size(), 1n);
+    assert.equal(state.proofReceipts.size(), 1n);
+    assert.equal(state.proofReceipts.member(expectedNullifier), true);
+
+    const receipt = state.proofReceipts.lookup(expectedNullifier);
+    assert.equal(receipt.proofType, 1n);
+    assert.equal(receipt.purposeCode, 101n);
+    assert.equal(receipt.policyVersion, 1n);
+    assert.equal(receipt.providerId, 1n);
+    assert.equal(receipt.bindingHash, requestBinding);
+    assert.equal(receipt.auxiliaryBindingHash, 0n);
+    assert.equal(receipt.verifierChallengeHash, expectedChallengeHash);
 
     // The exact same challenge must fail as a real second transaction attempt.
     await assert.rejects(
-      () => deployed.callTx.proveFamilyEligibility(101n, 777_001n),
+      () => deployed.callTx.proveFamilyEligibility(101n, requestBinding, verifierNonce),
       /already used/i,
     );
 
     console.log('OpenProof local Midnight E2E: PASS');
     console.log('✓ deployed contract');
-    console.log('✓ registered issuer on ledger');
+    console.log('✓ registered policy-authorised issuer on ledger');
     console.log('✓ registered policy on ledger');
     console.log('✓ proof server produced + submitted family proof transaction');
-    console.log('✓ indexer observed consumed nullifier');
+    console.log('✓ indexer observed authoritative proof receipt');
+    console.log('✓ receipt bound purpose + policy + issuer + request + verifier challenge');
     console.log('✓ real replay attempt rejected');
   } finally {
     await walletContext.wallet.stop();
