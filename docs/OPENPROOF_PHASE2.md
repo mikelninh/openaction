@@ -1,6 +1,6 @@
 # OpenProof Phase 2 — issuer-bound Midnight ZK proofs
 
-**Status:** compiled + adversarial Compact simulator green; real local-chain transaction gate in progress.
+**Status:** local Midnight end-to-end proof transaction + authoritative indexer receipt verification green.
 
 Phase 1 established the public proof envelope and three product integrations. Phase 2 moves hidden predicate evaluation from an issuer-trusted application backend into a compiled Midnight Compact contract and gives relying parties an authoritative minimum-data receipt to verify.
 
@@ -38,7 +38,7 @@ It does **not** store the household income, household composition beyond the pro
 
 The receipt is not an approval. It is cryptographic evidence that the registered contract accepted the specified predicate under a particular policy and binding.
 
-## Current compiler target
+## Current compiler / local-network target
 
 The CI gate pins:
 
@@ -47,24 +47,68 @@ The CI gate pins:
 - Compact runtime reported by compiler: **0.16.0**
 - Midnight.js: **4.1.1**
 - Ledger v8: **8.1.0**
+- onchain-runtime-v3: **3.0.0**
+- platform-js: **2.2.4**
+- local Midnight node: **1.0.0**
+- local indexer: **4.3.3**
+- local proof server: **8.1.0**
 
-This is intentionally the current ledger-8/mainnet-compatible line used by Midnight's maintained ZK Loan example rather than the newer ledger-9 compiler line.
+The explicit runtime pins prevent multiple WASM runtime class identities from being loaded across Compact runtime and Midnight.js transaction code.
 
-## What has already been proven
+## Verified local Midnight end-to-end run
 
-The Phase 2 verification contract has compiled successfully with Compact 0.31.1 and generated:
+On **2026-08-28**, CI completed the complete CARE family proof path against an ephemeral local Midnight network:
 
-- JavaScript contract bindings;
-- proving/verifying key material;
-- ZKIR artifacts.
+```text
+wallet + DUST ready
+        ↓
+OpenProof contract deployed
+        ↓
+policy-authorised issuer registered
+        ↓
+family policy registered
+        ↓
+issuer signs subject-bound private family credential
+        ↓
+proof server produces ZK proof
+        ↓
+family proof transaction submitted and finalised
+        ↓
+indexer queries contract state
+        ↓
+authoritative Proof Receipt found by expected nullifier
+        ↓
+receipt fields independently matched
+        ↓
+exact replay attempt rejected
+```
 
-The release gate also compiles issuer-side challenge helpers, typechecks the private-state/issuer adapters, and executes the generated contract in the Compact simulator.
+Verified example transaction evidence from that ephemeral run:
 
-The adversarial simulator gate has passed for the pre-receipt contract and is being rerun against the stronger receipt/issuer-scoped revision before graduation.
+- contract address: `17cbcbe259ed00a7cc13c5efad99b9d25ae7c08b41982fdf4e6c78f3fd9adfbd`
+- deploy tx: `00f997781e8a05e6fae13e1192980a1826034577ca98b6fff678aef6a40d1c8c98`
+- provider registration tx: `00c75bf6431d67db610afd5e41925dac9420495c930904ab542bbe67e3b0bd0230`
+- family policy tx: `00688e689a028ea5a93bb54db2fa6b182f70e03c64c4ca8cd501b6315d06483f50`
+- family proof tx: `00c032dc8a02266e493d2a727e45833af16a177c2a322559b91daecb11a4f30330`
+- family proof block: `16`
+
+The test queried the receipt through the indexer and verified:
+
+- `proofType = family`;
+- purpose `101`;
+- policy version `1`;
+- policy-authorised provider `1`;
+- exact CARE request binding;
+- verifier-challenge hash;
+- one-time nullifier consumption.
+
+The exact same verifier challenge was then attempted again and rejected.
+
+These addresses and transaction IDs belong to an ephemeral local development chain and are evidence of the CI execution, not public Midnight mainnet identifiers.
 
 ## Adversarial matrix
 
-| Case | Required result |
+| Case | Verified result |
 |---|---|
 | policy-authorised issuer + valid family credential | PASS + receipt |
 | globally registered but policy-unapproved issuer | REJECT |
@@ -127,17 +171,17 @@ compiled Compact contract                         ✅
         ↓
 issuer + private-state adapters typecheck         ✅
         ↓
-Compact simulator adversarial matrix              ✅ first revision / rerun stronger receipt revision
+Compact simulator adversarial matrix              ✅
         ↓
-standalone local Midnight + real proof tx          IN PROGRESS
+standalone local Midnight + real proof tx         ✅
         ↓
-query authoritative Proof Receipt via indexer
+query authoritative Proof Receipt via indexer     ✅
         ↓
-inspect ledger/indexer visibility for leakage
+receipt binding + replay rejection                ✅
         ↓
-Preprod deployment + real transaction receipt
+Preprod deployment + public test transaction
         ↓
-CARE / Agent / CareOS consume same verifier
+shared MidnightProofVerifier consumed by CARE / Passport / Agent / CareOS
         ↓
 independent threat-model review
         ↓
