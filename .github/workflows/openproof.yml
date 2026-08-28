@@ -63,8 +63,12 @@ jobs:
             find "openproof/contracts/managed/$contract/zkir" -type f | grep -q .
           done
           echo 'OpenProof verification + issuer helper contracts compiled with ZK artifacts.'
+      - name: Install Midnight test dependencies
+        working-directory: openproof/contracts
+        run: npm install --ignore-scripts
       - name: Typecheck private-state and issuer adapters
         working-directory: openproof/contracts
-        run: |
-          npm install --ignore-scripts
-          npm run typecheck
+        run: npm run typecheck
+      - name: Run adversarial Compact simulator
+        working-directory: openproof/contracts
+        run: npm run test:phase2
