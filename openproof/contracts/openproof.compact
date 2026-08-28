@@ -184,9 +184,8 @@ export circuit proveFamilyEligibility(
     assert(claim.purposeCode == purposeCode, "credential purpose mismatch");
     assert(claim.policyVersion == policy.version, "family policy version mismatch");
 
-    const subjectHash = transientHash<SubjectPublicKey>(
-        deriveSubjectPublicKey(getUserSecret(), purposeCode)
-    );
+    const subject = deriveSubjectPublicKey(getUserSecret(), purposeCode);
+    const subjectHash = transientHash<Bytes<32>>(subject as Bytes<32>);
     const providerPk = requireProvider(providerId);
     const msg: Vector<9, Field> = [
         claim.credentialId,
@@ -218,20 +217,21 @@ export circuit proveAgentAuthority(
     verifierNonce: Field
 ): Field {
     const publicPurpose = disclose(purposeCode);
+    const publicActionHash = disclose(expectedActionHash);
+    const publicApprovalHash = disclose(expectedApprovalReceiptHash);
     assert(agentPolicies.member(publicPurpose), "agent policy not registered");
     const policy = agentPolicies.lookup(publicPurpose);
 
     const [claim, signature, providerId] = getAgentAttestation();
     assert(claim.purposeCode == purposeCode, "credential purpose mismatch");
     assert(claim.policyVersion == policy.version, "agent policy version mismatch");
-    assert(claim.actionHash == expectedActionHash, "action binding mismatch");
-    assert(claim.approvalReceiptHash == expectedApprovalReceiptHash, "approval receipt binding mismatch");
+    assert(claim.actionHash == publicActionHash, "action binding mismatch");
+    assert(claim.approvalReceiptHash == publicApprovalHash, "approval receipt binding mismatch");
 
-    const subjectHash = transientHash<SubjectPublicKey>(
-        deriveSubjectPublicKey(getUserSecret(), purposeCode)
-    );
+    const subject = deriveSubjectPublicKey(getUserSecret(), purposeCode);
+    const subjectHash = transientHash<Bytes<32>>(subject as Bytes<32>);
     const providerPk = requireProvider(providerId);
-    const msg: Vector<14, Field> = [
+    const msg: Vector<13, Field> = [
         claim.credentialId,
         claim.revocationHandle,
         claim.purposeCode as Field,
@@ -243,11 +243,10 @@ export circuit proveAgentAuthority(
         claim.scopeHash,
         claim.actionHash,
         claim.approvalReceiptHash,
-        claim.humanApproved as Field,
-        subjectHash,
-        transientHash<Field>(expectedActionHash)
+        transientHash<Boolean>(claim.humanApproved),
+        subjectHash
     ];
-    Schnorr_schnorrVerify<14>(msg, signature, providerPk);
+    Schnorr_schnorrVerify<13>(msg, signature, providerPk);
 
     requireFreshAndUnrevoked(claim.validUntil, claim.revocationHandle);
     assert(claim.capabilityCode == policy.requiredCapabilityCode, "capability predicate failed");
@@ -269,35 +268,34 @@ export circuit proveCareTrustPassport(
     verifierNonce: Field
 ): Field {
     const publicPurpose = disclose(purposeCode);
+    const publicWorkflowScope = disclose(expectedWorkflowScopeHash);
     assert(carePolicies.member(publicPurpose), "care policy not registered");
     const policy = carePolicies.lookup(publicPurpose);
 
     const [claim, signature, providerId] = getCareAttestation();
     assert(claim.purposeCode == purposeCode, "credential purpose mismatch");
     assert(claim.policyVersion == policy.version, "care policy version mismatch");
-    assert(claim.workflowScopeHash == expectedWorkflowScopeHash, "workflow scope binding mismatch");
+    assert(claim.workflowScopeHash == publicWorkflowScope, "workflow scope binding mismatch");
     assert(claim.workflowScopeHash == policy.requiredWorkflowScopeHash, "workflow scope not permitted");
 
-    const subjectHash = transientHash<SubjectPublicKey>(
-        deriveSubjectPublicKey(getUserSecret(), purposeCode)
-    );
+    const subject = deriveSubjectPublicKey(getUserSecret(), purposeCode);
+    const subjectHash = transientHash<Bytes<32>>(subject as Bytes<32>);
     const providerPk = requireProvider(providerId);
-    const msg: Vector<13, Field> = [
+    const msg: Vector<12, Field> = [
         claim.credentialId,
         claim.revocationHandle,
         claim.purposeCode as Field,
         claim.policyVersion as Field,
         claim.validUntil as Field,
         claim.workflowScopeHash,
-        claim.licenceActive as Field,
-        claim.roleAuthorised as Field,
-        claim.consentValid as Field,
-        claim.privacyReviewCurrent as Field,
-        claim.securityReviewCurrent as Field,
-        subjectHash,
-        transientHash<Field>(expectedWorkflowScopeHash)
+        transientHash<Boolean>(claim.licenceActive),
+        transientHash<Boolean>(claim.roleAuthorised),
+        transientHash<Boolean>(claim.consentValid),
+        transientHash<Boolean>(claim.privacyReviewCurrent),
+        transientHash<Boolean>(claim.securityReviewCurrent),
+        subjectHash
     ];
-    Schnorr_schnorrVerify<13>(msg, signature, providerPk);
+    Schnorr_schnorrVerify<12>(msg, signature, providerPk);
 
     requireFreshAndUnrevoked(claim.validUntil, claim.revocationHandle);
     if (policy.requireLicenceActive) {
