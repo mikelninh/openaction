@@ -181,7 +181,10 @@ async function createWalletProvider(walletContext) {
 
 async function main() {
   setNetworkId(CONFIG.networkId);
-  process.env.MIDNIGHT_STORAGE_PASSWORD ??= 'openproof-local-ci-only';
+  // Ephemeral local-dev encryption password only. Midnight validates password
+  // strength even for a throwaway private-state database, so keep the fallback
+  // valid for developers who run `npm run test:localnet` without extra env vars.
+  process.env.MIDNIGHT_STORAGE_PASSWORD ??= 'OpenProof-Local-2026!Only';
 
   const walletContext = await initGenesisWallet();
   try {
