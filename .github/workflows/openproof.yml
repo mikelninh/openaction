@@ -1,0 +1,28 @@
+name: OpenProof core
+on:
+  pull_request:
+    paths:
+      - 'openproof/**'
+      - '.github/workflows/openproof.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'openproof/**'
+      - '.github/workflows/openproof.yml'
+permissions:
+  contents: read
+jobs:
+  openproof:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check openproof/openproof.js
+      - run: node openproof/tests/openproof.mjs
+      - name: Compact scaffold boundary
+        run: |
+          grep -q 'pragma language_version >= 0.22 && <= 0.23' openproof/contracts/openproof.compact
+          grep -q 'signature verification must be added' openproof/contracts/openproof.compact
+          echo 'Compact scaffold present; compilation/deployment is intentionally NOT claimed by this gate.'
