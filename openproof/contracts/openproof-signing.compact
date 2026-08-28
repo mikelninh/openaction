@@ -1,0 +1,26 @@
+// Pure challenge helpers used by issuer/attestation services to create the
+// exact Schnorr signatures verified inside openproof.compact.
+pragma language_version >= 0.22 && <= 0.23;
+import CompactStandardLibrary;
+import "schnorr" prefix Schnorr_;
+
+export pure circuit familyAttestationChallenge(
+  ann_x: Field, ann_y: Field, pk_x: Field, pk_y: Field,
+  msg: Vector<9, Field>
+): Field {
+  return Schnorr_schnorrChallenge9(ann_x, ann_y, pk_x, pk_y, msg);
+}
+
+export pure circuit agentAttestationChallenge(
+  ann_x: Field, ann_y: Field, pk_x: Field, pk_y: Field,
+  msg: Vector<13, Field>
+): Field {
+  return Schnorr_schnorrChallenge13(ann_x, ann_y, pk_x, pk_y, msg);
+}
+
+export pure circuit careAttestationChallenge(
+  ann_x: Field, ann_y: Field, pk_x: Field, pk_y: Field,
+  msg: Vector<12, Field>
+): Field {
+  return Schnorr_schnorrChallenge12(ann_x, ann_y, pk_x, pk_y, msg);
+}
