@@ -11,10 +11,13 @@
     "@midnight-ntwrk/midnight-js-protocol": "4.1.1"
   },
   "devDependencies": {
+    "@types/node": "^25.0.1",
+    "tsx": "^4.20.6",
     "typescript": "^5.9.3"
   },
   "scripts": {
-    "compact": "compact compile --compact-path . openproof.compact managed/openproof",
-    "typecheck": "tsc -p tsconfig.json --noEmit"
+    "compact": "compact compile --compact-path . openproof.compact managed/openproof && compact compile --compact-path . openproof-signing.compact managed/openproof-signing",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test:phase2": "tsx test/openproof-phase2.test.ts"
   }
 }
