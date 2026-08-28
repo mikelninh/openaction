@@ -1,0 +1,8 @@
+# OpenProof / Midnight generated build artifacts
+openproof/contracts/managed/
+openproof/contracts/node_modules/
+openproof/contracts/package-lock.json
+
+# Local test state / logs
+openproof/contracts/.private-state/
+openproof/contracts/logs/

@@ -1,0 +1,112 @@
+name: OpenProof core
+on:
+  pull_request:
+    paths:
+      - 'openproof/**'
+      - '.github/workflows/openproof.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'openproof/**'
+      - '.github/workflows/openproof.yml'
+permissions:
+  contents: read
+jobs:
+  protocol:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check openproof/openproof.js
+      - run: node openproof/tests/openproof.mjs
+
+  compact-compile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Compact devtools
+        shell: bash
+        run: |
+          curl --proto '=https' --tlsv1.2 -LsSf \
+            https://github.com/midnightntwrk/compact/releases/latest/download/compact-installer.sh | sh
+          export PATH="$HOME/.local/bin:$PATH"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          compact update 0.31.1
+          compact compile --version
+          compact compile --runtime-version
+      - name: Compile OpenProof ZK contracts
+        shell: bash
+        run: |
+          rm -rf openproof/contracts/managed/openproof openproof/contracts/managed/openproof-signing
+          compact compile \
+            --compact-path openproof/contracts \
+            openproof/contracts/openproof.compact \
+            openproof/contracts/managed/openproof
+          compact compile \
+            --compact-path openproof/contracts \
+            openproof/contracts/openproof-signing.compact \
+            openproof/contracts/managed/openproof-signing
+      - name: Assert generated proof + helper artifacts
+        shell: bash
+        run: |
+          test -f openproof/contracts/managed/openproof/contract/index.js
+          test -d openproof/contracts/managed/openproof/keys
+          test -d openproof/contracts/managed/openproof/zkir
+          find openproof/contracts/managed/openproof/keys -type f | grep -q .
+          find openproof/contracts/managed/openproof/zkir -type f | grep -q .
+
+          # Pure issuer helpers need generated callable bindings, but do not
+          # require proving keys because they create no ledger transition.
+          test -f openproof/contracts/managed/openproof-signing/contract/index.js
+          grep -q 'familyAttestationChallenge' openproof/contracts/managed/openproof-signing/contract/index.js
+          grep -q 'agentAttestationChallenge' openproof/contracts/managed/openproof-signing/contract/index.js
+          grep -q 'careAttestationChallenge' openproof/contracts/managed/openproof-signing/contract/index.js
+          echo 'OpenProof proof circuits + issuer helper bindings generated.'
+      - name: Install Midnight test dependencies
+        working-directory: openproof/contracts
+        run: npm install --ignore-scripts
+      - name: Typecheck private-state and issuer adapters
+        working-directory: openproof/contracts
+        run: npm run typecheck
+      - name: Run adversarial Compact simulator
+        working-directory: openproof/contracts
+        run: npm run test:phase2
+      - name: Start pinned Midnight local devnet
+        working-directory: openproof/contracts
+        shell: bash
+        run: |
+          docker compose -f standalone.yml pull
+          docker compose -f standalone.yml up -d
+          echo 'Waiting for Midnight node + indexer + proof server...'
+          for i in {1..90}; do
+            node_status=$(docker inspect -f '{{if .State.Health}}{{.State.Health.Status}}{{else}}none{{end}}' openproof-node 2>/dev/null || true)
+            indexer_status=$(docker inspect -f '{{if .State.Health}}{{.State.Health.Status}}{{else}}none{{end}}' openproof-indexer 2>/dev/null || true)
+            proof_ok=0
+            curl -fsS http://127.0.0.1:6300/version >/dev/null 2>&1 && proof_ok=1 || true
+            if [ "$node_status" = healthy ] && [ "$indexer_status" = healthy ] && [ "$proof_ok" = 1 ]; then
+              echo 'Midnight local devnet ready.'
+              exit 0
+            fi
+            sleep 2
+          done
+          docker compose -f standalone.yml ps
+          docker compose -f standalone.yml logs --tail=100
+          exit 1
+      - name: Deploy contract and submit real ZK proof transaction
+        working-directory: openproof/contracts
+        env:
+          # Local CI-only encryption password. Midnight's private-state provider
+          # requires at least three character classes; this value is not used
+          # outside the ephemeral GitHub Actions runner.
+          MIDNIGHT_STORAGE_PASSWORD: OpenProof-CI-2026!Local
+        run: npm run test:localnet
+      - name: Stop Midnight local devnet
+        if: always()
+        working-directory: openproof/contracts
+        run: docker compose -f standalone.yml down -v --remove-orphans

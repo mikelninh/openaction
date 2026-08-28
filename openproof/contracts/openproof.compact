@@ -1,0 +1,431 @@
+// OpenProof / Midnight Compact contract — Phase 2
+//
+// Goal: prove narrowly-scoped predicates over issuer-attested private claims
+// without disclosing the claims themselves.
+//
+// Security model in this phase:
+// - trusted issuers are registered on the public ledger and pinned per policy;
+// - issuer signatures are verified inside the circuit;
+// - subject identity is derived from a private secret and purpose code;
+// - policy parameters + versions are public contract state, not caller-chosen;
+// - credential expiry uses Midnight block time, not caller-supplied "now";
+// - credential revocation handles are checked on-ledger;
+// - verifier challenges derive one-time nullifiers to reject exact replay;
+// - successful proofs write minimum queryable receipts for relying parties;
+// - no raw family, authority, professional, consent, or clinical values are stored.
+//
+// Current privacy trade-off: the random revocation handle is disclosed for the
+// public revocation-set lookup and is therefore linkable if the same credential
+// is reused. Production should evaluate a privacy-preserving revocation
+// accumulator or short-lived/rotating credentials before claiming unlinkability.
+
+pragma language_version >= 0.22 && <= 0.23;
+import CompactStandardLibrary;
+import "schnorr" prefix Schnorr_;
+
+export { Schnorr_SchnorrSignature };
+
+export new type UserSecretKey = Bytes<32>;
+export new type SubjectPublicKey = Bytes<32>;
+export new type AdminPublicKey = Bytes<32>;
+
+export struct FamilyPolicy {
+    version: Uint<16>;
+    requiredProviderId: Uint<16>;
+    requiredCountryCode: Uint<16>;
+    minimumChildren: Uint<8>;
+    maximumMonthlyIncomeEur: Uint<32>;
+}
+
+export struct AgentPolicy {
+    version: Uint<16>;
+    requiredProviderId: Uint<16>;
+    requiredCapabilityCode: Uint<16>;
+    maximumActionAmountEur: Uint<32>;
+    requiredScopeHash: Field;
+    requireHumanApproval: Boolean;
+}
+
+export struct CarePolicy {
+    version: Uint<16>;
+    requiredProviderId: Uint<16>;
+    requiredWorkflowScopeHash: Field;
+    requireLicenceActive: Boolean;
+    requireRoleAuthorised: Boolean;
+    requireConsentValid: Boolean;
+    requirePrivacyReviewCurrent: Boolean;
+    requireSecurityReviewCurrent: Boolean;
+}
+
+// Minimal public proof result. A relying party queries this from authoritative
+// contract state instead of trusting a prover-supplied JSON receipt.
+export struct ProofReceipt {
+    proofType: Uint<8>;              // 1=family, 2=agent, 3=care
+    purposeCode: Uint<16>;
+    policyVersion: Uint<16>;
+    providerId: Uint<16>;
+    bindingHash: Field;              // request/action/workflow binding
+    auxiliaryBindingHash: Field;     // e.g. agent approval-receipt hash
+    verifierChallengeHash: Field;    // hash of high-entropy verifier nonce
+}
+
+struct FamilyAttestation {
+    credentialId: Field;
+    revocationHandle: Field;
+    purposeCode: Uint<16>;
+    policyVersion: Uint<16>;
+    validUntil: Uint<64>;
+    residentCountryCode: Uint<16>;
+    childCount: Uint<8>;
+    monthlyIncomeEur: Uint<32>;
+}
+
+struct AgentAttestation {
+    credentialId: Field;
+    revocationHandle: Field;
+    purposeCode: Uint<16>;
+    policyVersion: Uint<16>;
+    validUntil: Uint<64>;
+    capabilityCode: Uint<16>;
+    approvedAmountEur: Uint<32>;
+    requestedAmountEur: Uint<32>;
+    scopeHash: Field;
+    actionHash: Field;
+    approvalReceiptHash: Field;
+    humanApproved: Boolean;
+}
+
+struct CareAttestation {
+    credentialId: Field;
+    revocationHandle: Field;
+    purposeCode: Uint<16>;
+    policyVersion: Uint<16>;
+    validUntil: Uint<64>;
+    workflowScopeHash: Field;
+    licenceActive: Boolean;
+    roleAuthorised: Boolean;
+    consentValid: Boolean;
+    privacyReviewCurrent: Boolean;
+    securityReviewCurrent: Boolean;
+}
+
+witness getUserSecret(): UserSecretKey;
+witness getFamilyAttestation(): [FamilyAttestation, Schnorr_SchnorrSignature, Uint<16>];
+witness getAgentAttestation(): [AgentAttestation, Schnorr_SchnorrSignature, Uint<16>];
+witness getCareAttestation(): [CareAttestation, Schnorr_SchnorrSignature, Uint<16>];
+
+export ledger contractAdmin: AdminPublicKey;
+export ledger providers: Map<Uint<16>, JubjubPoint>;
+export ledger familyPolicies: Map<Uint<16>, FamilyPolicy>;
+export ledger agentPolicies: Map<Uint<16>, AgentPolicy>;
+export ledger carePolicies: Map<Uint<16>, CarePolicy>;
+export ledger revokedCredentials: Set<Field>;
+export ledger usedNullifiers: Set<Field>;
+export ledger proofReceipts: Map<Field, ProofReceipt>;
+
+constructor() {
+    contractAdmin = disclose(deriveAdminPublicKey(getUserSecret()));
+}
+
+export pure circuit deriveAdminPublicKey(sk: UserSecretKey): AdminPublicKey {
+    return persistentHash<[Bytes<18>, UserSecretKey]>([
+        "openproof:admin:v1",
+        sk
+    ]) as AdminPublicKey;
+}
+
+// Purpose-separated subject identity prevents one stable public identifier from
+// being reused across unrelated CARE / agent / healthcare contexts.
+export pure circuit deriveSubjectPublicKey(
+    sk: UserSecretKey,
+    purposeCode: Uint<16>
+): SubjectPublicKey {
+    const purposeBytes = persistentHash<Uint<16>>(purposeCode);
+    return persistentHash<[Bytes<20>, Bytes<32>, UserSecretKey]>([
+        "openproof:subject:v1",
+        purposeBytes,
+        sk
+    ]) as SubjectPublicKey;
+}
+
+export pure circuit deriveNullifier(
+    sk: UserSecretKey,
+    purposeCode: Uint<16>,
+    verifierNonce: Field
+): Field {
+    const subject = deriveSubjectPublicKey(sk, purposeCode);
+    return transientHash<[Bytes<22>, SubjectPublicKey, Field]>([
+        "openproof:nullifier:v1",
+        subject,
+        verifierNonce
+    ]);
+}
+
+export pure circuit verifierChallengeHash(verifierNonce: Field): Field {
+    return transientHash<Field>(verifierNonce);
+}
+
+circuit requireAdmin(): [] {
+    assert(contractAdmin == deriveAdminPublicKey(getUserSecret()), "admin authority required");
+}
+
+circuit requireProvider(providerId: Uint<16>): JubjubPoint {
+    const publicProviderId = disclose(providerId);
+    assert(providers.member(publicProviderId), "attestation provider not registered");
+    return providers.lookup(publicProviderId);
+}
+
+circuit requireFreshAndUnrevoked(validUntil: Uint<64>, revocationHandle: Field): [] {
+    assert(blockTimeLt(disclose(validUntil)), "credential expired");
+    assert(!revokedCredentials.member(disclose(revocationHandle)), "credential revoked");
+}
+
+circuit consumeVerifierChallenge(
+    purposeCode: Uint<16>,
+    policyVersion: Uint<16>,
+    providerId: Uint<16>,
+    proofType: Uint<8>,
+    bindingHash: Field,
+    auxiliaryBindingHash: Field,
+    verifierNonce: Field
+): Field {
+    const nullifier = deriveNullifier(getUserSecret(), purposeCode, verifierNonce);
+    const publicNullifier = disclose(nullifier);
+    assert(!usedNullifiers.member(publicNullifier), "verifier challenge already used");
+    usedNullifiers.insert(publicNullifier);
+
+    const receipt = ProofReceipt {
+        proofType: proofType,
+        purposeCode: purposeCode,
+        policyVersion: policyVersion,
+        providerId: providerId,
+        bindingHash: bindingHash,
+        auxiliaryBindingHash: auxiliaryBindingHash,
+        verifierChallengeHash: verifierChallengeHash(verifierNonce)
+    };
+    proofReceipts.insert(publicNullifier, disclose(receipt));
+    return publicNullifier;
+}
+
+// --------------------------- Family / CARE ---------------------------
+
+export circuit proveFamilyEligibility(
+    purposeCode: Uint<16>,
+    requestBindingHash: Field,
+    verifierNonce: Field
+): Field {
+    const publicPurpose = disclose(purposeCode);
+    const publicRequestBinding = disclose(requestBindingHash);
+    assert(familyPolicies.member(publicPurpose), "family policy not registered");
+    const policy = familyPolicies.lookup(publicPurpose);
+
+    const [claim, signature, providerId] = getFamilyAttestation();
+    assert(claim.purposeCode == purposeCode, "credential purpose mismatch");
+    assert(claim.policyVersion == policy.version, "family policy version mismatch");
+    assert(providerId == policy.requiredProviderId, "family issuer not authorised by policy");
+
+    const subject = deriveSubjectPublicKey(getUserSecret(), purposeCode);
+    const subjectHash = transientHash<Bytes<32>>(subject as Bytes<32>);
+    const providerPk = requireProvider(providerId);
+    const msg: Vector<9, Field> = [
+        claim.credentialId,
+        claim.revocationHandle,
+        claim.purposeCode as Field,
+        claim.policyVersion as Field,
+        claim.validUntil as Field,
+        claim.residentCountryCode as Field,
+        claim.childCount as Field,
+        claim.monthlyIncomeEur as Field,
+        subjectHash
+    ];
+    Schnorr_schnorrVerify<9>(msg, signature, providerPk);
+
+    requireFreshAndUnrevoked(claim.validUntil, claim.revocationHandle);
+    assert(claim.residentCountryCode == policy.requiredCountryCode, "residency predicate failed");
+    assert(claim.childCount >= policy.minimumChildren, "child predicate failed");
+    assert(claim.monthlyIncomeEur <= policy.maximumMonthlyIncomeEur, "income predicate failed");
+
+    return consumeVerifierChallenge(
+        purposeCode,
+        policy.version,
+        providerId,
+        1 as Uint<8>,
+        publicRequestBinding,
+        0 as Field,
+        verifierNonce
+    );
+}
+
+// --------------------------- Agent authority ---------------------------
+
+export circuit proveAgentAuthority(
+    purposeCode: Uint<16>,
+    expectedActionHash: Field,
+    expectedApprovalReceiptHash: Field,
+    verifierNonce: Field
+): Field {
+    const publicPurpose = disclose(purposeCode);
+    const publicActionHash = disclose(expectedActionHash);
+    const publicApprovalHash = disclose(expectedApprovalReceiptHash);
+    assert(agentPolicies.member(publicPurpose), "agent policy not registered");
+    const policy = agentPolicies.lookup(publicPurpose);
+
+    const [claim, signature, providerId] = getAgentAttestation();
+    assert(claim.purposeCode == purposeCode, "credential purpose mismatch");
+    assert(claim.policyVersion == policy.version, "agent policy version mismatch");
+    assert(providerId == policy.requiredProviderId, "agent issuer not authorised by policy");
+    assert(claim.actionHash == publicActionHash, "action binding mismatch");
+    assert(claim.approvalReceiptHash == publicApprovalHash, "approval receipt binding mismatch");
+
+    const subject = deriveSubjectPublicKey(getUserSecret(), purposeCode);
+    const subjectHash = transientHash<Bytes<32>>(subject as Bytes<32>);
+    const providerPk = requireProvider(providerId);
+    const msg: Vector<13, Field> = [
+        claim.credentialId,
+        claim.revocationHandle,
+        claim.purposeCode as Field,
+        claim.policyVersion as Field,
+        claim.validUntil as Field,
+        claim.capabilityCode as Field,
+        claim.approvedAmountEur as Field,
+        claim.requestedAmountEur as Field,
+        claim.scopeHash,
+        claim.actionHash,
+        claim.approvalReceiptHash,
+        transientHash<Boolean>(claim.humanApproved),
+        subjectHash
+    ];
+    Schnorr_schnorrVerify<13>(msg, signature, providerPk);
+
+    requireFreshAndUnrevoked(claim.validUntil, claim.revocationHandle);
+    assert(claim.capabilityCode == policy.requiredCapabilityCode, "capability predicate failed");
+    assert(claim.scopeHash == policy.requiredScopeHash, "scope predicate failed");
+    assert(claim.requestedAmountEur <= claim.approvedAmountEur, "action exceeds credential authority");
+    assert(claim.requestedAmountEur <= policy.maximumActionAmountEur, "action exceeds policy limit");
+    if (policy.requireHumanApproval) {
+        assert(claim.humanApproved, "human approval required");
+    }
+
+    return consumeVerifierChallenge(
+        purposeCode,
+        policy.version,
+        providerId,
+        2 as Uint<8>,
+        publicActionHash,
+        publicApprovalHash,
+        verifierNonce
+    );
+}
+
+// --------------------------- CareOS trust passport ---------------------------
+
+export circuit proveCareTrustPassport(
+    purposeCode: Uint<16>,
+    expectedWorkflowScopeHash: Field,
+    verifierNonce: Field
+): Field {
+    const publicPurpose = disclose(purposeCode);
+    const publicWorkflowScope = disclose(expectedWorkflowScopeHash);
+    assert(carePolicies.member(publicPurpose), "care policy not registered");
+    const policy = carePolicies.lookup(publicPurpose);
+
+    const [claim, signature, providerId] = getCareAttestation();
+    assert(claim.purposeCode == purposeCode, "credential purpose mismatch");
+    assert(claim.policyVersion == policy.version, "care policy version mismatch");
+    assert(providerId == policy.requiredProviderId, "care issuer not authorised by policy");
+    assert(claim.workflowScopeHash == publicWorkflowScope, "workflow scope binding mismatch");
+    assert(claim.workflowScopeHash == policy.requiredWorkflowScopeHash, "workflow scope not permitted");
+
+    const subject = deriveSubjectPublicKey(getUserSecret(), purposeCode);
+    const subjectHash = transientHash<Bytes<32>>(subject as Bytes<32>);
+    const providerPk = requireProvider(providerId);
+    const msg: Vector<12, Field> = [
+        claim.credentialId,
+        claim.revocationHandle,
+        claim.purposeCode as Field,
+        claim.policyVersion as Field,
+        claim.validUntil as Field,
+        claim.workflowScopeHash,
+        transientHash<Boolean>(claim.licenceActive),
+        transientHash<Boolean>(claim.roleAuthorised),
+        transientHash<Boolean>(claim.consentValid),
+        transientHash<Boolean>(claim.privacyReviewCurrent),
+        transientHash<Boolean>(claim.securityReviewCurrent),
+        subjectHash
+    ];
+    Schnorr_schnorrVerify<12>(msg, signature, providerPk);
+
+    requireFreshAndUnrevoked(claim.validUntil, claim.revocationHandle);
+    if (policy.requireLicenceActive) {
+        assert(claim.licenceActive, "professional licence inactive");
+    }
+    if (policy.requireRoleAuthorised) {
+        assert(claim.roleAuthorised, "role not authorised");
+    }
+    if (policy.requireConsentValid) {
+        assert(claim.consentValid, "required consent missing");
+    }
+    if (policy.requirePrivacyReviewCurrent) {
+        assert(claim.privacyReviewCurrent, "privacy review not current");
+    }
+    if (policy.requireSecurityReviewCurrent) {
+        assert(claim.securityReviewCurrent, "security review not current");
+    }
+
+    return consumeVerifierChallenge(
+        purposeCode,
+        policy.version,
+        providerId,
+        3 as Uint<8>,
+        publicWorkflowScope,
+        0 as Field,
+        verifierNonce
+    );
+}
+
+// --------------------------- Governance ---------------------------
+
+export circuit registerProvider(providerId: Uint<16>, providerPk: JubjubPoint): [] {
+    requireAdmin();
+    providers.insert(disclose(providerId), disclose(providerPk));
+}
+
+export circuit removeProvider(providerId: Uint<16>): [] {
+    requireAdmin();
+    const publicProviderId = disclose(providerId);
+    assert(providers.member(publicProviderId), "provider not found");
+    providers.remove(publicProviderId);
+}
+
+export circuit setFamilyPolicy(purposeCode: Uint<16>, policy: FamilyPolicy): [] {
+    requireAdmin();
+    assert(providers.member(disclose(policy.requiredProviderId)), "family policy issuer must be registered");
+    familyPolicies.insert(disclose(purposeCode), disclose(policy));
+}
+
+export circuit setAgentPolicy(purposeCode: Uint<16>, policy: AgentPolicy): [] {
+    requireAdmin();
+    assert(providers.member(disclose(policy.requiredProviderId)), "agent policy issuer must be registered");
+    agentPolicies.insert(disclose(purposeCode), disclose(policy));
+}
+
+export circuit setCarePolicy(purposeCode: Uint<16>, policy: CarePolicy): [] {
+    requireAdmin();
+    assert(providers.member(disclose(policy.requiredProviderId)), "care policy issuer must be registered");
+    carePolicies.insert(disclose(purposeCode), disclose(policy));
+}
+
+export circuit revokeCredential(revocationHandle: Field): [] {
+    requireAdmin();
+    revokedCredentials.insert(disclose(revocationHandle));
+}
+
+export circuit unrevokeCredential(revocationHandle: Field): [] {
+    requireAdmin();
+    revokedCredentials.remove(disclose(revocationHandle));
+}
+
+export circuit rotateAdmin(newAdmin: AdminPublicKey): [] {
+    requireAdmin();
+    contractAdmin = disclose(newAdmin);
+}
