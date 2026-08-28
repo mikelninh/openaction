@@ -1,0 +1,54 @@
+// Schnorr signature verification helper for Jubjub.
+// Adapted from Midnight Foundation's Apache-2.0 example-zkloan reference:
+// https://github.com/midnightntwrk/example-zkloan
+// SPDX-License-Identifier: Apache-2.0
+//
+// Temporary polyfill pattern used by the official reference until a standard
+// library Schnorr verifier is available in the pinned Compact line.
+
+module schnorr {
+  import CompactStandardLibrary;
+
+  export struct SchnorrSignature {
+    announcement: JubjubPoint;
+    response: Field;
+  }
+
+  struct SchnorrHashInput<#n> {
+    ann_x: Field;
+    ann_y: Field;
+    pk_x: Field;
+    pk_y: Field;
+    msg: Vector<n, Field>;
+  }
+
+  witness getSchnorrReduction(challengeHash: Field): [Uint<7>, Uint<248>];
+
+  export circuit schnorrVerify<#n>(
+                   msg: Vector<n, Field>,
+                   signature: SchnorrSignature,
+                   pk: JubjubPoint
+                   ): [] {
+    const {announcement, response} = signature;
+    const cFull: Field =
+            transientHash<SchnorrHashInput<n>>(
+              SchnorrHashInput<n> { ann_x: jubjubPointX(announcement),
+                                    ann_y: jubjubPointY(announcement),
+                                    pk_x: jubjubPointX(pk),
+                                    pk_y: jubjubPointY(pk),
+                                    msg: msg }
+              );
+    const TWO_248: Field =
+            452312848583266388373324160190187140051835877600158453279131187530910662656 as Field;
+    const [q, cTruncated] = getSchnorrReduction(cFull);
+    assert(disclose(q) < 116, "Schnorr quotient out of range");
+    assert(disclose(q) * TWO_248 + (disclose(cTruncated) as Field) == cFull,
+           "Invalid challenge reduction"
+           );
+    const c: Field = disclose(cTruncated) as Field;
+    const lhs: JubjubPoint = ecMulGenerator(response);
+    const rhs: JubjubPoint = ecAdd(announcement, ecMul(pk, c));
+    assert(jubjubPointX(lhs) == jubjubPointX(rhs) && jubjubPointY(lhs) == jubjubPointY(rhs),
+           "Invalid attestation signature");
+  }
+}
