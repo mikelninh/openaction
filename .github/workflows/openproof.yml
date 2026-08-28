@@ -101,7 +101,10 @@ jobs:
       - name: Deploy contract and submit real ZK proof transaction
         working-directory: openproof/contracts
         env:
-          MIDNIGHT_STORAGE_PASSWORD: openproof-local-ci-only
+          # Local CI-only encryption password. Midnight's private-state provider
+          # requires at least three character classes; this value is not used
+          # outside the ephemeral GitHub Actions runner.
+          MIDNIGHT_STORAGE_PASSWORD: OpenProof-CI-2026!Local
         run: npm run test:localnet
       - name: Stop Midnight local devnet
         if: always()
