@@ -12,7 +12,7 @@ on:
 permissions:
   contents: read
 jobs:
-  openproof:
+  protocol:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -21,8 +21,36 @@ jobs:
           node-version: '22'
       - run: node --check openproof/openproof.js
       - run: node openproof/tests/openproof.mjs
-      - name: Compact scaffold boundary
+
+  compact-compile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Compact devtools
+        shell: bash
         run: |
-          grep -q 'pragma language_version >= 0.22 && <= 0.23' openproof/contracts/openproof.compact
-          grep -q 'signature verification must be added' openproof/contracts/openproof.compact
-          echo 'Compact scaffold present; compilation/deployment is intentionally NOT claimed by this gate.'
+          curl --proto '=https' --tlsv1.2 -LsSf \
+            https://github.com/midnightntwrk/compact/releases/latest/download/compact-installer.sh | sh
+          source "$HOME/.local/bin/env"
+          compact update 0.31.1
+          compact compile --version
+          compact compile --runtime-version
+      - name: Compile OpenProof ZK contract
+        shell: bash
+        run: |
+          source "$HOME/.local/bin/env"
+          rm -rf openproof/contracts/managed/openproof
+          compact compile \
+            --compact-path openproof/contracts \
+            openproof/contracts/openproof.compact \
+            openproof/contracts/managed/openproof
+      - name: Assert generated ZK artifacts
+        shell: bash
+        run: |
+          test -f openproof/contracts/managed/openproof/contract/index.js
+          test -d openproof/contracts/managed/openproof/keys
+          test -d openproof/contracts/managed/openproof/zkir
+          find openproof/contracts/managed/openproof/keys -type f | grep -q .
+          find openproof/contracts/managed/openproof/zkir -type f | grep -q .
+          echo 'OpenProof Compact contract compiled and generated contract bindings, ZK keys, and ZKIR.'
