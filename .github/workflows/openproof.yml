@@ -32,14 +32,14 @@ jobs:
         run: |
           curl --proto '=https' --tlsv1.2 -LsSf \
             https://github.com/midnightntwrk/compact/releases/latest/download/compact-installer.sh | sh
-          source "$HOME/.local/bin/env"
+          export PATH="$HOME/.local/bin:$PATH"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
           compact update 0.31.1
           compact compile --version
           compact compile --runtime-version
       - name: Compile OpenProof ZK contract
         shell: bash
         run: |
-          source "$HOME/.local/bin/env"
           rm -rf openproof/contracts/managed/openproof
           compact compile \
             --compact-path openproof/contracts \
