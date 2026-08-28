@@ -4,13 +4,14 @@
 // without disclosing the claims themselves.
 //
 // Security model in this phase:
-// - trusted issuers are registered on the public ledger;
+// - trusted issuers are registered on the public ledger and pinned per policy;
 // - issuer signatures are verified inside the circuit;
 // - subject identity is derived from a private secret and purpose code;
 // - policy parameters + versions are public contract state, not caller-chosen;
 // - credential expiry uses Midnight block time, not caller-supplied "now";
 // - credential revocation handles are checked on-ledger;
 // - verifier challenges derive one-time nullifiers to reject exact replay;
+// - successful proofs write minimum queryable receipts for relying parties;
 // - no raw family, authority, professional, consent, or clinical values are stored.
 //
 // Current privacy trade-off: the random revocation handle is disclosed for the
@@ -30,6 +31,7 @@ export new type AdminPublicKey = Bytes<32>;
 
 export struct FamilyPolicy {
     version: Uint<16>;
+    requiredProviderId: Uint<16>;
     requiredCountryCode: Uint<16>;
     minimumChildren: Uint<8>;
     maximumMonthlyIncomeEur: Uint<32>;
@@ -37,6 +39,7 @@ export struct FamilyPolicy {
 
 export struct AgentPolicy {
     version: Uint<16>;
+    requiredProviderId: Uint<16>;
     requiredCapabilityCode: Uint<16>;
     maximumActionAmountEur: Uint<32>;
     requiredScopeHash: Field;
@@ -45,12 +48,25 @@ export struct AgentPolicy {
 
 export struct CarePolicy {
     version: Uint<16>;
+    requiredProviderId: Uint<16>;
     requiredWorkflowScopeHash: Field;
     requireLicenceActive: Boolean;
     requireRoleAuthorised: Boolean;
     requireConsentValid: Boolean;
     requirePrivacyReviewCurrent: Boolean;
     requireSecurityReviewCurrent: Boolean;
+}
+
+// Minimal public proof result. A relying party queries this from authoritative
+// contract state instead of trusting a prover-supplied JSON receipt.
+export struct ProofReceipt {
+    proofType: Uint<8>;              // 1=family, 2=agent, 3=care
+    purposeCode: Uint<16>;
+    policyVersion: Uint<16>;
+    providerId: Uint<16>;
+    bindingHash: Field;              // request/action/workflow binding
+    auxiliaryBindingHash: Field;     // e.g. agent approval-receipt hash
+    verifierChallengeHash: Field;    // hash of high-entropy verifier nonce
 }
 
 struct FamilyAttestation {
@@ -105,6 +121,7 @@ export ledger agentPolicies: Map<Uint<16>, AgentPolicy>;
 export ledger carePolicies: Map<Uint<16>, CarePolicy>;
 export ledger revokedCredentials: Set<Field>;
 export ledger usedNullifiers: Set<Field>;
+export ledger proofReceipts: Map<Field, ProofReceipt>;
 
 constructor() {
     contractAdmin = disclose(deriveAdminPublicKey(getUserSecret()));
@@ -144,6 +161,10 @@ export pure circuit deriveNullifier(
     ]);
 }
 
+export pure circuit verifierChallengeHash(verifierNonce: Field): Field {
+    return transientHash<Field>(verifierNonce);
+}
+
 circuit requireAdmin(): [] {
     assert(contractAdmin == deriveAdminPublicKey(getUserSecret()), "admin authority required");
 }
@@ -161,12 +182,28 @@ circuit requireFreshAndUnrevoked(validUntil: Uint<64>, revocationHandle: Field):
 
 circuit consumeVerifierChallenge(
     purposeCode: Uint<16>,
+    policyVersion: Uint<16>,
+    providerId: Uint<16>,
+    proofType: Uint<8>,
+    bindingHash: Field,
+    auxiliaryBindingHash: Field,
     verifierNonce: Field
 ): Field {
     const nullifier = deriveNullifier(getUserSecret(), purposeCode, verifierNonce);
     const publicNullifier = disclose(nullifier);
     assert(!usedNullifiers.member(publicNullifier), "verifier challenge already used");
     usedNullifiers.insert(publicNullifier);
+
+    const receipt = ProofReceipt {
+        proofType: proofType,
+        purposeCode: purposeCode,
+        policyVersion: policyVersion,
+        providerId: providerId,
+        bindingHash: bindingHash,
+        auxiliaryBindingHash: auxiliaryBindingHash,
+        verifierChallengeHash: verifierChallengeHash(verifierNonce)
+    };
+    proofReceipts.insert(publicNullifier, disclose(receipt));
     return publicNullifier;
 }
 
@@ -174,15 +211,18 @@ circuit consumeVerifierChallenge(
 
 export circuit proveFamilyEligibility(
     purposeCode: Uint<16>,
+    requestBindingHash: Field,
     verifierNonce: Field
 ): Field {
     const publicPurpose = disclose(purposeCode);
+    const publicRequestBinding = disclose(requestBindingHash);
     assert(familyPolicies.member(publicPurpose), "family policy not registered");
     const policy = familyPolicies.lookup(publicPurpose);
 
     const [claim, signature, providerId] = getFamilyAttestation();
     assert(claim.purposeCode == purposeCode, "credential purpose mismatch");
     assert(claim.policyVersion == policy.version, "family policy version mismatch");
+    assert(providerId == policy.requiredProviderId, "family issuer not authorised by policy");
 
     const subject = deriveSubjectPublicKey(getUserSecret(), purposeCode);
     const subjectHash = transientHash<Bytes<32>>(subject as Bytes<32>);
@@ -205,7 +245,15 @@ export circuit proveFamilyEligibility(
     assert(claim.childCount >= policy.minimumChildren, "child predicate failed");
     assert(claim.monthlyIncomeEur <= policy.maximumMonthlyIncomeEur, "income predicate failed");
 
-    return consumeVerifierChallenge(purposeCode, verifierNonce);
+    return consumeVerifierChallenge(
+        purposeCode,
+        policy.version,
+        providerId,
+        1 as Uint<8>,
+        publicRequestBinding,
+        0 as Field,
+        verifierNonce
+    );
 }
 
 // --------------------------- Agent authority ---------------------------
@@ -225,6 +273,7 @@ export circuit proveAgentAuthority(
     const [claim, signature, providerId] = getAgentAttestation();
     assert(claim.purposeCode == purposeCode, "credential purpose mismatch");
     assert(claim.policyVersion == policy.version, "agent policy version mismatch");
+    assert(providerId == policy.requiredProviderId, "agent issuer not authorised by policy");
     assert(claim.actionHash == publicActionHash, "action binding mismatch");
     assert(claim.approvalReceiptHash == publicApprovalHash, "approval receipt binding mismatch");
 
@@ -257,7 +306,15 @@ export circuit proveAgentAuthority(
         assert(claim.humanApproved, "human approval required");
     }
 
-    return consumeVerifierChallenge(purposeCode, verifierNonce);
+    return consumeVerifierChallenge(
+        purposeCode,
+        policy.version,
+        providerId,
+        2 as Uint<8>,
+        publicActionHash,
+        publicApprovalHash,
+        verifierNonce
+    );
 }
 
 // --------------------------- CareOS trust passport ---------------------------
@@ -275,6 +332,7 @@ export circuit proveCareTrustPassport(
     const [claim, signature, providerId] = getCareAttestation();
     assert(claim.purposeCode == purposeCode, "credential purpose mismatch");
     assert(claim.policyVersion == policy.version, "care policy version mismatch");
+    assert(providerId == policy.requiredProviderId, "care issuer not authorised by policy");
     assert(claim.workflowScopeHash == publicWorkflowScope, "workflow scope binding mismatch");
     assert(claim.workflowScopeHash == policy.requiredWorkflowScopeHash, "workflow scope not permitted");
 
@@ -314,7 +372,15 @@ export circuit proveCareTrustPassport(
         assert(claim.securityReviewCurrent, "security review not current");
     }
 
-    return consumeVerifierChallenge(purposeCode, verifierNonce);
+    return consumeVerifierChallenge(
+        purposeCode,
+        policy.version,
+        providerId,
+        3 as Uint<8>,
+        publicWorkflowScope,
+        0 as Field,
+        verifierNonce
+    );
 }
 
 // --------------------------- Governance ---------------------------
@@ -333,16 +399,19 @@ export circuit removeProvider(providerId: Uint<16>): [] {
 
 export circuit setFamilyPolicy(purposeCode: Uint<16>, policy: FamilyPolicy): [] {
     requireAdmin();
+    assert(providers.member(disclose(policy.requiredProviderId)), "family policy issuer must be registered");
     familyPolicies.insert(disclose(purposeCode), disclose(policy));
 }
 
 export circuit setAgentPolicy(purposeCode: Uint<16>, policy: AgentPolicy): [] {
     requireAdmin();
+    assert(providers.member(disclose(policy.requiredProviderId)), "agent policy issuer must be registered");
     agentPolicies.insert(disclose(purposeCode), disclose(policy));
 }
 
 export circuit setCarePolicy(purposeCode: Uint<16>, policy: CarePolicy): [] {
     requireAdmin();
+    assert(providers.member(disclose(policy.requiredProviderId)), "care policy issuer must be registered");
     carePolicies.insert(disclose(purposeCode), disclose(policy));
 }
 
