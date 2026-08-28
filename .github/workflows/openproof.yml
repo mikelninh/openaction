@@ -27,6 +27,9 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
       - name: Install Compact devtools
         shell: bash
         run: |
@@ -37,20 +40,31 @@ jobs:
           compact update 0.31.1
           compact compile --version
           compact compile --runtime-version
-      - name: Compile OpenProof ZK contract
+      - name: Compile OpenProof ZK contracts
         shell: bash
         run: |
-          rm -rf openproof/contracts/managed/openproof
+          rm -rf openproof/contracts/managed/openproof openproof/contracts/managed/openproof-signing
           compact compile \
             --compact-path openproof/contracts \
             openproof/contracts/openproof.compact \
             openproof/contracts/managed/openproof
+          compact compile \
+            --compact-path openproof/contracts \
+            openproof/contracts/openproof-signing.compact \
+            openproof/contracts/managed/openproof-signing
       - name: Assert generated ZK artifacts
         shell: bash
         run: |
-          test -f openproof/contracts/managed/openproof/contract/index.js
-          test -d openproof/contracts/managed/openproof/keys
-          test -d openproof/contracts/managed/openproof/zkir
-          find openproof/contracts/managed/openproof/keys -type f | grep -q .
-          find openproof/contracts/managed/openproof/zkir -type f | grep -q .
-          echo 'OpenProof Compact contract compiled and generated contract bindings, ZK keys, and ZKIR.'
+          for contract in openproof openproof-signing; do
+            test -f "openproof/contracts/managed/$contract/contract/index.js"
+            test -d "openproof/contracts/managed/$contract/keys"
+            test -d "openproof/contracts/managed/$contract/zkir"
+            find "openproof/contracts/managed/$contract/keys" -type f | grep -q .
+            find "openproof/contracts/managed/$contract/zkir" -type f | grep -q .
+          done
+          echo 'OpenProof verification + issuer helper contracts compiled with ZK artifacts.'
+      - name: Typecheck private-state and issuer adapters
+        working-directory: openproof/contracts
+        run: |
+          npm install --ignore-scripts
+          npm run typecheck
