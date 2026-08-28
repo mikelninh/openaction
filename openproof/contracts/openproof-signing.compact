@@ -1,8 +1,12 @@
-// Pure challenge helpers used by issuer/attestation services to create the
-// exact Schnorr signatures verified inside openproof.compact.
+// Pure helpers used by issuer/attestation services to create the exact
+// Schnorr messages and challenges verified inside openproof.compact.
 pragma language_version >= 0.22 && <= 0.23;
 import CompactStandardLibrary;
 import "schnorr" prefix Schnorr_;
+
+export pure circuit booleanMessageField(value: Boolean): Field {
+  return transientHash<Boolean>(value);
+}
 
 export pure circuit familyAttestationChallenge(
   ann_x: Field, ann_y: Field, pk_x: Field, pk_y: Field,
