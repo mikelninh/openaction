@@ -1,0 +1,55 @@
+{
+  "schema": "openaction.release-gate.v1",
+  "project": "Digital Worker Factory / OpsPilot",
+  "release": "paid-shadow-pilot-v1",
+  "outcome": {
+    "human_outcome": "A customer removes repetitive work while retaining control of consequential actions."
+  },
+  "gates": [
+    {
+      "id": "R0-paid-wedge",
+      "stage": "R0",
+      "owner": "human",
+      "blocking": true,
+      "status": "pass",
+      "claim": "Buyer, repeated workflow, price and target outcome are explicit.",
+      "evidence": [{"class": "human", "ref": "commercial/products.json + sales/PLAYBOOK.md"}]
+    },
+    {
+      "id": "R1-shadow-measurement",
+      "stage": "R1",
+      "owner": "automated",
+      "blocking": true,
+      "status": "pass",
+      "claim": "Before/after minutes, corrections, escalations and unsafe outcomes are measured case by case.",
+      "evidence": [{"class": "automated", "ref": "PR #58 shadow-replay E2E + CI"}]
+    },
+    {
+      "id": "R2-bounded-actions",
+      "stage": "R2",
+      "owner": "automated",
+      "blocking": true,
+      "status": "pass",
+      "claim": "Consequential actions remain policy-gated and human-controlled.",
+      "evidence": [{"class": "automated", "ref": "Factory trust/security CI"}]
+    },
+    {
+      "id": "R3-real-batch-quality",
+      "stage": "R3",
+      "owner": "human",
+      "blocking": true,
+      "status": "review",
+      "claim": "Real supervised batch saves >=30% observed human time with <=20% corrected cases and zero false completion/unsafe execution.",
+      "evidence": [{"class": "synthetic", "ref": "Synthetic 12-case fixture proves measurement machinery only"}]
+    },
+    {
+      "id": "R4-paid-outcome",
+      "stage": "R4",
+      "owner": "external",
+      "blocking": true,
+      "status": "todo",
+      "claim": "A paying customer completes the sprint and decides whether to continue.",
+      "evidence": []
+    }
+  ]
+}
