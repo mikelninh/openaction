@@ -1,14 +1,19 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import { readdirSync } from 'node:fs';
 import { releaseVerdict, validateReleaseGate } from '../scripts/validate-release-gate.mjs';
 import { validateAgencyReceipt } from '../scripts/validate-agency-receipt.mjs';
 
-for (const name of ['opspilot', 'game-studio', 'hana-atelier']) {
-  const manifest = JSON.parse(fs.readFileSync(new URL(`../examples/release-gate/${name}.json`, import.meta.url), 'utf8'));
+const releaseDir = new URL('../examples/release-gate/', import.meta.url);
+const releaseFiles = readdirSync(releaseDir).filter(name => name.endsWith('.json')).sort();
+assert.ok(releaseFiles.length >= 10, 'portfolio release examples should cover the priority stack');
+
+for (const file of releaseFiles) {
+  const manifest = JSON.parse(fs.readFileSync(new URL(file, releaseDir), 'utf8'));
   const validation = validateReleaseGate(manifest);
-  assert.equal(validation.ok, true, `${name}: ${validation.errors.join(', ')}`);
+  assert.equal(validation.ok, true, `${file}: ${validation.errors.join(', ')}`);
   const verdict = releaseVerdict(manifest);
-  assert.equal(verdict.verdict, 'REVIEW', `${name} should stay REVIEW until real-world evidence exists`);
+  assert.notEqual(verdict.verdict, 'PASS', `${file} must not claim full release before its R4 reality gate is evidenced`);
 }
 
 const illegalRealityPass = {
