@@ -1,0 +1,61 @@
+{
+  "schema": "openaction.agency-loop.v1",
+  "id": "agency_game_studio_patch",
+  "domain": "game_studio",
+  "goal": {
+    "statement": "Use synthetic players to catch broken mechanics and balance regressions before human playtests, then use humans to judge whether the game is actually fun.",
+    "human_outcome": "Players get a fairer, more legible and more enjoyable game with fewer obvious balance failures."
+  },
+  "state": {
+    "current": "Agent Lab Core already provides deterministic matches, replay verification, conformance tests, tournaments and paired counterfactuals.",
+    "evidence": [
+      "agent-lab-core deterministic replay",
+      "choice reports",
+      "counterfactual experiments",
+      "integration pilot contract"
+    ]
+  },
+  "gap": {
+    "blocker": "There is no studio-level release gate separating what simulation can prove from what only human play can prove.",
+    "why_now": "Cheaper long-horizon agents and reusable game adapters make thousands of reproducible synthetic sessions practical before every human test."
+  },
+  "options": [
+    "Playtest every patch manually first",
+    "Let simulation replace human playtesting",
+    "Run simulation gates first, then targeted human playtests"
+  ],
+  "decision": {
+    "selected_path": "Run simulation gates first, then targeted human playtests",
+    "decision_owner": "human",
+    "rationale": "Machines are excellent at repetition, edge cases and reproducibility; humans remain the authority on enjoyment, clarity, attachment and meaning."
+  },
+  "action": {
+    "next_action": "Connect one live studio game to Agent Lab Core and run baseline-versus-patch simulation with a human playtest handoff.",
+    "executor": "Game Studio simulation runner",
+    "authority": "prepare",
+    "external_side_effects": false
+  },
+  "proof": {
+    "success_metrics": [
+      "deterministic conformance passes",
+      "no illegal-action or replay regressions",
+      "dominant strategy and patch deltas are surfaced",
+      "human playtest records enjoyment, clarity and replay intent separately"
+    ],
+    "stop_conditions": [
+      "simulation results are presented as proof of fun",
+      "patch creates a critical rules regression",
+      "human feedback shows the simulated improvement harmed enjoyment"
+    ],
+    "evidence_required": [
+      "simulation report",
+      "representative replay seeds",
+      "patch comparison",
+      "human playtest notes"
+    ]
+  },
+  "feedback": {
+    "observations": [],
+    "next_cycle_trigger": "Simulation or human evidence changes the patch, tutorial, balance or release decision."
+  }
+}
