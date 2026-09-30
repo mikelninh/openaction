@@ -1,0 +1,75 @@
+{
+  "schema": "openaction.release-gate.v1",
+  "project": "Anspruch",
+  "release": "rights-recovery-dossier-v1",
+  "outcome": {
+    "human_outcome": "A person moves from a cautious eligibility indication to a self-service evidence package and official/partner next step without losing filing authority."
+  },
+  "gates": [
+    {
+      "id": "R0-recovery-wedge",
+      "stage": "R0",
+      "owner": "human",
+      "blocking": true,
+      "status": "pass",
+      "claim": "Free check → paid dossier wedge and self-service boundary are explicit.",
+      "evidence": [
+        {
+          "class": "human",
+          "ref": "Anspruch README + COMPLIANCE.md"
+        }
+      ]
+    },
+    {
+      "id": "R1-dossier-contract",
+      "stage": "R1",
+      "owner": "automated",
+      "blocking": true,
+      "status": "pass",
+      "claim": "Dossier contains explicit submission authority and official-verification requirements.",
+      "evidence": [
+        {
+          "class": "automated",
+          "ref": "Anspruch PR #1 tests 36708884104"
+        }
+      ]
+    },
+    {
+      "id": "R2-compliance-signoff",
+      "stage": "R2",
+      "owner": "human",
+      "blocking": true,
+      "status": "review",
+      "claim": "Pre-launch lawyer/partner/privacy/compliance checklist is signed off.",
+      "evidence": [
+        {
+          "class": "source",
+          "ref": "COMPLIANCE.md checklist remains open"
+        }
+      ]
+    },
+    {
+      "id": "R3-end-to-end-correction",
+      "stage": "R3",
+      "owner": "human",
+      "blocking": true,
+      "status": "review",
+      "claim": "A real dossier is reviewed for completeness, clarity and corrections before scaled launch.",
+      "evidence": [
+        {
+          "class": "source",
+          "ref": "No real-user dossier review recorded yet"
+        }
+      ]
+    },
+    {
+      "id": "R4-real-recovery-path",
+      "stage": "R4",
+      "owner": "external",
+      "blocking": true,
+      "status": "todo",
+      "claim": "A real user/partner accepts the dossier into an official/regulated path and the outcome is recorded.",
+      "evidence": []
+    }
+  ]
+}
