@@ -1,0 +1,75 @@
+{
+  "schema": "openaction.release-gate.v1",
+  "project": "COMMONS",
+  "release": "outcome-ledger-v1",
+  "outcome": {
+    "human_outcome": "Human-set missions learn from verified outcome evidence without collapsing unlike human values into one score."
+  },
+  "gates": [
+    {
+      "id": "R0-human-values",
+      "stage": "R0",
+      "owner": "human",
+      "blocking": true,
+      "status": "pass",
+      "claim": "Humans set goals and values; COMMONS explicitly rejects one universal flourishing score.",
+      "evidence": [
+        {
+          "class": "human",
+          "ref": "COMMONS README + SUCCESS.md + Outcome Ledger v1"
+        }
+      ]
+    },
+    {
+      "id": "R1-portable-outcomes",
+      "stage": "R1",
+      "owner": "automated",
+      "blocking": true,
+      "status": "pass",
+      "claim": "Portable Agency Receipts are validated and normalized while synthetic evidence stays synthetic.",
+      "evidence": [
+        {
+          "class": "automated",
+          "ref": "COMMONS PR #100 CI 36709881671"
+        }
+      ]
+    },
+    {
+      "id": "R2-authority-preserved",
+      "stage": "R2",
+      "owner": "automated",
+      "blocking": true,
+      "status": "pass",
+      "claim": "Outcome ingestion rejects consequential external execution without human/policy ownership.",
+      "evidence": [
+        {
+          "class": "automated",
+          "ref": "COMMONS PR #100 CI 36709881671"
+        }
+      ]
+    },
+    {
+      "id": "R3-closed-feedback-loop",
+      "stage": "R3",
+      "owner": "human",
+      "blocking": true,
+      "status": "review",
+      "claim": "A real outcome receipt changes the next mission/action rather than only populating a ledger.",
+      "evidence": [
+        {
+          "class": "source",
+          "ref": "Outcome Ledger exists; no cross-project real closed-loop receipt yet"
+        }
+      ]
+    },
+    {
+      "id": "R4-real-resolved-need",
+      "stage": "R4",
+      "owner": "external",
+      "blocking": true,
+      "status": "todo",
+      "claim": "A real human need is measurably resolved and the observed result informs the next cycle.",
+      "evidence": []
+    }
+  ]
+}
