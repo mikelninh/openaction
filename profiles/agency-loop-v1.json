@@ -1,0 +1,35 @@
+{
+  "schema": "openaction.agency-loop.v1",
+  "name": "Human Agency Loop",
+  "purpose": "Turn evidence into understanding, choice, bounded action and measurable learning while keeping consequential authority explicit.",
+  "stages": [
+    "sense",
+    "understand",
+    "choose",
+    "act",
+    "prove",
+    "learn"
+  ],
+  "required": {
+    "goal": ["statement", "human_outcome"],
+    "state": ["current", "evidence"],
+    "gap": ["blocker", "why_now"],
+    "decision": ["selected_path", "decision_owner", "rationale"],
+    "action": ["next_action", "executor", "authority", "external_side_effects"],
+    "proof": ["success_metrics", "stop_conditions", "evidence_required"],
+    "feedback": ["observations", "next_cycle_trigger"]
+  },
+  "authority_rules": {
+    "allowed_authority": ["observe", "propose", "prepare", "execute"],
+    "decision_owner": ["human", "shared", "policy"],
+    "consequential_external_action_requires_human_or_policy_authority": true,
+    "machine_evidence_must_not_claim_subjective_human_outcomes": true
+  },
+  "design_principles": [
+    "Evidence before confidence.",
+    "The model may propose; the system or human authorises.",
+    "Missing evidence stays missing.",
+    "Simulation can prove mechanics, not human meaning or enjoyment.",
+    "Every cycle must end in evidence or a clearly recorded unknown."
+  ]
+}
