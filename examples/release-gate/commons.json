@@ -26,11 +26,11 @@
       "owner": "automated",
       "blocking": true,
       "status": "pass",
-      "claim": "Portable Agency Receipts are validated and normalized while synthetic evidence stays synthetic.",
+      "claim": "Current OpenAction receipt shapes ingest without evidence laundering; explicit synthetic/observed/external/failure class is preserved.",
       "evidence": [
         {
           "class": "automated",
-          "ref": "COMMONS PR #100 CI 36709881671"
+          "ref": "COMMONS PR #100 CI 36719774632 + OpenAction compatibility fixtures"
         }
       ]
     },
@@ -44,7 +44,7 @@
       "evidence": [
         {
           "class": "automated",
-          "ref": "COMMONS PR #100 CI 36709881671"
+          "ref": "COMMONS PR #100 CI 36719774632"
         }
       ]
     },
@@ -58,7 +58,7 @@
       "evidence": [
         {
           "class": "source",
-          "ref": "Outcome Ledger exists; no cross-project real closed-loop receipt yet"
+          "ref": "Cross-repo receipt compatibility proven; no real observed receipt has changed a next mission yet"
         }
       ]
     },
