@@ -72,6 +72,14 @@ const fakeOutcome = structuredClone(receipt);
 fakeOutcome.outcome.status = 'probably_good';
 assert.ok(validateAgencyReceipt(fakeOutcome).errors.includes('invalid_outcome_status'));
 
+const missingEvidenceClass = structuredClone(receipt);
+delete missingEvidenceClass.outcome.evidence_class;
+assert.ok(validateAgencyReceipt(missingEvidenceClass).errors.includes('outcome_evidence_class_required'));
+
+const fakeEvidenceClass = structuredClone(receipt);
+fakeEvidenceClass.outcome.evidence_class = 'trust_me';
+assert.ok(validateAgencyReceipt(fakeEvidenceClass).errors.includes('invalid_outcome_evidence_class'));
+
 const malformedEvidence = structuredClone(receipt);
 malformedEvidence.evidence = [{ ref: '' }];
 assert.ok(validateAgencyReceipt(malformedEvidence).errors.includes('evidence_requires_nonempty_refs'));
