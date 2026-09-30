@@ -25,12 +25,12 @@
       "stage": "R1",
       "owner": "automated",
       "blocking": true,
-      "status": "review",
+      "status": "pass",
       "claim": "12-case master proof and source-impact gates remain green.",
       "evidence": [
         {
-          "class": "source",
-          "ref": "CivicOS PR #3 must rerun canonical gate before PASS"
+          "class": "automated",
+          "ref": "CivicOS PR #3 proof contract CI 36709249942"
         }
       ]
     },
@@ -39,12 +39,12 @@
       "stage": "R2",
       "owner": "automated",
       "blocking": true,
-      "status": "review",
+      "status": "pass",
       "claim": "Invite-only access, consent, bounded uploads, no persistence and no automatic external actions pass.",
       "evidence": [
         {
-          "class": "source",
-          "ref": "CivicOS PR #3 must rerun pilot gate before PASS"
+          "class": "automated",
+          "ref": "CivicOS PR #3 pilot gate in proof-contract CI 36709249942"
         }
       ]
     },
