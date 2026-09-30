@@ -4,9 +4,15 @@
   "project": "HANA Commerce",
   "observed_at": "2026-09-30T12:00:00Z",
   "evidence": [
-    {"ref": "HANA canon v1 machine-readable constraints"},
-    {"ref": "two-hour deterministic live-host soak"},
-    {"ref": "commerce policy tests"}
+    {
+      "ref": "HANA canon v1 machine-readable constraints"
+    },
+    {
+      "ref": "two-hour deterministic live-host soak"
+    },
+    {
+      "ref": "commerce policy red-team tests"
+    }
   ],
   "decision": {
     "owner": "human",
@@ -19,8 +25,9 @@
   },
   "outcome": {
     "status": "succeeded",
+    "evidence_class": "synthetic",
     "evidence": [
-      "CI verifies runtime invariants, canon constraints and safe fallback behaviour"
+      "CI verifies runtime invariants, canon constraints, policy red-team and safe fallback behaviour"
     ]
   },
   "learning": {
