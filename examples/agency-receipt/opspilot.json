@@ -1,0 +1,26 @@
+{
+  "schema": "openaction.agency-receipt.v1",
+  "mission_id": "mission_demo_paid_shadow",
+  "project": "Digital Worker Factory / OpsPilot",
+  "observed_at": "2026-09-30T00:00:00Z",
+  "evidence": [
+    {"ref": "approved supervised shadow batch"},
+    {"ref": "case-level before/after timing"}
+  ],
+  "decision": {
+    "owner": "human",
+    "rationale": "Keep external actions disabled until observed value and correction burden are known."
+  },
+  "action": {
+    "authority": "prepare",
+    "external_side_effects": false,
+    "description": "Prepare work in shadow mode for human review."
+  },
+  "outcome": {
+    "status": "succeeded",
+    "evidence": ["review receipt", "case-level metrics"]
+  },
+  "learning": {
+    "next_change": "Turn every correction into a regression case before widening autonomy."
+  }
+}
