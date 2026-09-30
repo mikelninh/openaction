@@ -40,11 +40,11 @@
       "owner": "automated",
       "blocking": true,
       "status": "pass",
-      "claim": "Non-vegan products, invented health claims and fake scarcity are blocked/escalated.",
+      "claim": "Non-vegan products, unsupported health claims, fabricated scarcity/social proof and shame/fear/insecurity pressure fail closed or escalate.",
       "evidence": [
         {
           "class": "automated",
-          "ref": "HANA Commerce policy tests / CI 36708309898"
+          "ref": "HANA Commerce red-team + policy tests / CI 36719079879"
         }
       ]
     },
@@ -58,7 +58,7 @@
       "evidence": [
         {
           "class": "automated",
-          "ref": "HANA Commerce PR #3 CI 36708309898"
+          "ref": "HANA Commerce PR #3 CI 36719079879 incl. two-hour soak"
         }
       ]
     },
