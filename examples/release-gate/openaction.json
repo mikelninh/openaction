@@ -26,11 +26,11 @@
       "owner": "automated",
       "blocking": true,
       "status": "pass",
-      "claim": "OpsPilot, HANA and Game Studio examples validate against one contract.",
+      "claim": "OpsPilot, HANA Commerce and Game Studio Agency Receipts plus portfolio release manifests validate under one strict contract.",
       "evidence": [
         {
           "class": "automated",
-          "ref": "OpenAction v1 CI 36707505428"
+          "ref": "OpenAction CI 36719633604 / 36719633871"
         }
       ]
     },
@@ -40,11 +40,11 @@
       "owner": "automated",
       "blocking": true,
       "status": "pass",
-      "claim": "R4 cannot be automated and synthetic evidence cannot satisfy real-world PASS.",
+      "claim": "R4 cannot be automated; receipts require explicit evidence class so synthetic results cannot silently become observed outcomes.",
       "evidence": [
         {
           "class": "automated",
-          "ref": "OpenAction release-gate tests / CI 36707505372"
+          "ref": "OpenAction release-gate/receipt tests CI 36719633604 / 36719633871"
         }
       ]
     },
@@ -58,7 +58,7 @@
       "evidence": [
         {
           "class": "automated",
-          "ref": "OpenAction v1 CI 36707505428"
+          "ref": "OpenAction v1/current checks 36719633604 / 36719633871"
         }
       ]
     },
