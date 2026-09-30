@@ -16,3 +16,4 @@ jobs:
       - run: node --check sdk/openaction.js
       - run: node tests/smoke.mjs
       - run: node tests/release-gate.mjs
+      - run: node tests/council-integration.mjs
