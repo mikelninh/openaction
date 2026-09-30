@@ -25,12 +25,12 @@
       "stage": "R1",
       "owner": "automated",
       "blocking": true,
-      "status": "review",
+      "status": "pass",
       "claim": "Repeat-rate, reward-cost, margin and source evidence are machine-checkable.",
       "evidence": [
         {
-          "class": "source",
-          "ref": "Transit PR #1 implementation; CI must be green before PASS"
+          "class": "automated",
+          "ref": "Transit PR #1 pilot-evidence CI 36708982954"
         }
       ]
     },
