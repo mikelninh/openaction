@@ -1,0 +1,7 @@
+{
+  "schema": "openaction.bounded-question.v1",
+  "id": "hana_commerce_next_move",
+  "prompt": "What is the safest useful next conversational move?",
+  "answers": ["answer_verified_facts", "ask_clarifying_question", "recommend_nothing", "handoff_human"],
+  "fallback": "handoff_human"
+}
