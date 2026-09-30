@@ -1,0 +1,7 @@
+{
+  "schema": "openaction.bounded-question.v1",
+  "id": "opspilot_inbox_route",
+  "prompt": "Which bounded workflow should receive this case?",
+  "answers": ["maintenance", "invoice", "contractor", "human_review"],
+  "fallback": "human_review"
+}
