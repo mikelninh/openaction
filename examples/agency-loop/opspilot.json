@@ -1,0 +1,62 @@
+{
+  "schema": "openaction.agency-loop.v1",
+  "id": "agency_opspilot_paid_shadow_pilot",
+  "domain": "operations",
+  "goal": {
+    "statement": "Turn one repetitive operational workflow into a paid, bounded AI-assisted service.",
+    "human_outcome": "A customer gets less repetitive work while retaining control over consequential decisions."
+  },
+  "state": {
+    "current": "Digital Worker Factory already has capability gates, evidence requirements, shadow mode, RevenueOS and a €1,900 sprint offer.",
+    "evidence": [
+      "digital-worker-factory README",
+      "commercial/products.json",
+      "sales/PLAYBOOK.md",
+      "shadow replay proof"
+    ]
+  },
+  "gap": {
+    "blocker": "No paid customer has yet produced observed before/after value evidence.",
+    "why_now": "The runtime is mature enough that more platform code has lower leverage than a real paid shadow pilot."
+  },
+  "options": [
+    "Build more generic agent infrastructure",
+    "Sell and run one supervised shadow pilot",
+    "Expand into another vertical before proof"
+  ],
+  "decision": {
+    "selected_path": "Sell and run one supervised shadow pilot",
+    "decision_owner": "human",
+    "rationale": "It produces cash, failure data, real value evidence and the strongest signal for what to automate next."
+  },
+  "action": {
+    "next_action": "Run one €1,900 AI Operations Sprint with external actions disabled during the first shadow measurement.",
+    "executor": "Digital Worker Factory with human operator",
+    "authority": "prepare",
+    "external_side_effects": false
+  },
+  "proof": {
+    "success_metrics": [
+      "kickoff payment collected",
+      "observed time saved >= 30%",
+      "corrected cases <= 20%",
+      "false completion = 0",
+      "unsafe execution = 0"
+    ],
+    "stop_conditions": [
+      "customer workflow cannot plausibly repay pilot cost",
+      "required data access is unsafe or unavailable",
+      "false completion or unsafe action escapes containment"
+    ],
+    "evidence_required": [
+      "baseline handling times",
+      "review times",
+      "case-level corrections",
+      "customer decision on continuation"
+    ]
+  },
+  "feedback": {
+    "observations": [],
+    "next_cycle_trigger": "Pilot evidence changes the workflow, price, autonomy boundary or expansion decision."
+  }
+}

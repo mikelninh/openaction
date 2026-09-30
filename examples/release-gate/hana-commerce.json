@@ -1,0 +1,75 @@
+{
+  "schema": "openaction.release-gate.v1",
+  "project": "HANA Commerce",
+  "release": "embodied-trusted-worker-v1",
+  "outcome": {
+    "human_outcome": "A customer receives honest, verified product guidance from a recognisable HANA while retaining control over purchasing."
+  },
+  "gates": [
+    {
+      "id": "R0-human-canon",
+      "stage": "R0",
+      "owner": "human",
+      "blocking": true,
+      "status": "pass",
+      "claim": "HANA identity and trust-over-conversion values are human-authored and versioned.",
+      "evidence": [
+        {
+          "class": "human",
+          "ref": "HANA canon v1 / PR #3"
+        }
+      ]
+    },
+    {
+      "id": "R1-verified-catalog",
+      "stage": "R1",
+      "owner": "automated",
+      "blocking": true,
+      "status": "pass",
+      "claim": "Recommendations are limited to approved product records and canon-versioned traces.",
+      "evidence": [
+        {
+          "class": "automated",
+          "ref": "HANA Commerce CI 36708309898"
+        }
+      ]
+    },
+    {
+      "id": "R2-manipulation-boundary",
+      "stage": "R2",
+      "owner": "automated",
+      "blocking": true,
+      "status": "pass",
+      "claim": "Non-vegan products, unsupported health claims, fabricated scarcity/social proof and shame/fear/insecurity pressure fail closed or escalate.",
+      "evidence": [
+        {
+          "class": "automated",
+          "ref": "HANA Commerce red-team + policy tests / CI 36719079879"
+        }
+      ]
+    },
+    {
+      "id": "R3-runtime-reliability",
+      "stage": "R3",
+      "owner": "automated",
+      "blocking": true,
+      "status": "pass",
+      "claim": "Dry-run runtime, fallback language, operator kill switch and synthetic soak tests are green.",
+      "evidence": [
+        {
+          "class": "automated",
+          "ref": "HANA Commerce PR #3 CI 36719079879 incl. two-hour soak"
+        }
+      ]
+    },
+    {
+      "id": "R4-real-product-journey",
+      "stage": "R4",
+      "owner": "external",
+      "blocking": true,
+      "status": "todo",
+      "claim": "A real customer completes a verified product journey and merchant-controlled purchase path without manipulation.",
+      "evidence": []
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "schema": "openaction.release-gate.v1",
+  "project": "OpenAction",
+  "release": "human-agency-loop-v1",
+  "outcome": {
+    "human_outcome": "Different products can share inspectable mission state, authority and outcome evidence without depending on one model or cloud."
+  },
+  "gates": [
+    {
+      "id": "R0-protocol-purpose",
+      "stage": "R0",
+      "owner": "human",
+      "blocking": true,
+      "status": "pass",
+      "claim": "Human Agency Loop purpose and governance boundary are explicit.",
+      "evidence": [
+        {
+          "class": "human",
+          "ref": "Human Agency Loop design / PR #14"
+        }
+      ]
+    },
+    {
+      "id": "R1-cross-domain-examples",
+      "stage": "R1",
+      "owner": "automated",
+      "blocking": true,
+      "status": "pass",
+      "claim": "OpsPilot, HANA Commerce and Game Studio Agency Receipts plus portfolio release manifests validate under one strict contract.",
+      "evidence": [
+        {
+          "class": "automated",
+          "ref": "OpenAction CI 36719633604 / 36719633871"
+        }
+      ]
+    },
+    {
+      "id": "R2-release-boundaries",
+      "stage": "R2",
+      "owner": "automated",
+      "blocking": true,
+      "status": "pass",
+      "claim": "R4 cannot be automated; receipts require explicit evidence class so synthetic results cannot silently become observed outcomes.",
+      "evidence": [
+        {
+          "class": "automated",
+          "ref": "OpenAction release-gate/receipt tests CI 36719633604 / 36719633871"
+        }
+      ]
+    },
+    {
+      "id": "R3-conformance",
+      "stage": "R3",
+      "owner": "automated",
+      "blocking": true,
+      "status": "pass",
+      "claim": "Protocol/SDK/conformance checks remain green.",
+      "evidence": [
+        {
+          "class": "automated",
+          "ref": "OpenAction v1/current checks 36719633604 / 36719633871"
+        }
+      ]
+    },
+    {
+      "id": "R4-independent-adoption",
+      "stage": "R4",
+      "owner": "external",
+      "blocking": true,
+      "status": "todo",
+      "claim": "At least one independent adopter exchanges/uses the contract without relying on the original author.",
+      "evidence": []
+    }
+  ]
+}

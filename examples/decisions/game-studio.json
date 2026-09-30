@@ -1,0 +1,7 @@
+{
+  "schema": "openaction.bounded-question.v1",
+  "id": "game_studio_next_test",
+  "prompt": "What should the evidence pipeline do next with this patch?",
+  "answers": ["simulate_more", "target_human_playtest", "block_patch", "needs_reasoning"],
+  "fallback": "needs_reasoning"
+}

@@ -1,0 +1,55 @@
+{
+  "schema": "openaction.release-gate.v1",
+  "project": "HANA / Atelier",
+  "release": "hana-canon-genome-v1",
+  "outcome": {
+    "human_outcome": "HANA remains recognisably the same authored character across story, fashion, 3D, games and commerce while controlled variation stays possible."
+  },
+  "gates": [
+    {
+      "id": "R0-canon-owner",
+      "stage": "R0",
+      "owner": "human",
+      "blocking": true,
+      "status": "pass",
+      "claim": "Human creative direction owns canon and the selected Graphic Hero direction.",
+      "evidence": [{"class": "human", "ref": "HANA GH-01 selected direction / Atelier PR #4"}]
+    },
+    {
+      "id": "R1-versioned-identity",
+      "stage": "R1",
+      "owner": "automated",
+      "blocking": true,
+      "status": "pass",
+      "claim": "Genome has deterministic fingerprint, lineage and explicit canon locks.",
+      "evidence": [{"class": "automated", "ref": "Atelier Genome smoke tests / PR #4"}]
+    },
+    {
+      "id": "R2-no-silent-canon-mutation",
+      "stage": "R2",
+      "owner": "automated",
+      "blocking": true,
+      "status": "pass",
+      "claim": "Software rejects mutations of locked identity unless a human deliberately changes the lock.",
+      "evidence": [{"class": "automated", "ref": "Atelier bad-logo mutation regression test"}]
+    },
+    {
+      "id": "R3-cross-surface-roundtrip",
+      "stage": "R3",
+      "owner": "human",
+      "blocking": true,
+      "status": "review",
+      "claim": "One canonical object survives at least three renderers/surfaces without contradiction.",
+      "evidence": [{"class": "automated", "ref": "Current code proves genome lineage only; cross-surface roundtrip not yet complete"}]
+    },
+    {
+      "id": "R4-human-recognition",
+      "stage": "R4",
+      "owner": "human",
+      "blocking": true,
+      "status": "todo",
+      "claim": "Real viewers/readers recognise the intended HANA identity and emotional role across surfaces.",
+      "evidence": []
+    }
+  ]
+}

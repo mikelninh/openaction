@@ -1,0 +1,79 @@
+{
+  "schema": "openaction.release-gate.v1",
+  "project": "Game Studio / Agent Lab Core",
+  "release": "game-qa-balance-box-v1",
+  "outcome": {
+    "human_outcome": "A game team catches reproducible mechanics failures earlier and uses human playtests on the questions machines cannot answer."
+  },
+  "gates": [
+    {
+      "id": "R0-service-contract",
+      "stage": "R0",
+      "owner": "human",
+      "blocking": true,
+      "status": "pass",
+      "claim": "Mechanics QA and human-experience claims are explicitly separated.",
+      "evidence": [
+        {
+          "class": "human",
+          "ref": "Agent Lab Core PR #7 product contract"
+        }
+      ]
+    },
+    {
+      "id": "R1-replay-evidence",
+      "stage": "R1",
+      "owner": "automated",
+      "blocking": true,
+      "status": "pass",
+      "claim": "Runs are seeded, replayable and comparable.",
+      "evidence": [
+        {
+          "class": "automated",
+          "ref": "Agent Lab deterministic replay/conformance tests"
+        }
+      ]
+    },
+    {
+      "id": "R2-human-fun-boundary",
+      "stage": "R2",
+      "owner": "automated",
+      "blocking": true,
+      "status": "pass",
+      "claim": "Synthetic mechanics evidence cannot produce a final human-fun PASS.",
+      "evidence": [
+        {
+          "class": "automated",
+          "ref": "studio release-gate tests on PR #7"
+        }
+      ]
+    },
+    {
+      "id": "R3-reference-integration",
+      "stage": "R3",
+      "owner": "automated",
+      "blocking": true,
+      "status": "pass",
+      "claim": "Two structurally different real games use the canonical Agent Lab contract with deterministic replay/conformance evidence and drift control.",
+      "evidence": [
+        {
+          "class": "automated",
+          "ref": "Tiny Tactics PR #31 / CI 36706175819"
+        },
+        {
+          "class": "automated",
+          "ref": "Tiến Lên PR #13 / CI 36710961197 + 600-game engine selftest"
+        }
+      ]
+    },
+    {
+      "id": "R4-external-team",
+      "stage": "R4",
+      "owner": "external",
+      "blocking": true,
+      "status": "todo",
+      "claim": "An external team receives useful reproducible findings and a targeted human playtest plan.",
+      "evidence": []
+    }
+  ]
+}

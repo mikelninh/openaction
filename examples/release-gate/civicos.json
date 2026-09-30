@@ -1,0 +1,80 @@
+{
+  "schema": "openaction.release-gate.v1",
+  "project": "CivicOS",
+  "release": "1.0.0-rc2-first-tester",
+  "outcome": {
+    "human_outcome": "A trusted adult can distinguish evidence, uncertainty and the next action without CivicOS taking consequential authority."
+  },
+  "gates": [
+    {
+      "id": "R0-civic-outcome",
+      "stage": "R0",
+      "owner": "human",
+      "blocking": true,
+      "status": "pass",
+      "claim": "Master proof, first-tester purpose and public-beta boundary are explicitly defined.",
+      "evidence": [
+        {
+          "class": "human",
+          "ref": "CivicOS docs/READINESS.md + PILOT_RELEASE.md"
+        }
+      ]
+    },
+    {
+      "id": "R1-master-proof",
+      "stage": "R1",
+      "owner": "automated",
+      "blocking": true,
+      "status": "pass",
+      "claim": "12-case master proof and source-impact gates remain green.",
+      "evidence": [
+        {
+          "class": "automated",
+          "ref": "CivicOS PR #3 proof contract CI 36709249942"
+        }
+      ]
+    },
+    {
+      "id": "R2-first-tester-safety",
+      "stage": "R2",
+      "owner": "automated",
+      "blocking": true,
+      "status": "pass",
+      "claim": "Invite-only access, consent, bounded uploads, no persistence and no automatic external actions pass.",
+      "evidence": [
+        {
+          "class": "automated",
+          "ref": "CivicOS PR #3 pilot gate in proof-contract CI 36709249942"
+        }
+      ]
+    },
+    {
+      "id": "R3-runtime-deployment",
+      "stage": "R3",
+      "owner": "human",
+      "blocking": true,
+      "status": "review",
+      "claim": "Pilot secret and secure runtime configuration are supplied outside Git for an invite-only deployment.",
+      "evidence": [
+        {
+          "class": "source",
+          "ref": "Runtime configuration intentionally absent from CI"
+        }
+      ]
+    },
+    {
+      "id": "R4-representative-beta",
+      "stage": "R4",
+      "owner": "external",
+      "blocking": true,
+      "status": "review",
+      "claim": "Representative user evaluation, qualified domain review and production IAM/privacy/provider gaps are closed.",
+      "evidence": [
+        {
+          "class": "source",
+          "ref": "CivicOS public-beta gates explicitly remain false"
+        }
+      ]
+    }
+  ]
+}

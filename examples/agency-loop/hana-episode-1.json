@@ -1,0 +1,59 @@
+{
+  "schema": "openaction.agency-loop.v1",
+  "id": "agency_hana_episode_1",
+  "domain": "creative_ip",
+  "goal": {
+    "statement": "Release the smallest HANA Episode 1 that makes a stranger care about Hana and want the next episode.",
+    "human_outcome": "A reader feels something real, remembers the human relationship at the centre, and chooses to continue."
+  },
+  "state": {
+    "current": "Hana has a strong origin, visual direction, Le relationship, Thread mythology and multiple product concepts, but no canonical GitHub source of truth.",
+    "evidence": [
+      "approved Hana character/story canon",
+      "Episode 1 release direction",
+      "Graphic Hero Jacket direction"
+    ]
+  },
+  "gap": {
+    "blocker": "Canon, production state and release evidence are fragmented across conversations and assets.",
+    "why_now": "Modern multimodal tools make production faster, which increases the cost of inconsistent canon unless the source of truth becomes durable first."
+  },
+  "options": [
+    "Generate more scenes and variants",
+    "Create canonical HANA Studio state and finish Episode 1",
+    "Start multiple merch/product releases in parallel"
+  ],
+  "decision": {
+    "selected_path": "Create canonical HANA Studio state and finish Episode 1",
+    "decision_owner": "human",
+    "rationale": "Hana's moat is emotional authorship and recognisable IP, not generation volume."
+  },
+  "action": {
+    "next_action": "Lock Episode 1 beat sheet, recurring human object/ritual, required canonical assets and thumbnail reader-test package.",
+    "executor": "Human creative director with AI-assisted production",
+    "authority": "prepare",
+    "external_side_effects": false
+  },
+  "proof": {
+    "success_metrics": [
+      "canonical Episode 1-critical visual/story choices have zero unresolved contradictions",
+      "reader understands the central emotional beat without lore explanation",
+      ">= 70% of a small real-reader test wants the next episode"
+    ],
+    "stop_conditions": [
+      "new lore is being added instead of resolving the episode",
+      "AI-generated variation weakens character recognition",
+      "reader test cannot identify the emotional relationship"
+    ],
+    "evidence_required": [
+      "beat sheet",
+      "thumbnail sequence",
+      "canon checklist",
+      "real human reader responses"
+    ]
+  },
+  "feedback": {
+    "observations": [],
+    "next_cycle_trigger": "Reader evidence changes pacing, clarity or the next release decision."
+  }
+}

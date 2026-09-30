@@ -1,0 +1,75 @@
+{
+  "schema": "openaction.release-gate.v1",
+  "project": "PrüfPilot",
+  "release": "qualified-reviewer-pilot-v1",
+  "outcome": {
+    "human_outcome": "A reviewer resolves document-review work faster without unsupported findings or hidden missing evidence."
+  },
+  "gates": [
+    {
+      "id": "R0-buyer-offer",
+      "stage": "R0",
+      "owner": "human",
+      "blocking": true,
+      "status": "review",
+      "claim": "Buyer, scope and paid pilot offer are explicit enough to run.",
+      "evidence": [
+        {
+          "class": "human",
+          "ref": "commercial catalogue / portfolio plan"
+        }
+      ]
+    },
+    {
+      "id": "R1-review-pack",
+      "stage": "R1",
+      "owner": "automated",
+      "blocking": true,
+      "status": "pass",
+      "claim": "Reviewer-study pack, rubric, validator and representative proof artifacts exist.",
+      "evidence": [
+        {
+          "class": "automated",
+          "ref": "proof/reviewer-study + existing green CI"
+        }
+      ]
+    },
+    {
+      "id": "R2-human-authority",
+      "stage": "R2",
+      "owner": "automated",
+      "blocking": true,
+      "status": "pass",
+      "claim": "Missing evidence stays missing and consequential external handoff requires explicit authority.",
+      "evidence": [
+        {
+          "class": "automated",
+          "ref": "repo policy + privacy/authority tests"
+        }
+      ]
+    },
+    {
+      "id": "R3-qualified-reviewer",
+      "stage": "R3",
+      "owner": "human",
+      "blocking": true,
+      "status": "review",
+      "claim": "A qualified reviewer evaluates evidence linkage, unsupported findings, correction burden and operator time.",
+      "evidence": [
+        {
+          "class": "source",
+          "ref": "reviewer study is ready_for_review; no qualified reviewer result yet"
+        }
+      ]
+    },
+    {
+      "id": "R4-paid-pilot",
+      "stage": "R4",
+      "owner": "external",
+      "blocking": true,
+      "status": "todo",
+      "claim": "A real B2B buyer completes a paid review/pilot and decides whether to continue.",
+      "evidence": []
+    }
+  ]
+}

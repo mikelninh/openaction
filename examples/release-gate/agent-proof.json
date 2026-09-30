@@ -1,0 +1,75 @@
+{
+  "schema": "openaction.release-gate.v1",
+  "project": "Agent-Proof",
+  "release": "agent-trust-audit-v1",
+  "outcome": {
+    "human_outcome": "A deployment owner gets evidence-linked reasons to promote, reject or remediate an AI agent before production."
+  },
+  "gates": [
+    {
+      "id": "R0-audit-offer",
+      "stage": "R0",
+      "owner": "human",
+      "blocking": true,
+      "status": "pass",
+      "claim": "Audit scope, deliverable and non-certification boundary are explicit.",
+      "evidence": [
+        {
+          "class": "human",
+          "ref": "Agent-Proof docs/AGENT_TRUST_AUDIT.md"
+        }
+      ]
+    },
+    {
+      "id": "R1-risk-pack",
+      "stage": "R1",
+      "owner": "automated",
+      "blocking": true,
+      "status": "pass",
+      "claim": "A 30-case dogfood pack covers correctness, boundary, injection, recovery and approval.",
+      "evidence": [
+        {
+          "class": "automated",
+          "ref": "Agent-Proof CI 36708448402 + release gate 36708448335"
+        }
+      ]
+    },
+    {
+      "id": "R2-critical-release-gate",
+      "stage": "R2",
+      "owner": "automated",
+      "blocking": true,
+      "status": "pass",
+      "claim": "Critical failures fail the deployment gate and hidden ground truth remains separate.",
+      "evidence": [
+        {
+          "class": "automated",
+          "ref": "Agent-Proof release gate 36708448335"
+        }
+      ]
+    },
+    {
+      "id": "R3-repeatable-report",
+      "stage": "R3",
+      "owner": "automated",
+      "blocking": true,
+      "status": "pass",
+      "claim": "Audit readiness and candidate gate rerun deterministically in CI.",
+      "evidence": [
+        {
+          "class": "automated",
+          "ref": "Agent-Proof PR #13 current CI"
+        }
+      ]
+    },
+    {
+      "id": "R4-paid-external-audit",
+      "stage": "R4",
+      "owner": "external",
+      "blocking": true,
+      "status": "todo",
+      "claim": "A real external customer completes a paid audit and receives useful remediation evidence.",
+      "evidence": []
+    }
+  ]
+}

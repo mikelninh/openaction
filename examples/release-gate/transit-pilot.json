@@ -1,0 +1,70 @@
+{
+  "schema": "openaction.release-gate.v1",
+  "project": "Transit Loyalty / Berlin Taste Passport",
+  "release": "transit-pass-30-day-pilot-v1",
+  "outcome": {
+    "human_outcome": "A restaurant learns whether the loyalty mechanic improves repeat behaviour and observed margin enough to justify continuing."
+  },
+  "gates": [
+    {
+      "id": "R0-pilot-contract",
+      "stage": "R0",
+      "owner": "human",
+      "blocking": true,
+      "status": "pass",
+      "claim": "30-day free pilot scope and continue/pause/stop decision are explicit.",
+      "evidence": [
+        {
+          "class": "human",
+          "ref": "Transit launch/MVP docs"
+        }
+      ]
+    },
+    {
+      "id": "R1-measurement-contract",
+      "stage": "R1",
+      "owner": "automated",
+      "blocking": true,
+      "status": "pass",
+      "claim": "Repeat-rate, reward-cost, margin and source evidence are machine-checkable.",
+      "evidence": [
+        {
+          "class": "automated",
+          "ref": "Transit PR #1 pilot-evidence CI 36708982954"
+        }
+      ]
+    },
+    {
+      "id": "R2-consent-privacy",
+      "stage": "R2",
+      "owner": "human",
+      "blocking": true,
+      "status": "review",
+      "claim": "Live signup/stamp validation and consent/privacy flow are approved before personal data collection.",
+      "evidence": [
+        {
+          "class": "source",
+          "ref": "Pre-pilot open decision; no live data flow yet"
+        }
+      ]
+    },
+    {
+      "id": "R3-live-pilot-quality",
+      "stage": "R3",
+      "owner": "external",
+      "blocking": true,
+      "status": "todo",
+      "claim": "30 days plus comparable baseline and required source exports are complete.",
+      "evidence": []
+    },
+    {
+      "id": "R4-owner-decision",
+      "stage": "R4",
+      "owner": "external",
+      "blocking": true,
+      "status": "todo",
+      "claim": "Owner reviews real evidence and explicitly chooses continue, pause or stop.",
+      "evidence": []
+    }
+  ]
+}
