@@ -1,0 +1,21 @@
+{
+  "schema": "openaction.release-gate.v1",
+  "name": "Human Agency Release Gate",
+  "stages": {
+    "R0": "Outcome — name the human/customer/user outcome and scope.",
+    "R1": "Evidence — representative inputs, provenance and expected truth.",
+    "R2": "Authority — permissions, safety, privacy, failure and approval boundaries.",
+    "R3": "Reliability — deterministic tests, regressions, economics, latency or experience quality.",
+    "R4": "Reality — a real human, customer, reviewer or external system result."
+  },
+  "statuses": ["pass", "review", "blocked", "todo"],
+  "owners": ["automated", "human", "external"],
+  "rules": [
+    "Every release must represent R0 through R4.",
+    "A blocking gate prevents PASS until it passes.",
+    "R4 can never be owned by automation.",
+    "Synthetic or automated evidence can never satisfy R4 by itself.",
+    "PASS requires evidence matching the gate owner.",
+    "Missing real-world evidence produces REVIEW, not a fabricated PASS."
+  ]
+}
