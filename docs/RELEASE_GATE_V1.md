@@ -26,4 +26,4 @@ A release gate answers **may this release ship?**
 
 An Agency Receipt answers **what happened after a bounded action?**
 
-Receipts record evidence, decision owner, authority, action, outcome and the next learned change/unknown. They are intended to be portable across OpsPilot, Agent-Proof, Game Studio, HANA and civic products without making any one model the system of record.
+Receipts record evidence, decision owner, authority, action, outcome, an explicit outcome evidence class (`synthetic`, `observed`, `external` or `failure`) and the next learned change/unknown. Downstream systems must preserve that class rather than infer it. A synthetic success is proof that the synthetic workflow worked; it is never customer ROI, human enjoyment or real-world adoption. Receipts are intended to be portable across OpsPilot, Agent-Proof, Game Studio, HANA and civic products without making any one model the system of record.
