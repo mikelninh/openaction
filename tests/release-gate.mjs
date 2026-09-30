@@ -47,9 +47,16 @@ for (const gate of fullPass.gates) {
 }
 assert.equal(releaseVerdict(fullPass).verdict, 'PASS');
 
-const receipt = JSON.parse(fs.readFileSync(new URL('../examples/agency-receipt/opspilot.json', import.meta.url), 'utf8'));
-assert.equal(validateAgencyReceipt(receipt).ok, true);
+const receiptDir = new URL('../examples/agency-receipt/', import.meta.url);
+const receiptFiles = readdirSync(receiptDir).filter(name => name.endsWith('.json')).sort();
+assert.ok(receiptFiles.length >= 3, 'Agency Receipt portability should be proven across multiple domains');
+for (const file of receiptFiles) {
+  const receipt = JSON.parse(fs.readFileSync(new URL(file, receiptDir), 'utf8'));
+  const validation = validateAgencyReceipt(receipt);
+  assert.equal(validation.ok, true, `${file}: ${validation.errors.join(', ')}`);
+}
 
+const receipt = JSON.parse(fs.readFileSync(new URL('../examples/agency-receipt/opspilot.json', import.meta.url), 'utf8'));
 const unsafeReceipt = structuredClone(receipt);
 unsafeReceipt.action.authority = 'execute';
 unsafeReceipt.action.external_side_effects = true;
@@ -57,4 +64,16 @@ unsafeReceipt.decision.owner = 'shared';
 assert.equal(validateAgencyReceipt(unsafeReceipt).ok, false);
 assert.ok(validateAgencyReceipt(unsafeReceipt).errors.includes('consequential_execute_requires_human_or_policy_owner'));
 
-console.log('✓ Release Gate v1 + Agency Receipt v1 enforce evidence and human reality boundaries.');
+const fakeAuthority = structuredClone(receipt);
+fakeAuthority.action.authority = 'do_whatever';
+assert.ok(validateAgencyReceipt(fakeAuthority).errors.includes('invalid_action_authority'));
+
+const fakeOutcome = structuredClone(receipt);
+fakeOutcome.outcome.status = 'probably_good';
+assert.ok(validateAgencyReceipt(fakeOutcome).errors.includes('invalid_outcome_status'));
+
+const malformedEvidence = structuredClone(receipt);
+malformedEvidence.evidence = [{ ref: '' }];
+assert.ok(validateAgencyReceipt(malformedEvidence).errors.includes('evidence_requires_nonempty_refs'));
+
+console.log('✓ Release Gate v1 + Agency Receipt v1 enforce evidence, authority, portability and human reality boundaries.');
