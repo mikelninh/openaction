@@ -1,0 +1,75 @@
+{
+  "schema": "openaction.release-gate.v1",
+  "project": "Council / Mission Control",
+  "release": "provider-independent-runner-v1.2",
+  "outcome": {
+    "human_outcome": "A human owner gets evidence-first portfolio recommendations and can delegate bounded A0–A2 work without silently granting consequential authority."
+  },
+  "gates": [
+    {
+      "id": "R0-chief-contract",
+      "stage": "R0",
+      "owner": "human",
+      "blocking": true,
+      "status": "pass",
+      "claim": "Mission, A0–A4 authority model and advisory decision role are explicit.",
+      "evidence": [
+        {
+          "class": "human",
+          "ref": "Council AGENTS.md + harness project contract"
+        }
+      ]
+    },
+    {
+      "id": "R1-current-runner-proof",
+      "stage": "R1",
+      "owner": "automated",
+      "blocking": true,
+      "status": "review",
+      "claim": "Provider-independent mission runner passes fresh repository-owned verification.",
+      "evidence": [
+        {
+          "class": "source",
+          "ref": "Existing prior CI is recorded; this release pass did not rerun Council"
+        }
+      ]
+    },
+    {
+      "id": "R2-a2-authority-ceiling",
+      "stage": "R2",
+      "owner": "automated",
+      "blocking": true,
+      "status": "review",
+      "claim": "Automatic execution remains capped at A2 and A3/A4 fail closed in the current runner.",
+      "evidence": [
+        {
+          "class": "source",
+          "ref": "Council active-task contract records the boundary; no fresh runner proof this pass"
+        }
+      ]
+    },
+    {
+      "id": "R3-owner-runner-setup",
+      "stage": "R3",
+      "owner": "human",
+      "blocking": true,
+      "status": "review",
+      "claim": "Owner-controlled self-hosted runner, Ollama/Aider and MISSION_LOCAL_MODEL are configured.",
+      "evidence": [
+        {
+          "class": "source",
+          "ref": "Council active-task status = awaiting_human_setup"
+        }
+      ]
+    },
+    {
+      "id": "R4-real-mission",
+      "stage": "R4",
+      "owner": "external",
+      "blocking": true,
+      "status": "todo",
+      "claim": "One approved bounded mission executes end to end, runs target verification and returns a PR without merge/deploy/send/spend.",
+      "evidence": []
+    }
+  ]
+}
