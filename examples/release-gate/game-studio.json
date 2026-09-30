@@ -13,7 +13,12 @@
       "blocking": true,
       "status": "pass",
       "claim": "Mechanics QA and human-experience claims are explicitly separated.",
-      "evidence": [{"class": "human", "ref": "Agent Lab Core PR #7 product contract"}]
+      "evidence": [
+        {
+          "class": "human",
+          "ref": "Agent Lab Core PR #7 product contract"
+        }
+      ]
     },
     {
       "id": "R1-replay-evidence",
@@ -22,7 +27,12 @@
       "blocking": true,
       "status": "pass",
       "claim": "Runs are seeded, replayable and comparable.",
-      "evidence": [{"class": "automated", "ref": "Agent Lab deterministic replay/conformance tests"}]
+      "evidence": [
+        {
+          "class": "automated",
+          "ref": "Agent Lab deterministic replay/conformance tests"
+        }
+      ]
     },
     {
       "id": "R2-human-fun-boundary",
@@ -31,7 +41,12 @@
       "blocking": true,
       "status": "pass",
       "claim": "Synthetic mechanics evidence cannot produce a final human-fun PASS.",
-      "evidence": [{"class": "automated", "ref": "studio release-gate tests on PR #7"}]
+      "evidence": [
+        {
+          "class": "automated",
+          "ref": "studio release-gate tests on PR #7"
+        }
+      ]
     },
     {
       "id": "R3-reference-integration",
@@ -39,8 +54,17 @@
       "owner": "automated",
       "blocking": true,
       "status": "pass",
-      "claim": "One real studio game shares the canonical Agent Lab engine without silent drift.",
-      "evidence": [{"class": "automated", "ref": "Tiny Tactics PR #31 / CI 36706175819"}]
+      "claim": "Two structurally different real games use the canonical Agent Lab contract with deterministic replay/conformance evidence and drift control.",
+      "evidence": [
+        {
+          "class": "automated",
+          "ref": "Tiny Tactics PR #31 / CI 36706175819"
+        },
+        {
+          "class": "automated",
+          "ref": "Tiến Lên PR #13 / CI 36710961197 + 600-game engine selftest"
+        }
+      ]
     },
     {
       "id": "R4-external-team",
