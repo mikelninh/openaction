@@ -1,6 +1,7 @@
 const ALLOWED_OWNERS = new Set(['human', 'shared', 'policy']);
 const ALLOWED_AUTHORITIES = new Set(['observe', 'propose', 'prepare', 'execute']);
 const ALLOWED_OUTCOMES = new Set(['succeeded', 'partial', 'failed', 'unknown']);
+const ALLOWED_EVIDENCE_CLASSES = new Set(['synthetic', 'observed', 'external', 'failure']);
 
 function nonEmptyRefItems(value) {
   return Array.isArray(value)
@@ -42,6 +43,10 @@ export function validateAgencyReceipt(receipt) {
   const outcome = receipt.outcome?.status;
   if (!outcome) errors.push('outcome_status_required');
   else if (!ALLOWED_OUTCOMES.has(outcome)) errors.push('invalid_outcome_status');
+
+  const evidenceClass = receipt.outcome?.evidence_class;
+  if (!evidenceClass) errors.push('outcome_evidence_class_required');
+  else if (!ALLOWED_EVIDENCE_CLASSES.has(evidenceClass)) errors.push('invalid_outcome_evidence_class');
 
   if (outcome === 'succeeded' && !nonEmptyRefItems((receipt.outcome?.evidence || []).map(ref => typeof ref === 'string' ? { ref } : ref))) {
     errors.push('successful_outcome_requires_evidence');
