@@ -1,0 +1,75 @@
+{
+  "schema": "openaction.release-gate.v1",
+  "project": "Cyber Resilience Commons",
+  "release": "resilience-drill-box-v1",
+  "outcome": {
+    "human_outcome": "A real team leaves a tabletop with clearer ownership, concrete improvements and a plan to retest them."
+  },
+  "gates": [
+    {
+      "id": "R0-drill-outcome",
+      "stage": "R0",
+      "owner": "human",
+      "blocking": true,
+      "status": "pass",
+      "claim": "The drill outcome and synthetic truth boundary are explicit.",
+      "evidence": [
+        {
+          "class": "human",
+          "ref": "Cyber Resilience Commons product contract"
+        }
+      ]
+    },
+    {
+      "id": "R1-deterministic-drill",
+      "stage": "R1",
+      "owner": "automated",
+      "blocking": true,
+      "status": "pass",
+      "claim": "Scenario, decisions and after-action output are deterministic and inspectable.",
+      "evidence": [
+        {
+          "class": "automated",
+          "ref": "Cyber PR #4 verify CI 36708583550"
+        }
+      ]
+    },
+    {
+      "id": "R2-authorized-only",
+      "stage": "R2",
+      "owner": "automated",
+      "blocking": true,
+      "status": "pass",
+      "claim": "The product does not scan/probe real infrastructure and requires owned/authorized technical validation.",
+      "evidence": [
+        {
+          "class": "automated",
+          "ref": "Cyber safety markers + CI 36708583550"
+        }
+      ]
+    },
+    {
+      "id": "R3-release-receipt",
+      "stage": "R3",
+      "owner": "automated",
+      "blocking": true,
+      "status": "pass",
+      "claim": "Complete drills emit a measured Agency Receipt while synthetic runs remain REVIEW for reality.",
+      "evidence": [
+        {
+          "class": "automated",
+          "ref": "Cyber PR #4 release-gate tests"
+        }
+      ]
+    },
+    {
+      "id": "R4-real-team",
+      "stage": "R4",
+      "owner": "external",
+      "blocking": true,
+      "status": "todo",
+      "claim": "A 4–8 person real team completes the drill and facilitator evidence shows useful learning/follow-through.",
+      "evidence": []
+    }
+  ]
+}
