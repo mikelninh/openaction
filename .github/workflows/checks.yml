@@ -17,5 +17,6 @@ jobs:
       - run: node tests/smoke.mjs
       - run: node tests/release-gate.mjs
       - run: node tests/council-integration.mjs
+      - run: node tests/bounded-decision.mjs
       - name: Portfolio release summary
         run: node scripts/portfolio-release-summary.mjs --markdown >> "$GITHUB_STEP_SUMMARY"
