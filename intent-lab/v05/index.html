@@ -1,0 +1,1164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111c20"><meta name="description" content="COMMONS / The Space Between Us. A tactile miniature world exploring help, consent and human agency. A fictional, local simulation.">
+<title>COMMONS — The Space Between Us · 0.5</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght,SOFT,WONK@9..144,400,0,1;9..144,500,0,1;9..144,600,0,1&display=swap" rel="stylesheet">
+<style>:root{--bg:#111b1e;--ink:#e9e5d7;--dim:#9da9a5;--mint:#b5d2b8;--brass:#e5c39d;--paper:#f5f0e7;--dark:#172225;--line:rgba(232,235,214,.16);font-family:"DM Sans",system-ui,sans-serif}*{box-sizing:border-box}html,body{min-width:300px;min-height:100%;margin:0;background:var(--bg);color:var(--ink)}button{font:inherit;cursor:pointer}button:focus-visible,input:focus-visible{outline:2px solid #fad8a1;outline-offset:4px}button:disabled{cursor:not-allowed;opacity:.5}::selection{background:#aec5b2;color:#16302b}.app{min-height:100svh;position:relative;overflow:hidden;background:radial-gradient(ellipse 49% 64% at 64% 38%,rgba(105,120,103,.21),transparent 81%),radial-gradient(ellipse 55% 70% at 88% 78%,rgba(94,106,114,.10),transparent 87%),linear-gradient(118deg,#121e22 0%,#172424 49%,#10191c 100%);transition:background 1.4s ease}.app[data-sky=blue]{background:radial-gradient(ellipse 48% 65% at 63% 35%,rgba(81,100,124,.24),transparent 84%),linear-gradient(118deg,#0b1624,#13252b 59%,#0b1827)}.texture{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.19;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' opacity='.14' filter='url(%23n)'/%3E%3C/svg%3E");mix-blend-mode:screen}.topbar{height:100px;position:relative;z-index:12;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 clamp(23px,4.2vw,76px);border-bottom:1px solid rgba(235,229,207,.095)}.brand{display:flex;align-items:center;gap:10px;font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:20px;letter-spacing:-1px;white-space:nowrap}.brand-emblem{color:#d4bea0;font:22px Georgia;animation:slow-turn 18s linear infinite}.brand-note{border-left:1px solid #6d7771;padding-left:13px;margin-left:6px;font:500 9px "DM Sans",sans-serif;letter-spacing:1.8px;color:#98a79f}.chapters{display:flex;gap:10px;align-items:center;font-size:10px;letter-spacing:2px;white-space:nowrap;color:#b0bfb8}.chapter-dot{display:block;height:6px;width:6px;border-radius:100%;background:#e0c5a0;box-shadow:0 0 15px #ebd2a3}.slash{color:#64746c}.top-actions{justify-self:end;display:flex;align-items:center;gap:16px}.text-button,.journal-link{border:0;background:none;color:#b9c9c1;font-size:11px;font-weight:600;letter-spacing:.25px;display:flex;gap:9px;align-items:center;padding:10px 1px;white-space:nowrap;transition:color .2s}.text-button:hover,.journal-link:hover{color:#fff}.text-button svg{height:16px;width:16px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.journal-link{border:1px solid #53696155;border-radius:26px;padding:10px 13px 10px 15px;color:#f0e3cb}.journal-sigil{font-size:20px;font-family:Georgia;line-height:12px}.journal-count{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#d8cfb8;color:#192323;font-size:11px}.scene-area{height:calc(100svh - 100px);min-height:620px;position:relative;z-index:1;overflow:hidden}.scene-atmosphere{position:absolute;inset:0;pointer-events:none;overflow:hidden}.orbital{position:absolute;display:block;border:1px solid rgba(217,219,190,.085);border-radius:50%;transform:rotate(-24deg)}.orbital-a{width:850px;height:210px;left:43%;top:49%}.orbital-b{width:1170px;height:480px;left:29%;top:23%;opacity:.5}.ray{display:block;position:absolute;height:950px;width:300px;top:-200px;left:62%;transform:rotate(27deg);background:linear-gradient(90deg,transparent,#e7d4a207,transparent);filter:blur(12px)}.intro{position:absolute;top:clamp(84px,14vh,170px);left:clamp(24px,5.1vw,92px);z-index:3;max-width:430px;pointer-events:none;transition:opacity .7s,transform .6s}.eyebrow{display:flex;align-items:center;gap:10px;letter-spacing:2.35px;color:#c9c7b3;font-size:10px;font-weight:700}.tiny-star{color:#ebc994;font-size:21px}.intro h1{font-family:"Fraunces",Georgia,serif;font-weight:400;letter-spacing:-2.5px;font-size:clamp(45px,4.9vw,88px);line-height:1.07;margin:21px 0 24px}.intro h1 em{font-style:italic;color:#b2c9b8}.intro p{font-size:14px;line-height:1.95;color:#c3ccc2;font-weight:400}.intro-sep{width:76px;height:1px;background:#9ca99d79;margin:28px 0 18px}.intro-quiet{font-family:"Fraunces",Georgia,serif;font-style:italic;font-size:16px;color:#a0afa8}.world-window{position:absolute;inset:15px 1.1% 25px 25%;overflow:visible;touch-action:pan-y}.world{position:absolute;width:min(1040px,73vw);aspect-ratio:1200 / 740;left:clamp(18px,3vw,75px);top:50%;transform:translateY(-48%);filter:drop-shadow(0 55px 45px rgba(1,13,16,.30));transition:filter .7s,transform .8s cubic-bezier(.17,.67,.23,1);isolation:isolate}.world-svg{position:absolute;inset:0;transition:transform .65s ease;will-change:transform}.world-svg svg{display:block;height:100%;width:100%}.world-halo{position:absolute;inset:15% 2%;border-radius:50%;background:radial-gradient(ellipse at 53% 55%,#d3c89e22,transparent 65%);filter:blur(34px);animation:halo-breathe 8s ease-in-out infinite;pointer-events:none}.world-pin{position:absolute;width:51px;height:51px;border:0;padding:0;border-radius:50%;display:grid;place-items:center;background:none;color:#f3e2c5;transform:translate(-50%,-50%);z-index:5;transition:transform .2s,opacity .3s;touch-action:none}.pin-beam{position:absolute;inset:-11px;background:radial-gradient(circle,#e9d4a626,transparent 69%);border-radius:50%;animation:pulse 2.5s ease-in-out infinite}.pin-core{height:35px;width:35px;border-radius:50%;border:1px solid #ead7b7a8;background:#213b3ab8;box-shadow:inset 0 0 0 2px #a1a3831a,0 0 0 5px #d2d4af15,0 1px 18px #facb872a;display:grid;place-items:center;position:relative;transition:background .3s,box-shadow .3s,transform .3s}.pin-icon{font-family:Georgia,serif;font-size:21px;line-height:1}.pin-tag{position:absolute;left:50%;top:54px;transform:translateX(-50%);background:#172a2bcc;border:1px solid #c7cdbb22;padding:7px 11px;border-radius:4px;color:#edf3e6;font-weight:700;font-size:9px;letter-spacing:1.15px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s,top .2s}.world-pin:hover,.world-pin:focus-visible{transform:translate(-50%,-50%) scale(1.14)}.world-pin:hover .pin-core,.world-pin:focus-visible .pin-core{background:#425c4d;box-shadow:0 0 21px #fbdda671}.world-pin:hover .pin-tag,.world-pin:focus-visible .pin-tag{top:50px;opacity:1}.world-pin.is-next .pin-core{box-shadow:0 0 0 6px #eed8ad24,0 0 28px #ecd7b992;background:#4a6a5a}.world-pin.is-next .pin-tag{opacity:1}.world-pin.is-done .pin-core{background:#30493b;color:#c3f5c3;border-color:#a7dab5}.world-pin.is-done .pin-icon{font-family:system-ui;font-size:15px}.world-pin.is-blocked .pin-core{background:#523c3c;border-color:#d8a192;color:#e4b59a}.world-pin.is-blocked .pin-icon{font-family:system-ui;font-size:18px}.world-pin.is-done .pin-beam,.world-pin.is-blocked .pin-beam{animation:none;opacity:0}.world-effects{position:absolute;inset:0;pointer-events:none}.scene-effect{position:absolute;opacity:0;transition:opacity 1s;font-size:34px;filter:drop-shadow(0 0 18px #e4d4acaa)}.growth-effects{top:56%;left:40%;color:#cfe1a8;transform:rotate(-21deg)}.lantern-effect{left:55%;top:27%;color:#f8d2a1;animation:glint 3s infinite}.world[data-grown=true] #growEffect,.world[data-invited=true] #lanternEffect{opacity:.8}.world[data-invited=true] .lantern-glow{opacity:1;animation:halo-breathe 2s infinite}.world[data-notes=true] #villageArt .firefly{opacity:.6}.world-svg .tree{animation:tree-breathe 5s ease-in-out infinite;transform-box:fill-box;transform-origin:bottom}.app[data-sky=blue] #villageArt{filter:brightness(.8) saturate(.85) hue-rotate(5deg)}.app[data-sky=blue] .lantern-glow{opacity:1}.app[data-sky=blue] .window-light{opacity:.7}.thread-overlay{position:absolute;inset:0;width:100%;height:100%;z-index:8;pointer-events:none;overflow:visible}.thread-overlay path{fill:none;stroke-linecap:round}#threadShadow{stroke:#f4e7c5;stroke-opacity:.15;stroke-width:12;filter:blur(6px)}#threadPath{stroke:url(#lineGrad);stroke-width:2.5;stroke-dasharray:5 0;filter:drop-shadow(0 0 5px #dbdbb9aa)}.bottom-hud{position:absolute;z-index:10;bottom:31px;left:clamp(23px,4.9vw,88px);right:clamp(23px,4.9vw,88px);display:flex;align-items:end;justify-content:space-between;gap:24px}.thread-well{display:flex;align-items:center;gap:18px;min-width:235px}.spool{background:transparent;width:82px;height:82px;border:1px solid #d7d5c46b;border-radius:50%;color:#ebd5b0;padding:8px;display:grid;place-items:center;box-shadow:0 0 0 6px #d6d1c409;transition:background .25s,transform .25s;touch-action:none;flex:none}.spool:hover,.spool.dragging{transform:scale(1.07);background:#2c423e}.spool-inner{height:56px;width:56px;border:1px dashed #c3cabd94;border-radius:50%;display:grid;place-items:center}.spool svg{width:46px;height:46px}.thread-heading{font-family:"Fraunces",Georgia,serif;font-size:20px;color:#f1e5d0}.thread-sub{font-size:11px;line-height:1.9;color:#adbdb7;margin-top:3px}.mission-progress{display:flex;align-items:center;gap:12px;padding-bottom:14px;color:#b4bfb9;font-size:11px;white-space:nowrap}.progress-glyph{letter-spacing:5px;font-size:17px;color:#c5c4ab;white-space:nowrap}.stage-note{padding-bottom:15px;font-size:9px;color:#a0ada5;letter-spacing:1.2px;white-space:nowrap}.star-sep{padding:0 5px}.world-toast{position:absolute;z-index:25;top:28px;left:50%;transform:translate(-50%,-10px);color:#1d3030;max-width:420px;background:#e7e9d5;border:1px solid #fff8df;padding:11px 20px;border-radius:70px;text-align:center;box-shadow:0 15px 30px #06111199;font-size:12px;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none}.world-toast.is-on{opacity:1;transform:translate(-50%,0)}.mobile-pan-hint{display:none}
+/* Episode cards: almost a physical museum label */
+.decision-layer,.journal-overlay{position:fixed;inset:0;z-index:50}.decision-layer[hidden],.journal-overlay[hidden],.finish-layer[hidden]{display:none!important}.decision-backdrop,.journal-backdrop{position:absolute;inset:0;background:#0b171c6e;backdrop-filter:blur(8px)}.decision-panel{position:absolute;top:50%;right:clamp(22px,6.5vw,140px);transform:translateY(-50%);width:min(430px,calc(100vw - 36px));max-height:calc(100svh - 40px);overflow:auto;padding:35px 38px 28px;background:var(--paper);color:var(--dark);box-shadow:0 32px 110px #0009,0 0 0 1px #f9efcf;animation:letter-arrive .45s cubic-bezier(.16,.8,.27,1);border-radius:3px;isolation:isolate}.decision-panel:before{content:"";position:absolute;z-index:-1;inset:13px;border:1px solid #d6cbb9c7;pointer-events:none}.decision-panel:after{content:"";position:absolute;inset:0;z-index:-2;background-image:radial-gradient(#96876c11 .7px,transparent .7px);background-size:7px 7px;pointer-events:none}.close-circle{position:absolute;top:20px;right:24px;height:34px;width:34px;border-radius:50%;border:1px solid #baad99;background:transparent;font-size:24px;color:#424c42;line-height:1}.letter-upper{display:flex;align-items:center;gap:11px;letter-spacing:2px;font-size:9px;color:#757866;font-weight:700;padding:7px 0 6px}.letter-seal{font-size:22px;color:#708e71;margin-right:2px;line-height:1}.mini-dash{width:10px;height:1px;background:#8e968b}#letterLocation{max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.decision-panel h2{font-family:"Fraunces",Georgia,serif;font-weight:500;letter-spacing:-1.2px;font-size:clamp(34px,3.5vw,47px);line-height:1.13;margin:20px 0 22px}.letter-message{line-height:1.84;font-size:13px;color:#404a46}.letter-message strong{color:#1a322d}.letter-border{width:100%;border-bottom:1px solid #cfcebb;margin:25px 0 19px}.evaluation{display:flex;align-items:flex-start;gap:13px;margin:8px 0 20px}.evaluation-marker{height:28px;width:28px;border-radius:50%;flex:none;display:grid;place-items:center;font-family:Georgia;font-size:17px;border:1px solid #9cb9a4;color:#54775b;background:#e4eadd}.evaluation.review .evaluation-marker{color:#a37442;border-color:#caaa7b;background:#f4e9d1}.evaluation.block .evaluation-marker{color:#a45553;border-color:#d3a397;background:#f4e1d9}.evaluation-title{font-size:12px;font-weight:700;color:#2d4439;margin:1px 0 4px}.evaluation.review .evaluation-title{color:#936b3c}.evaluation.block .evaluation-title{color:#964c42}.evaluation-text{color:#63726a;font-size:11px;line-height:1.58}.decision-buttons{display:flex;flex-wrap:wrap;gap:9px}.decision-buttons button{flex:1;min-width:150px;border-radius:3px;padding:14px 15px;border:1px solid #b9baa5;background:transparent;color:#37433c;font-weight:700;font-size:11px;transition:transform .2s,background .2s}.decision-buttons .primary{background:#274d43;color:#f9f3e4;border-color:#274d43}.decision-buttons button:hover{transform:translateY(-2px)}.decision-buttons .primary:hover{background:#386352}.explain-btn{border:0;padding:16px 0 3px;background:transparent;text-align:left;color:#687e6d;font-size:11px;font-weight:600}.explain-btn span{padding-left:7px}.explain-text{margin:9px 0 5px;color:#475c51;font-size:11px;line-height:1.8;border-left:2px solid #8ea593;padding-left:14px}.policy-controls{margin:19px 0 5px;padding:20px 15px 17px;background:#e9e8d9;border:1px solid #d7d8c6;border-radius:4px}.policy-topline{display:flex;align-items:center;justify-content:space-between;font-size:12px;margin-bottom:15px}.policy-topline button{border:0;background:transparent;color:#557765;font-size:10px}.policy-row,.budget-row{display:flex;justify-content:space-between;gap:15px;align-items:center;padding:13px 0;border-top:1px solid #cacbbc;cursor:pointer}.policy-row b,.budget-row b{display:block;font-size:12px;font-weight:700}.policy-row small,.budget-row small{display:block;font-size:10px;margin-top:5px;color:#758276}.policy-row input{position:absolute;opacity:0}.switch{width:35px;height:19px;border-radius:12px;background:#8f9588;position:relative;flex:none;transition:background .2s}.switch:after{content:"";position:absolute;top:3px;left:3px;width:13px;height:13px;border-radius:50%;background:#fff;transition:transform .2s}.policy-row input:checked+.switch{background:#4a8162}.policy-row input:checked+.switch:after{transform:translateX(16px)}.policy-row input:focus-visible+.switch{outline:2px solid #514a2b;outline-offset:3px}.budget-row{cursor:default}.budget-row>span:last-child{font-size:15px;font-weight:700;color:#325649}input[type=range]{width:100%;accent-color:#527b60;cursor:pointer}.policy-controls p{font-size:10px;line-height:1.6;color:#66796c;margin:12px 0 0}.letter-foot{margin-top:22px;display:flex;justify-content:space-between;color:#a1a48b;font-size:9px;letter-spacing:1.55px}
+/* field journal */
+.journal-backdrop{background:#060f12b3;backdrop-filter:blur(10px)}.journal-sheet{width:min(570px,100vw);max-height:100svh;height:100%;overflow:auto;position:absolute;right:0;top:0;background:#eee9df;color:#293c36;padding:28px clamp(28px,5vw,58px) 46px;box-shadow:-34px 0 100px #0007;animation:journal-arrive .55s cubic-bezier(.19,.76,.16,1);isolation:isolate}.journal-sheet:before{content:"";position:absolute;left:19px;top:0;bottom:0;border-left:1px solid #e1d4c1}.sheet-top{display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:9px;letter-spacing:1.7px;color:#8e8e7a}.sheet-top button{font-size:26px;border:0;background:transparent;color:#4c5f51}.journal-mark{font-size:36px;color:#648470;margin-top:42px}.journal-topnote{font-size:9px;color:#8b8d7d;letter-spacing:1.8px;margin:16px 0}.journal-sheet h2,.finish-body h2{font-family:"Fraunces",Georgia,serif;font-size:clamp(40px,5vw,64px);font-weight:400;line-height:1.06;letter-spacing:-2px;margin:0 0 20px}.journal-sheet h2 em{font-weight:400;color:#63806b}.journal-intro{max-width:400px;font-size:12px;line-height:1.95;color:#67736c}.journal-entries{margin-top:35px;border-top:1px solid #c3c7b9}.journal-entry{padding:15px 0 18px;border-bottom:1px solid #c6c7b8;display:flex;gap:13px}.entry-icon{width:29px;height:29px;border:1px solid #bac2ad;border-radius:50%;display:grid;place-items:center;flex:none;color:#607964;font-size:14px}.journal-entry[data-decision=BLOCKED] .entry-icon{color:#ab7868;border-color:#c7a79c}.entry-main{flex:1}.entry-main b{font-size:12px}.entry-main p{font-size:11px;line-height:1.65;color:#657269;margin:4px 0 0}.entry-meta{margin-top:5px;color:#899287;font-size:9px;letter-spacing:1px}.empty-journal{padding:30px 2px;color:#819084;font-family:"Fraunces",Georgia,serif;font-style:italic}.journal-integrity{display:flex;align-items:center;justify-content:space-between;gap:13px;padding:24px 0 12px;font-size:11px;color:#6a776b}.journal-integrity button,.journal-actions button,.import-control{background:#304c40;border:0;color:#f5eddc;padding:12px 13px;border-radius:3px;font-size:11px;font-weight:700;cursor:pointer}.journal-actions{display:flex;align-items:center;gap:9px;margin:14px 0 35px}.journal-actions button{flex:1}.import-control{background:transparent;color:#325344;border:1px solid #9cae99;text-align:center;flex:1}.restart{border:0;background:transparent;font-size:11px;text-decoration:underline;color:#6e7167;padding:0;cursor:pointer}.journal-bottom{color:#949b8e;font-size:10px;line-height:1.7;padding-top:20px}
+.finish-layer{position:fixed;inset:0;z-index:40;background:#0b161bcb;backdrop-filter:blur(19px);display:grid;place-items:center;text-align:center;padding:30px}.finish-body{max-width:600px}.finish-star{display:block;font-family:Georgia;color:#e7cda3;font-size:53px;margin-bottom:22px;animation:slow-turn 16s linear infinite}.finish-kicker{font-size:10px;letter-spacing:2.4px;color:#adc2b7;margin-bottom:26px}.finish-body h2{font-size:clamp(45px,6vw,83px);color:#f0e7d6}.finish-body h2 em{color:#bdcebb}.finish-body p{max-width:455px;margin:22px auto 34px;font-size:14px;line-height:2;color:#c3cbbf}.finish-body button{border:1px solid #b9cebd;color:#142b23;background:#e1ebd9;padding:15px 21px;font-size:12px;font-weight:700;border-radius:3px;margin:7px}.finish-body button:last-child{background:transparent;color:#dbe6d7}
+@keyframes halo-breathe{50%{opacity:.56;transform:scale(1.05)}}@keyframes slow-turn{to{transform:rotate(360deg)}}@keyframes pulse{50%{opacity:.5;transform:scale(1.14)}}@keyframes glint{50%{filter:brightness(1.6)}}@keyframes tree-breathe{50%{opacity:.89}}@keyframes letter-arrive{from{opacity:0;transform:translate(30px,calc(-50% + 12px))}to{opacity:1;transform:translate(0,-50%)}}@keyframes journal-arrive{from{transform:translateX(65px);opacity:.7}to{transform:translateX(0);opacity:1}}@keyframes float-spark{to{transform:translate(var(--dx),var(--dy)) scale(.2);opacity:0}}.spark{position:absolute;z-index:17;pointer-events:none;width:5px;height:5px;border-radius:50%;background:#f5db9e;animation:float-spark 1s ease-out forwards}.world.in-focus{filter:drop-shadow(0 65px 55px rgba(0,0,0,.7));transform:translateY(-48%) scale(1.08)}.world.in-focus .world-pin{opacity:.15}.world-pin[data-selected=true]{opacity:1!important}
+@media(max-width:1320px){.brand-note{display:none}.chapters{font-size:9px}.stage-note{display:none}.world-window{inset:17px 0 22px 23%}.world{width:78vw;left:0}.intro h1{font-size:clamp(48px,5vw,73px)}}
+@media(max-width:950px){.topbar{height:78px;padding:0 23px;grid-template-columns:1fr auto}.chapters{display:none}.brand{font-size:18px}.top-actions{gap:11px}.text-button span{display:none}.scene-area{height:calc(100svh - 78px);min-height:670px}.intro{top:50px;left:29px}.intro h1{font-size:54px;max-width:340px;margin:12px 0 14px}.intro p{font-size:12px}.intro-sep,.intro-quiet{display:none}.world-window{inset:185px 0 102px 4%;overflow:visible}.world{width:min(890px,100vw);top:48%;left:0}.bottom-hud{bottom:25px}.mission-progress{display:none}.decision-panel{right:50%;transform:translate(50%,-50%)}@keyframes letter-arrive{from{opacity:0;transform:translate(50%,calc(-50% + 25px))}to{opacity:1;transform:translate(50%,-50%)}}}
+@media(max-width:620px){.topbar{height:66px;padding:0 17px}.brand{font-size:16px}.brand-emblem{font-size:17px}.brand-note{display:none}.journal-link{padding:7px 10px}.journal-link>span:nth-child(2){display:none}.journal-count{height:18px;width:18px}.scene-area{height:calc(100svh - 66px);min-height:590px}.intro{top:24px;left:22px;right:15px}.eyebrow{font-size:8px;letter-spacing:1.5px}.intro h1{font-size:clamp(38px,10.5vw,54px);line-height:1.01;margin:9px 0 13px}.intro p{font-size:11px;line-height:1.6}.world-window{top:184px;left:0;right:0;bottom:119px;overflow-x:auto;overflow-y:hidden;touch-action:pan-x pan-y;scrollbar-width:none}.world-window::-webkit-scrollbar{display:none}.world{top:46%;left:0;transform:translateY(-46%);width:780px;min-width:780px}.world.in-focus{transform:translateY(-46%) scale(1.035)}.world-pin{width:45px;height:45px}.pin-core{height:33px;width:33px}.pin-tag{font-size:8px}.bottom-hud{left:20px;right:20px;bottom:20px}.thread-well{gap:14px;min-width:auto}.spool{width:66px;height:66px}.spool-inner{width:48px;height:48px}.spool svg{width:35px;height:35px}.thread-heading{font-size:18px}.thread-sub{font-size:10px;line-height:1.5;max-width:220px}.mobile-pan-hint{display:block;position:absolute;right:20px;top:178px;z-index:12;color:#bdc7c1;font-size:9px;letter-spacing:.5px}.decision-backdrop{backdrop-filter:blur(5px)}.decision-panel{width:calc(100vw - 24px);padding:24px 26px 21px;max-height:min(92svh,760px)}.decision-panel:before{inset:9px}.decision-panel h2{font-size:34px;margin:12px 0 15px}.letter-message{font-size:12px;line-height:1.7}.letter-border{margin:16px 0}.evaluation{margin:4px 0 14px}.decision-buttons button{min-width:115px;padding:13px 8px;font-size:10px}.journal-sheet{padding:24px 27px 42px}.journal-mark{margin-top:28px}.journal-sheet h2{font-size:46px}.journal-actions{flex-direction:column}.journal-actions button,.import-control{width:100%}}@media(max-width:380px){.world-window{top:166px}.intro h1{font-size:36px}.intro p{font-size:10px}.mobile-pan-hint{top:166px}.decision-panel{padding:20px 19px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition-duration:.01ms!important}.world-svg .tree{animation:none}.world-pin .pin-beam{animation:none}}
+
+/* The thread is persistent evidence of each decision, not just a drag cursor. */
+.woven-lines{position:absolute;inset:0;width:100%;height:100%;z-index:4;pointer-events:none;filter:drop-shadow(0 0 4px #c7d9b6aa)}.woven-lines path{fill:none;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round}.woven-lines path.allowed{stroke:#f4d3a9;opacity:.72;stroke-dasharray:750;animation:thread-appear 1.25s ease both}.woven-lines path.blocked{stroke:#d2a89d;stroke-dasharray:3 9;opacity:.67}.woven-lines circle{fill:#ede1bf;opacity:.8}.woven-lines circle.blocked{fill:#a97669}
+@keyframes thread-appear{from{stroke-dashoffset:750}to{stroke-dashoffset:0}}
+#villageArt .seed-growth,#villageArt .greenhouse-growth{opacity:0;transform-box:fill-box;transform-origin:bottom;transform:scale(.25);transition:opacity 1.25s ease,transform 1.3s cubic-bezier(.19,.73,.24,1.08)}.world[data-grown=true] #villageArt .seed-growth,.world[data-kits=true] #villageArt .greenhouse-growth{opacity:1;transform:scale(1)}
+.growth-effects svg{display:block;width:100%;height:100%;overflow:visible}.growth-effects{width:110px;height:70px;filter:drop-shadow(0 0 10px #cadbb155)}.lantern-glow{opacity:.16;transition:opacity 1.5s}.world[data-invited=true] .lantern-glow{opacity:1}
+@media(min-width:951px){.intro h1{font-size:clamp(50px,4.9vw,73px);letter-spacing:-2px}.intro{top:clamp(115px,18vh,195px)}.world{width:min(1140px,79vw);left:-15px}.world-window{inset:10px 0 23px 23%}}
+@media(max-width:620px){.growth-effects{width:80px;height:50px}}
+
+/* V0.4 — the diorama, not a dashboard, is the primary interface. */
+:root{--honey:#e5c796;--luminous:#dbf4c0}
+.world-pin{cursor:crosshair}
+.world-pin:not(.is-next):not(.is-done):not(.is-blocked) .pin-core{transition:box-shadow .3s,background .3s,transform .3s}
+.world-pin.is-near .pin-core{transform:scale(1.18);background:#56745a;box-shadow:0 0 0 10px #f8db9d17,0 0 31px #f7e0a5b3}
+.spool{position:relative}
+.spool:after{content:"";position:absolute;inset:-9px;border:1px dashed #d9caac6c;border-radius:100%;animation:slow-turn 27s linear infinite;pointer-events:none}
+.spool.dragging .spool-inner{box-shadow:inset 0 0 12px #d9e1ac55,0 0 22px #b3d1a955}
+.quest-chip{position:absolute;z-index:11;top:25px;right:clamp(22px,4.9vw,84px);width:clamp(250px,27.8vw,365px);min-height:69px;display:flex;align-items:center;gap:11px;padding:12px 12px 12px 14px;border:1px solid #dddab23b;background:linear-gradient(110deg,#203335cb,#172b2ecc);box-shadow:0 15px 30px #06131466,inset 0 0 0 1px #c4d9a308;border-radius:5px;backdrop-filter:blur(16px);animation:quest-rise .8s both}
+.quest-symbol{font:27px Georgia,serif;color:#efd9a8;align-self:center;flex:none}
+.quest-labels{min-width:0;flex:1}
+.quest-labels>span{display:block;margin-bottom:5px;font-size:8px;letter-spacing:1.65px;font-weight:700;color:#b5c6ba}
+.quest-labels strong{display:block;line-height:1.35;font:400 15px "Fraunces",Georgia,serif;color:#f3e7cf;letter-spacing:-.15px}
+.quest-chip button{flex:none;border:1px solid #9fb9a05c;border-radius:4px;background:#314c43;color:#edede0;font-size:10px;font-weight:700;padding:9px 10px;transition:background .2s,transform .2s}
+.quest-chip button span{color:#efddab;margin-left:4px;font-size:14px}.quest-chip button:hover{background:#48705c;transform:translateY(-1px)}
+.voice-bubble{position:absolute;right:clamp(22px,5.2vw,87px);bottom:128px;width:350px;max-width:calc(100vw - 35px);z-index:16;display:flex;align-items:flex-start;gap:12px;pointer-events:none;opacity:0;transform:translateY(16px) scale(.97);transition:opacity .35s,transform .45s cubic-bezier(.19,.77,.31,1);border:1px solid #d6ddb16a;background:#223a35f0;color:#ece7d5;border-radius:8px;padding:16px 17px;box-shadow:0 20px 55px #031111c0,0 0 30px #c5e5bb08}
+.voice-bubble.is-on{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+.voice-sigil{height:36px;width:36px;display:grid;place-items:center;flex:none;border:1px solid #b7c79c8a;background:#344d41;border-radius:50%;color:#edd1a2;font:24px Georgia}
+.voice-bubble>div{flex:1}.voice-speaker{font-size:8px;letter-spacing:1.4px;font-weight:700;color:#b8c9bc}.voice-bubble p{font:400 15px/1.55 "Fraunces",Georgia,serif;margin:6px 0 0;color:#f5e9cf}.voice-bubble>button{border:0;color:#b7cbc1;background:none;font-size:18px;padding:0 4px}
+.seed-ritual{position:absolute;z-index:19;bottom:128px;right:clamp(22px,5.2vw,87px);width:min(368px,calc(100vw - 40px));background:#eae3d2;color:#263a35;border-radius:7px;padding:17px 18px 16px;border:1px solid #f8efce;box-shadow:0 21px 70px #030f1288;animation:seed-rise .55s cubic-bezier(.13,.75,.31,1) both}
+.seed-ritual[hidden]{display:none!important}.seed-kicker{font-size:8px;letter-spacing:1.6px;color:#74836e;font-weight:700;display:flex;justify-content:space-between;align-items:center}.seed-kicker span{font:21px Georgia;color:#738c6b}
+.seed-content{margin-top:7px;display:flex;align-items:center;gap:14px}.seed-token{width:65px;height:70px;flex:none;border:0;background:transparent;padding:2px;touch-action:none;position:relative;transition:transform .18s}.seed-token:hover,.seed-token.dragging{transform:rotate(-8deg) scale(1.1)}.seed-drawing{display:grid;place-items:center;border-radius:50% 48% 46% 52%;background:radial-gradient(circle at 33% 26%,#f2dbad,#bd835c 64%,#794e3d 100%);color:#fff3d5;box-shadow:inset -6px -7px 11px #77493099,0 7px 10px #7b73634a;height:49px;width:40px;transform:rotate(-28deg);font-size:21px;margin:auto;position:relative;animation:seed-idle 3s ease-in-out infinite}.seed-shine{position:absolute;inset:0;border-radius:inherit;box-shadow:0 0 21px 5px #dfbd7a2f}
+.seed-story{flex:1;min-width:0}.seed-story strong{font:500 20px/1.05 "Fraunces",Georgia,serif}.seed-story p{font-size:11px;line-height:1.5;margin:6px 0 0;color:#69756d}.seed-later{align-self:flex-end;padding:8px 1px;border:0;background:none;text-decoration:underline;text-underline-offset:4px;color:#6b786c;font-size:10px}.seed-ritual.targeted{box-shadow:0 0 0 3px #b9e2a455,0 24px 85px #030f1299}
+.cat-hotspot{position:absolute;left:38.1%;top:61.5%;width:52px;height:48px;transform:translate(-50%,-50%);border:0;border-radius:50%;background:#e2cc9d00;z-index:5;touch-action:manipulation;padding:0;transition:background .2s;cursor:pointer}.cat-hotspot:hover,.cat-hotspot:focus-visible{background:#e2cc9d15;outline:1px dashed #e5daa88a;outline-offset:2px}.cat-label{position:absolute;bottom:48px;left:50%;transform:translate(-50%,5px);background:#192e2cd9;color:#f8e5ca;padding:7px 11px;opacity:0;transition:opacity .18s,transform .18s;font-size:10px;white-space:nowrap;pointer-events:none;letter-spacing:.3px}.cat-hotspot:hover .cat-label,.cat-hotspot:focus-visible .cat-label{opacity:1;transform:translate(-50%,0)}
+#miaCatArt .mia-tail{transform-box:fill-box;transform-origin:10% 50%;animation:cat-tail 3.7s ease-in-out infinite}#miaCatArt .mia-eyes{transform-box:fill-box;transform-origin:center;animation:cat-blink 6.7s infinite}.world[data-cat-warmed=true] #catHalo{opacity:.65;animation:pulse 3s infinite}.world[data-cat-warmed=true] #miaCatArt{filter:drop-shadow(0 0 4px #e6c28b77)}
+.scene-butterfly{animation:butterfly-float 5.5s ease-in-out infinite;transform-box:fill-box;transform-origin:center}.scene-butterfly.second{animation-delay:-2.8s;animation-duration:7.1s}.garden-wisps circle{fill:#f8dcaa;opacity:.6;filter:drop-shadow(0 0 4px #fce2af);transform-box:fill-box;transform-origin:center;animation:wisp-float 5s ease-in-out infinite}.garden-wisps circle:nth-child(2n){animation-delay:-2.3s;animation-duration:6s}.world-svg .firefly{opacity:0;transform-box:fill-box;transform-origin:center;animation:wisp-float 5s ease-in-out infinite}.app[data-sky=blue] .world-svg .firefly{opacity:.7}.world[data-invited=true] .world-svg .firefly{opacity:.48}.world-svg .firefly:nth-child(3n){animation-delay:-1.8s}
+.world[data-seed-target=true] [data-step=g1] .pin-core{background:#657453;box-shadow:0 0 0 10px #e5d3a340,0 0 36px 12px #edc88f77;animation:seed-target-pulse 1s infinite}
+.seed-trail{position:absolute;z-index:20;pointer-events:none;height:28px;width:28px;display:grid;place-items:center;border-radius:50%;background:#e5c38c;box-shadow:0 0 25px #f7dc9fc9;color:#786047;transform:translate(-50%,-50%);font-size:16px;transition:transform .2s}
+.scene-detail{font-family:"Fraunces",Georgia,serif;font-size:14px;line-height:1.52;border-left:3px solid #bea47b;padding:8px 0 8px 12px;margin:0 0 14px;color:#566957;background:linear-gradient(90deg,#f0e6d3,#f0e6d300)}.scene-detail[hidden]{display:none!important}
+.replan-note{font-size:11px;margin:9px 0 13px;padding:12px;background:#e6eee3;border:1px solid #b9cdb6;border-radius:4px;color:#4c6652;line-height:1.5}.replan-note[hidden]{display:none!important}.replan-note strong{display:block;color:#315540;font-size:12px;margin-bottom:4px}
+.decision-buttons button.alternative{background:#e7ebdf!important;border-color:#a3bba8!important;color:#315544!important}.decision-buttons button.alternative:hover{background:#d0e0d0!important}.decision-buttons button.revisit{background:transparent;color:#54715f;font-size:10px;text-decoration:underline;border:0!important;padding:8px}
+.small-wonders{border:1px solid #becfba;background:#e0e7d9;padding:15px 16px;margin-top:25px;border-radius:3px}.small-wonders[hidden]{display:none!important}.small-wonders>span{display:block;font-size:9px;letter-spacing:1.6px;color:#6d8175;font-weight:700}.small-wonders strong{display:block;font:400 19px/1.35 "Fraunces",Georgia,serif;color:#315b46;margin-top:8px}
+.finish-memento{display:inline-block;font:15px "Fraunces",Georgia,serif;color:#f1d7aa;border-top:1px solid #9eb3a260;border-bottom:1px solid #9eb3a260;padding:11px 20px;margin:3px 0 20px}
+@keyframes seed-idle{50%{transform:rotate(-18deg) translateY(-4px)}}@keyframes seed-rise{from{transform:translateY(23px) scale(.95);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}@keyframes quest-rise{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}@keyframes cat-blink{0%,44%,47%,100%{transform:scaleY(1)}45%{transform:scaleY(.1)}}@keyframes cat-tail{0%,100%{transform:rotate(-10deg)}50%{transform:rotate(14deg)}}@keyframes butterfly-float{0%,100%{translate:0 0;rotate:-5deg}50%{translate:9px -9px;rotate:12deg}}@keyframes wisp-float{0%,100%{translate:0 0;opacity:.4}50%{translate:6px -10px;opacity:.88}}@keyframes seed-target-pulse{50%{transform:scale(1.13)}}
+@media (max-width:950px){.quest-chip{top:14px;right:20px;width:min(300px,46vw)}.quest-labels strong{font-size:13px}.voice-bubble{bottom:110px;right:25px}.seed-ritual{bottom:114px;right:24px}}
+@media (max-width:620px){.quest-chip{top:165px;left:20px;right:20px;width:auto;min-height:57px;padding:7px 9px 7px 12px}.quest-labels>span{font-size:7px;margin-bottom:2px;letter-spacing:1px}.quest-labels strong{font-size:12px}.quest-symbol{font-size:22px}.quest-chip button{padding:8px;font-size:10px}.world-window{top:208px;bottom:120px}.mobile-pan-hint{top:205px;right:13px;transform:translateY(69px)}.voice-bubble{bottom:113px;left:17px;right:17px;width:auto;padding:13px}.voice-bubble p{font-size:14px}.seed-ritual{bottom:103px;left:16px;right:16px;width:auto;padding:12px 14px}.seed-token{width:56px;height:61px}.seed-story strong{font-size:18px}.seed-story p{font-size:10px}.seed-kicker{font-size:7px}.cat-hotspot{width:54px;height:54px}.bottom-hud{bottom:14px}.thread-sub{max-width:185px}.voice-bubble:has(~.seed-ritual:not([hidden])){bottom:245px}}
+@media (max-width:380px){.quest-chip{top:152px}.world-window{top:196px}.mobile-pan-hint{top:193px}.seed-story strong{font-size:17px}}
+@media(prefers-reduced-motion:reduce){.spool:after,.mia-tail,.mia-eyes,.scene-butterfly,.garden-wisps circle,.world-svg .firefly,.seed-drawing{animation:none!important}.seed-ritual,.quest-chip{animation:none!important}}
+
+/* Protected boundaries are positive outcomes, not red error states. */
+.world-pin.is-protected .pin-core{background:#5c5844;border-color:#ebd3a0;color:#f4d7a0;box-shadow:0 0 17px #e5c7975e}.world-pin.is-protected .pin-icon{font:20px Georgia,serif}.world-pin.is-protected .pin-beam{animation:none;opacity:.06}
+.woven-lines path.protected{stroke:#ddc68f;opacity:.91;stroke-width:2.6;stroke-dasharray:4 4}.woven-lines circle.protected{fill:#f0d49a}
+.app[data-ritual=open] .quest-chip{opacity:0;pointer-events:none;transition:opacity .35s}
+.app[data-ritual=open] .voice-bubble{opacity:0!important;pointer-events:none!important}
+.finish-memento{display:block;width:fit-content;margin:8px auto 20px}
+#villageArt .celebration-lanterns,#villageArt .protection-ribbon{opacity:0;transition:opacity 1.4s ease}
+.world[data-invited=true] #villageArt .celebration-lanterns,.world[data-protected=true] #villageArt .protection-ribbon{opacity:1}
+#villageArt .lantern-pendant{transform-box:fill-box;transform-origin:50% 0%;animation:lantern-sway 4s ease-in-out infinite alternate}
+#villageArt .lantern-pendant:nth-child(2n){animation-delay:-1.5s}
+@keyframes lantern-sway{from{transform:rotate(-4deg)}to{transform:rotate(5deg)}}
+@media(prefers-reduced-motion:reduce){#villageArt .lantern-pendant{animation:none}}
+
+/* V0.5 — The Lost Light. A short playable quest inhabiting the miniature. */
+.trail-stage{position:absolute;inset:0;z-index:7;pointer-events:none;isolation:isolate}
+.trail-stage[hidden],.trail-stage [hidden],.trail-guide[hidden],.trail-reward[hidden]{display:none!important}
+.trail-art{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+#trailComplete{filter:drop-shadow(0 0 5px #f7cf98ae);stroke-dasharray:4 0;transition:stroke-width .23s}
+#trailPathGlow{transition:opacity .8s}
+#trailLive,#trailLiveGlow{opacity:0;transition:opacity .16s}
+.trail-stage[data-dragging=true] #trailLive,.trail-stage[data-dragging=true] #trailLiveGlow{opacity:1}
+.trail-trigger{position:absolute;transform:translate(-19%,-56%);border:0;background:none;color:#fff4d6;display:flex;gap:11px;align-items:center;text-align:left;padding:10px 15px 10px 9px;pointer-events:auto;z-index:3;animation:none}
+.trail-trigger-icon{width:56px;height:56px;flex:none;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 34% 28%,#7a9987,#314947 65%,#1e3338);border:1px solid #f5dbb8bb;box-shadow:0 0 0 9px #f4dc9f15,0 0 30px #f5dba079,inset 0 0 15px #edcb9444;color:#ffeab7;font:30px Georgia,serif;transition:transform .24s,box-shadow .24s;animation:trigger-icon-breathe 3.7s ease-in-out infinite}
+.trail-trigger-copy{border:1px solid #e7d3a943;border-radius:9px;padding:11px 13px;background:linear-gradient(110deg,#1c3032eb,#1d3130db);backdrop-filter:blur(10px);box-shadow:0 10px 32px #04141999;white-space:nowrap}
+.trail-trigger-copy b{display:block;letter-spacing:2.1px;font-size:9px;color:#f4d9aa}
+.trail-trigger-copy small{display:block;margin-top:5px;color:#e9eadd;font:400 14px/1.2 "Fraunces",Georgia,serif;letter-spacing:.1px}
+.trail-trigger:hover .trail-trigger-icon,.trail-trigger:focus-visible .trail-trigger-icon{transform:rotate(-14deg) scale(1.12);box-shadow:0 0 0 12px #f4dc9f23,0 0 50px #f5dba0d1}
+.trail-knot,.trail-shortcut{position:absolute;display:grid;place-items:center;pointer-events:auto;transform:translate(-50%,-50%);border:0;z-index:4}
+.trail-knot{width:57px;height:57px;border-radius:50%;background:none;touch-action:none;cursor:crosshair;transition:scale .2s,opacity .32s,filter .25s}
+.trail-knot:before{content:"";position:absolute;inset:8px;border-radius:50%;border:1px solid #f8eac7bd;background:radial-gradient(circle at 32% 24%,#fceabf 0%,#ba9e76 10%,#567568 35%,#1e3939 75%);box-shadow:inset 0 0 0 3px #eae7c71c,0 0 0 6px #f8d8a41c,0 0 24px #f5dca288;transition:box-shadow .2s,transform .2s}
+.trail-knot span{position:relative;z-index:2;font:600 17px/1 "Fraunces",Georgia,serif;color:#f7e5bc;pointer-events:none}
+.trail-knot.is-next:before{box-shadow:0 0 0 8px #eedfaf36,0 0 42px #ffecadca,inset 0 0 10px #eec99766;animation:next-knot 1.45s ease-in-out infinite}
+.trail-knot.is-lit:before{background:radial-gradient(circle at 30% 25%,#ffefbe,#83aa85 35%,#365b4d 75%);box-shadow:0 0 15px #b4ebbd9e,inset 0 0 10px #f4e7af87}
+.trail-knot.is-locked{opacity:.35;filter:saturate(.55)}
+.trail-knot.is-current{cursor:grab}.trail-knot.is-current:active{cursor:grabbing}.trail-knot.is-current:before{box-shadow:0 0 0 10px #e9daa437,0 0 28px #ffe6a5d8}
+.trail-knot.is-near:before,.trail-knot:hover:before{transform:scale(1.15);box-shadow:0 0 0 11px #eedfaf3a,0 0 47px #ffeab7db}
+.trail-shortcut{width:49px;height:49px;border-radius:50%;background:radial-gradient(circle,#3a4d48dd,#243c3adb);border:1px dashed #f1d19b9c;color:#e7cf9e;cursor:help;box-shadow:0 0 0 5px #dfc69213;transition:box-shadow .25s,background .25s;touch-action:manipulation}
+.trail-shortcut span:first-child{font:20px Georgia}.trail-shortcut .shortcut-title{position:absolute;left:50%;bottom:-31px;transform:translateX(-50%);font-size:9px;color:#e5dbbc;background:#1f3434df;padding:5px 8px;border-radius:3px;white-space:nowrap;letter-spacing:.5px}
+.trail-shortcut:hover,.trail-shortcut:focus-visible,.trail-shortcut.is-blocked{box-shadow:0 0 0 13px #eecb8735,0 0 32px #f4d4a4aa;background:#615640}
+#trailBulbs circle{fill:#fff1bc;filter:drop-shadow(0 0 5px #ffe9a3);transform-box:fill-box;transform-origin:center;animation:lantern-flicker 3.8s ease-in-out infinite alternate}
+#trailBulbs circle:nth-child(3n){animation-delay:-1.9s;animation-duration:2.8s;fill:#bbefca}
+#trailTraveller{filter:drop-shadow(0 0 6px #f1d1a79b)}
+#trailTraveller .traveller-light{animation:lantern-flicker 1.5s ease-in-out infinite}
+.world[data-puzzle=active] .world-pin,.world[data-puzzle=active] #miaButton{opacity:.12;pointer-events:none}
+.world[data-puzzle=active]{filter:drop-shadow(0 55px 45px #01101285) drop-shadow(0 0 35px #f8d7ab1a)}
+.app[data-trail=active] .quest-chip{opacity:0;pointer-events:none;transition:opacity .25s}
+.app[data-trail=active] .intro{opacity:0;transform:translateY(-17px)}
+.app[data-trail=active] .thread-well{opacity:.45;pointer-events:none}
+.trail-guide{position:absolute;z-index:14;right:clamp(20px,5.2vw,90px);top:clamp(35px,5.4vh,70px);width:min(340px,calc(100vw - 38px));padding:24px 26px 19px;border:1px solid #eed8ab55;border-radius:10px;background:linear-gradient(160deg,#253e39e8,#1a3331ed);box-shadow:0 26px 70px #0717199c,0 0 0 1px #c4dccb0c;backdrop-filter:blur(18px);animation:guide-appear .35s ease-out}
+.trail-guide-head{display:flex;align-items:center;justify-content:space-between;gap:10px;color:#dfcba7;font:700 9px "DM Sans",sans-serif;letter-spacing:1.85px}
+.trail-guide-head button{color:#e5d8c7;background:#f0e0be12;border:1px solid #eadab850;width:30px;height:30px;border-radius:50%;font-size:20px}
+.trail-guide h2{font:400 34px/1.07 "Fraunces",Georgia,serif;letter-spacing:-.9px;color:#fbecdb;margin:15px 0 14px}
+.trail-guide h2 em{color:#d7eacb}
+.trail-guide p{font-size:12px;line-height:1.7;color:#d0dbd2;margin:0 0 19px;min-height:35px}
+.trail-guide-bottom{border-top:1px solid #d3dbc73d;padding-top:14px;display:flex;justify-content:space-between;align-items:center;gap:10px;color:#f8dca9;font-size:10px;font-weight:600;letter-spacing:1.3px}
+#trailTally{font:21px/1 Georgia,serif;letter-spacing:9px;color:#f5daa7}
+.trail-reward{position:absolute;z-index:16;right:clamp(22px,5.4vw,90px);bottom:clamp(120px,13vh,155px);width:min(350px,calc(100vw - 40px));padding:25px 28px 24px;background:linear-gradient(135deg,#e9dfc9,#f7efdf);border:1px solid #fff5d6;color:#263a32;box-shadow:0 30px 75px #041217c7;border-radius:8px;animation:guide-appear .6s cubic-bezier(.15,.7,.24,1)}
+.reward-mark{height:43px;width:43px;display:grid;place-items:center;border:1px solid #b4c4a3;background:#e0e7d5;border-radius:50%;color:#4c8066;font:26px Georgia,serif;margin-bottom:16px}
+.reward-kicker{font-size:9px;letter-spacing:2px;color:#6d8267;font-weight:700}
+.trail-reward h2{font:400 33px/1.14 "Fraunces",Georgia,serif;letter-spacing:-.5px;margin:14px 0 13px}
+.trail-reward h2 em{color:#4a7d69}
+.trail-reward p{font-size:12px;line-height:1.75;color:#587065;margin:0 0 19px}
+.reward-controls{display:flex;align-items:center;flex-wrap:wrap;gap:7px}
+.reward-controls button{background:#305a4a;color:#f2eedf;border:1px solid #305a4a;padding:12px 15px;font-size:11px;font-weight:700;border-radius:4px}
+.reward-controls button span{padding-left:6px}
+.reward-controls button:last-child{border:0;background:none;color:#527364;font-size:10px;padding:10px 0}
+.trail-burst{position:absolute;width:5px;height:5px;transform:translate(-50%,-50%);border-radius:50%;background:#ffebaf;pointer-events:none;box-shadow:0 0 12px #ffe4a8;z-index:9;animation:trail-spark 900ms cubic-bezier(.08,.6,.19,1) forwards}
+.trail-burst:nth-child(2n){background:#b5ebc9}
+.app.trail-celebrating .world-halo{background:radial-gradient(ellipse at 53% 55%,#edcf8f55,transparent 73%)}
+.app[data-trail=done] .trail-stage:not([data-mode=active]) #trailPathGlow{opacity:.65}
+@keyframes trail-spark{to{translate:var(--dx) var(--dy);scale:.1;opacity:0}}
+@keyframes next-knot{50%{transform:scale(1.14)}}
+@keyframes lantern-flicker{0%{opacity:.6;transform:scale(.75)}100%{opacity:1;transform:scale(1.2)}}
+@keyframes trigger-breathe{50%{translate:0 -5px}}
+@keyframes guide-appear{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(max-width:950px){.trail-guide{right:23px;top:12px}.trail-reward{right:22px;bottom:115px}}
+@media(max-width:620px){
+ .trail-trigger{transform:translate(-12%,-50%);gap:6px;padding:7px 5px}.trail-trigger-icon{height:51px;width:51px;font-size:24px}.trail-trigger-copy{padding:8px 10px}.trail-trigger-copy b{font-size:8px;letter-spacing:1.1px}.trail-trigger-copy small{font-size:12px}
+ .trail-knot{width:64px;height:64px}.trail-knot:before{inset:12px}
+ .app[data-trail=active] .intro{opacity:0}.app[data-trail=active] .world-window{top:168px;bottom:103px}
+ .trail-guide{left:14px;right:14px;top:74px;width:auto;max-width:none;padding:13px 17px 11px;z-index:15}
+ .trail-guide-head{font-size:8px}.trail-guide h2{font-size:23px;line-height:1.1;margin:7px 0 5px}.trail-guide h2 br{display:none}.trail-guide p{font-size:10px;line-height:1.4;min-height:auto;margin-bottom:9px}
+ .trail-guide-bottom{padding-top:8px}.trail-guide-bottom #trailTally{font-size:16px;letter-spacing:5px}
+ .trail-reward{left:16px;right:16px;width:auto;bottom:108px;padding:18px 21px}.trail-reward h2{font-size:28px}.trail-reward p{font-size:11px}
+ .app[data-trail=active] .bottom-hud{opacity:.38}.app[data-trail=active] .mobile-pan-hint{display:none}
+}
+@media(max-width:380px){.trail-guide{top:70px;padding:10px 13px}.trail-guide h2{font-size:21px}.trail-guide p{font-size:9px}.trail-reward{bottom:104px}}
+@media(prefers-reduced-motion:reduce){.trail-trigger,.trail-knot:before,#trailBulbs circle,#trailTraveller .traveller-light,.trail-burst,.trail-reward,.trail-guide{animation:none!important}}
+
+@keyframes trigger-icon-breathe{50%{transform:translateY(-4px)}}
+/* Quest mode is a focused play space, not a second dashboard layered over the first. */
+.app[data-trail=active] .intro,.app[data-trail=active] .quest-chip{opacity:0!important;visibility:hidden!important;transition:none!important;pointer-events:none!important}
+.app[data-trail=active] .trail-guide{background:linear-gradient(160deg,#294139f6,#1a3331f9);box-shadow:0 27px 65px #081719bc,0 0 0 1px #e7d6b913}
+.app[data-trail=active] .world{filter:drop-shadow(0 55px 38px #071719b3) drop-shadow(0 0 28px #e8d4a51e)}
+@media(max-width:620px){
+ .app[data-trail=active] .trail-guide{top:68px;left:15px;right:15px;background:linear-gradient(160deg,#29443cef,#1b3534fc)}
+ .app[data-trail=active] .world-window{top:166px;bottom:104px}
+}
+
+@media(max-width:620px){.trail-guide h2 br{display:block}.app[data-trail=active] .bottom-hud{visibility:hidden}}
+</style>
+</head>
+<body>
+<div id="app" class="app" data-sky="dusk">
+<div class="texture" aria-hidden="true"></div>
+<header class="topbar">
+  <div class="brand" aria-label="COMMONS"><span class="brand-emblem">✳</span><span>COMMONS</span><span class="brand-note">A TINY LIVING WORLD</span></div>
+  <div class="chapters"><i class="chapter-dot"></i> <span>CHAPTER 01</span><span class="slash">/</span><span>THE COMMON GROUND</span></div>
+  <nav class="top-actions" aria-label="Experience controls">
+    <button id="soundBtn" class="text-button" type="button" aria-pressed="false" title="Enable ambient audio"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M17 9q3 3 0 6"/></svg><span>Sound off</span></button>
+    <button id="dayBtn" class="text-button" type="button" aria-pressed="false" title="Toggle the time of day"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 1v3m0 16v3M1 12h3m16 0h3M4 4l2 2m12 12l2 2M20 4l-2 2M6 18l-2 2"/></svg><span>Blue hour</span></button>
+    <button id="journalBtn" class="journal-link" type="button"><span class="journal-sigil">≋</span><span>Field notes</span><span id="journalCount" class="journal-count">0</span></button>
+  </nav>
+</header>
+<main class="scene-area" id="sceneArea" aria-label="Interactive miniature garden world">
+  <div class="scene-atmosphere" aria-hidden="true"><span class="orbital orbital-a"></span><span class="orbital orbital-b"></span><span class="ray ray-a"></span></div>
+  <div class="intro" id="intro">
+    <div class="eyebrow"><span class="tiny-star">✦</span> A PLAYABLE THOUGHT EXPERIMENT</div>
+    <h1>The space<br><em>between us.</em></h1>
+    <p>A tiny world with a small mystery.<br>Follow the light. Make something good happen.</p>
+    <div class="intro-sep"></div>
+    <div class="intro-quiet">Some paths are made, not found.</div>
+  </div>
+  <div class="world-window" id="worldWindow">
+    <div class="world" id="world">
+      <div class="world-halo" aria-hidden="true"></div>
+      <div class="world-svg" id="worldSvg"><svg id="villageArt" viewBox="0 0 1200 740" role="img" aria-labelledby="dioramaTitle dioramaDesc" xmlns="http://www.w3.org/2000/svg">
+<title id="dioramaTitle">A floating miniature neighbourhood</title><desc id="dioramaDesc">Handcrafted isometric gardens, a warm community workshop, trees, lanterns and pathways, with five glowing places to interact with.</desc>
+<defs>
+  <linearGradient id="ground" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#a1aa7f"/><stop offset=".48" stop-color="#6e9a79"/><stop offset="1" stop-color="#496d65"/></linearGradient>
+  <linearGradient id="cliff" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#52615a"/><stop offset=".5" stop-color="#313b40"/><stop offset="1" stop-color="#1c292e"/></linearGradient>
+  <linearGradient id="wall" x1="0" y1="0" x2=".7" y2="1"><stop stop-color="#b3a993"/><stop offset="1" stop-color="#75827b"/></linearGradient>
+  <radialGradient id="warmLight"><stop stop-color="#ffd18a" stop-opacity=".87"/><stop offset=".28" stop-color="#ffe0a1" stop-opacity=".44"/><stop offset="1" stop-color="#ffc77d" stop-opacity="0"/></radialGradient>
+  <radialGradient id="pond"><stop stop-color="#93ceca"/><stop offset="1" stop-color="#386c70"/></radialGradient>
+  <filter id="softShadow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="23"/></filter>
+  <filter id="pinGlow" x="-70%" y="-70%" width="240%" height="240%"><feGaussianBlur stdDeviation="5"/></filter>
+  <filter id="glow" x="-120%" y="-120%" width="340%" height="340%"><feGaussianBlur stdDeviation="8"/></filter>
+  <clipPath id="groundClip"><path d="M600 123 L1001 334 Q1032 352 998 371 L618 574 Q594 591 565 575 L195 371 Q167 354 199 333 L574 129 Q588 119 600 123Z"/></clipPath>
+</defs>
+<ellipse cx="610" cy="626" rx="380" ry="47" fill="#020c10" opacity=".7" filter="url(#softShadow)"/>
+<!-- physical cutaway / underside -->
+<path d="M600 123 L1001 334 Q1032 352 998 371 L618 574 Q594 591 565 575 L195 371 Q167 354 199 333 L574 129 Q588 119 600 123Z" transform="translate(0 55)" fill="#152b30" opacity=".7"/>
+<path d="M195 369 L565 574 Q594 590 618 575 L998 371 L998 413 Q992 427 976 436 L616 641 Q594 653 574 640 L210 434 Q195 422 195 403Z" fill="url(#cliff)" stroke="#22333a" stroke-width="2"/>
+<path d="M618 575 L998 371 L998 413 Q992 427 976 436 L616 641Z" fill="#344c50" opacity=".59"/>
+<path d="M197 371 L566 574 L574 640 L210 434 Q195 422 195 403Z" fill="#243539" opacity=".55"/>
+<path d="M603 126 L1000 334 Q1031 351 998 372 L616 576 Q595 589 569 575 L195 371 Q168 354 202 332 L576 128 Q588 122 603 126Z" fill="url(#ground)" stroke="#c8c8a0" stroke-width="3"/>
+<g clip-path="url(#groundClip)">
+
+<ellipse cx="441.6" cy="314.4" rx="18" ry="6" fill="#b3b780" opacity="0.15" transform="rotate(25 441.6 314.4)"/>
+<ellipse cx="746.8" cy="308.5" rx="17" ry="10" fill="#365e58" opacity="0.07" transform="rotate(25 746.8 308.5)"/>
+<ellipse cx="857.7" cy="347.0" rx="24" ry="5" fill="#b3b780" opacity="0.07" transform="rotate(25 857.7 347.0)"/>
+<ellipse cx="545.5" cy="262.6" rx="24" ry="6" fill="#c7ae7f" opacity="0.07" transform="rotate(25 545.5 262.6)"/>
+<ellipse cx="696.4" cy="213.9" rx="20" ry="6" fill="#c7ae7f" opacity="0.10" transform="rotate(25 696.4 213.9)"/>
+<ellipse cx="622.0" cy="366.3" rx="16" ry="7" fill="#d1c59a" opacity="0.08" transform="rotate(25 622.0 366.3)"/>
+<ellipse cx="622.1" cy="356.6" rx="23" ry="5" fill="#b3b780" opacity="0.07" transform="rotate(25 622.1 356.6)"/>
+<ellipse cx="682.2" cy="366.8" rx="21" ry="10" fill="#d1c59a" opacity="0.14" transform="rotate(25 682.2 366.8)"/>
+<ellipse cx="580.8" cy="242.9" rx="18" ry="10" fill="#d1c59a" opacity="0.10" transform="rotate(25 580.8 242.9)"/>
+<ellipse cx="596.1" cy="337.6" rx="15" ry="4" fill="#365e58" opacity="0.07" transform="rotate(25 596.1 337.6)"/>
+<ellipse cx="692.5" cy="444.8" rx="26" ry="3" fill="#b3b780" opacity="0.13" transform="rotate(25 692.5 444.8)"/>
+<ellipse cx="850.7" cy="331.6" rx="20" ry="9" fill="#b3b780" opacity="0.09" transform="rotate(25 850.7 331.6)"/>
+<ellipse cx="409.3" cy="313.3" rx="29" ry="8" fill="#b3b780" opacity="0.08" transform="rotate(25 409.3 313.3)"/>
+<ellipse cx="639.2" cy="407.7" rx="12" ry="9" fill="#d1c59a" opacity="0.14" transform="rotate(25 639.2 407.7)"/>
+<ellipse cx="486.3" cy="379.7" rx="27" ry="9" fill="#d1c59a" opacity="0.10" transform="rotate(25 486.3 379.7)"/>
+<ellipse cx="632.9" cy="347.1" rx="11" ry="3" fill="#365e58" opacity="0.09" transform="rotate(25 632.9 347.1)"/>
+<ellipse cx="531.9" cy="346.5" rx="23" ry="9" fill="#b3b780" opacity="0.07" transform="rotate(25 531.9 346.5)"/>
+<ellipse cx="823.6" cy="349.4" rx="19" ry="7" fill="#c7ae7f" opacity="0.06" transform="rotate(25 823.6 349.4)"/>
+<ellipse cx="607.5" cy="436.3" rx="24" ry="5" fill="#b3b780" opacity="0.08" transform="rotate(25 607.5 436.3)"/>
+<ellipse cx="348.3" cy="328.1" rx="15" ry="5" fill="#365e58" opacity="0.06" transform="rotate(25 348.3 328.1)"/>
+<ellipse cx="605.4" cy="293.6" rx="10" ry="7" fill="#365e58" opacity="0.12" transform="rotate(25 605.4 293.6)"/>
+<ellipse cx="596.3" cy="307.2" rx="24" ry="9" fill="#d1c59a" opacity="0.08" transform="rotate(25 596.3 307.2)"/>
+<ellipse cx="497.2" cy="377.5" rx="26" ry="7" fill="#c7ae7f" opacity="0.08" transform="rotate(25 497.2 377.5)"/>
+<ellipse cx="617.6" cy="227.5" rx="12" ry="10" fill="#d1c59a" opacity="0.06" transform="rotate(25 617.6 227.5)"/>
+<ellipse cx="602.7" cy="470.7" rx="16" ry="10" fill="#d1c59a" opacity="0.07" transform="rotate(25 602.7 470.7)"/>
+<ellipse cx="470.8" cy="258.4" rx="18" ry="5" fill="#d1c59a" opacity="0.07" transform="rotate(25 470.8 258.4)"/>
+<ellipse cx="507.8" cy="392.8" rx="24" ry="9" fill="#c7ae7f" opacity="0.12" transform="rotate(25 507.8 392.8)"/>
+<ellipse cx="743.4" cy="245.8" rx="28" ry="6" fill="#b3b780" opacity="0.05" transform="rotate(25 743.4 245.8)"/>
+<ellipse cx="483.3" cy="371.5" rx="10" ry="3" fill="#365e58" opacity="0.07" transform="rotate(25 483.3 371.5)"/>
+<ellipse cx="542.6" cy="390.9" rx="18" ry="3" fill="#b3b780" opacity="0.07" transform="rotate(25 542.6 390.9)"/>
+<ellipse cx="743.3" cy="341.1" rx="24" ry="9" fill="#b3b780" opacity="0.08" transform="rotate(25 743.3 341.1)"/>
+<ellipse cx="480.4" cy="275.8" rx="15" ry="7" fill="#c7ae7f" opacity="0.06" transform="rotate(25 480.4 275.8)"/>
+<ellipse cx="538.2" cy="418.6" rx="24" ry="3" fill="#c7ae7f" opacity="0.08" transform="rotate(25 538.2 418.6)"/>
+<ellipse cx="832.7" cy="396.0" rx="27" ry="3" fill="#b3b780" opacity="0.12" transform="rotate(25 832.7 396.0)"/>
+<ellipse cx="699.3" cy="426.0" rx="14" ry="3" fill="#b3b780" opacity="0.15" transform="rotate(25 699.3 426.0)"/>
+<ellipse cx="421.3" cy="369.3" rx="14" ry="9" fill="#d1c59a" opacity="0.13" transform="rotate(25 421.3 369.3)"/>
+<ellipse cx="876.4" cy="324.5" rx="25" ry="6" fill="#c7ae7f" opacity="0.06" transform="rotate(25 876.4 324.5)"/>
+<ellipse cx="667.9" cy="377.3" rx="14" ry="6" fill="#c7ae7f" opacity="0.08" transform="rotate(25 667.9 377.3)"/>
+<ellipse cx="588.3" cy="261.9" rx="14" ry="9" fill="#365e58" opacity="0.12" transform="rotate(25 588.3 261.9)"/>
+<ellipse cx="648.0" cy="390.9" rx="16" ry="8" fill="#b3b780" opacity="0.05" transform="rotate(25 648.0 390.9)"/>
+<ellipse cx="795.6" cy="291.3" rx="12" ry="9" fill="#d1c59a" opacity="0.06" transform="rotate(25 795.6 291.3)"/>
+<ellipse cx="830.5" cy="384.2" rx="14" ry="10" fill="#d1c59a" opacity="0.14" transform="rotate(25 830.5 384.2)"/>
+<ellipse cx="838.2" cy="348.7" rx="18" ry="3" fill="#c7ae7f" opacity="0.09" transform="rotate(25 838.2 348.7)"/>
+<ellipse cx="516.9" cy="217.7" rx="15" ry="5" fill="#b3b780" opacity="0.08" transform="rotate(25 516.9 217.7)"/>
+<ellipse cx="801.3" cy="278.7" rx="9" ry="5" fill="#365e58" opacity="0.14" transform="rotate(25 801.3 278.7)"/>
+<ellipse cx="397.3" cy="292.3" rx="13" ry="8" fill="#365e58" opacity="0.12" transform="rotate(25 397.3 292.3)"/>
+<ellipse cx="513.5" cy="326.3" rx="24" ry="8" fill="#365e58" opacity="0.08" transform="rotate(25 513.5 326.3)"/>
+<ellipse cx="391.9" cy="408.0" rx="19" ry="9" fill="#c7ae7f" opacity="0.09" transform="rotate(25 391.9 408.0)"/>
+<ellipse cx="737.8" cy="278.6" rx="22" ry="5" fill="#b3b780" opacity="0.10" transform="rotate(25 737.8 278.6)"/>
+<ellipse cx="582.8" cy="252.8" rx="14" ry="10" fill="#b3b780" opacity="0.08" transform="rotate(25 582.8 252.8)"/>
+<ellipse cx="665.7" cy="452.4" rx="19" ry="7" fill="#c7ae7f" opacity="0.08" transform="rotate(25 665.7 452.4)"/>
+<ellipse cx="689.8" cy="215.9" rx="20" ry="6" fill="#c7ae7f" opacity="0.05" transform="rotate(25 689.8 215.9)"/>
+<ellipse cx="515.4" cy="428.2" rx="19" ry="3" fill="#c7ae7f" opacity="0.13" transform="rotate(25 515.4 428.2)"/>
+<ellipse cx="595.2" cy="470.4" rx="10" ry="9" fill="#365e58" opacity="0.10" transform="rotate(25 595.2 470.4)"/>
+<ellipse cx="816.9" cy="354.4" rx="29" ry="9" fill="#365e58" opacity="0.10" transform="rotate(25 816.9 354.4)"/>
+<ellipse cx="709.3" cy="309.4" rx="24" ry="4" fill="#b3b780" opacity="0.06" transform="rotate(25 709.3 309.4)"/>
+<ellipse cx="678.8" cy="394.0" rx="18" ry="7" fill="#c7ae7f" opacity="0.09" transform="rotate(25 678.8 394.0)"/>
+<ellipse cx="412.5" cy="380.1" rx="26" ry="8" fill="#b3b780" opacity="0.08" transform="rotate(25 412.5 380.1)"/>
+<ellipse cx="605.1" cy="167.4" rx="14" ry="9" fill="#b3b780" opacity="0.08" transform="rotate(25 605.1 167.4)"/>
+<ellipse cx="876.0" cy="353.8" rx="17" ry="8" fill="#b3b780" opacity="0.11" transform="rotate(25 876.0 353.8)"/>
+<ellipse cx="382.4" cy="391.3" rx="15" ry="9" fill="#c7ae7f" opacity="0.07" transform="rotate(25 382.4 391.3)"/>
+<ellipse cx="537.1" cy="238.0" rx="18" ry="6" fill="#d1c59a" opacity="0.14" transform="rotate(25 537.1 238.0)"/>
+<ellipse cx="636.0" cy="430.1" rx="25" ry="5" fill="#b3b780" opacity="0.14" transform="rotate(25 636.0 430.1)"/>
+<ellipse cx="819.8" cy="283.8" rx="12" ry="9" fill="#d1c59a" opacity="0.11" transform="rotate(25 819.8 283.8)"/>
+<ellipse cx="673.6" cy="428.1" rx="21" ry="9" fill="#b3b780" opacity="0.08" transform="rotate(25 673.6 428.1)"/>
+<ellipse cx="520.5" cy="448.9" rx="21" ry="3" fill="#c7ae7f" opacity="0.14" transform="rotate(25 520.5 448.9)"/>
+<ellipse cx="532.4" cy="380.2" rx="22" ry="10" fill="#d1c59a" opacity="0.09" transform="rotate(25 532.4 380.2)"/>
+<ellipse cx="417.8" cy="275.8" rx="13" ry="3" fill="#365e58" opacity="0.11" transform="rotate(25 417.8 275.8)"/>
+<ellipse cx="373.9" cy="333.3" rx="28" ry="4" fill="#d1c59a" opacity="0.12" transform="rotate(25 373.9 333.3)"/>
+<ellipse cx="580.4" cy="187.1" rx="18" ry="7" fill="#365e58" opacity="0.10" transform="rotate(25 580.4 187.1)"/>
+<ellipse cx="485.6" cy="423.7" rx="20" ry="7" fill="#d1c59a" opacity="0.06" transform="rotate(25 485.6 423.7)"/>
+<ellipse cx="636.0" cy="334.1" rx="10" ry="5" fill="#365e58" opacity="0.15" transform="rotate(25 636.0 334.1)"/>
+<ellipse cx="691.1" cy="301.0" rx="9" ry="3" fill="#c7ae7f" opacity="0.11" transform="rotate(25 691.1 301.0)"/>
+<ellipse cx="448.0" cy="385.4" rx="24" ry="9" fill="#d1c59a" opacity="0.08" transform="rotate(25 448.0 385.4)"/>
+<ellipse cx="423.9" cy="325.6" rx="18" ry="3" fill="#365e58" opacity="0.07" transform="rotate(25 423.9 325.6)"/>
+<ellipse cx="392.9" cy="339.8" rx="23" ry="10" fill="#b3b780" opacity="0.12" transform="rotate(25 392.9 339.8)"/>
+<ellipse cx="445.3" cy="262.2" rx="19" ry="7" fill="#b3b780" opacity="0.11" transform="rotate(25 445.3 262.2)"/>
+<ellipse cx="741.8" cy="433.5" rx="19" ry="6" fill="#365e58" opacity="0.11" transform="rotate(25 741.8 433.5)"/>
+<ellipse cx="722.6" cy="357.2" rx="15" ry="9" fill="#c7ae7f" opacity="0.13" transform="rotate(25 722.6 357.2)"/>
+<ellipse cx="636.4" cy="312.0" rx="25" ry="6" fill="#c7ae7f" opacity="0.10" transform="rotate(25 636.4 312.0)"/>
+<ellipse cx="663.1" cy="280.7" rx="17" ry="3" fill="#d1c59a" opacity="0.13" transform="rotate(25 663.1 280.7)"/>
+<ellipse cx="547.9" cy="219.2" rx="21" ry="4" fill="#c7ae7f" opacity="0.10" transform="rotate(25 547.9 219.2)"/>
+<ellipse cx="304.2" cy="340.1" rx="17" ry="3" fill="#365e58" opacity="0.07" transform="rotate(25 304.2 340.1)"/>
+<ellipse cx="720.9" cy="430.7" rx="29" ry="5" fill="#b3b780" opacity="0.14" transform="rotate(25 720.9 430.7)"/>
+<ellipse cx="567.0" cy="265.3" rx="9" ry="9" fill="#365e58" opacity="0.09" transform="rotate(25 567.0 265.3)"/>
+<ellipse cx="763.5" cy="307.9" rx="10" ry="7" fill="#c7ae7f" opacity="0.11" transform="rotate(25 763.5 307.9)"/>
+<ellipse cx="536.1" cy="426.1" rx="27" ry="9" fill="#d1c59a" opacity="0.07" transform="rotate(25 536.1 426.1)"/>
+<ellipse cx="528.2" cy="293.9" rx="24" ry="7" fill="#c7ae7f" opacity="0.09" transform="rotate(25 528.2 293.9)"/>
+<ellipse cx="610.4" cy="323.1" rx="13" ry="10" fill="#c7ae7f" opacity="0.12" transform="rotate(25 610.4 323.1)"/>
+<ellipse cx="592.4" cy="352.0" rx="13" ry="5" fill="#365e58" opacity="0.08" transform="rotate(25 592.4 352.0)"/>
+<ellipse cx="507.4" cy="417.4" rx="14" ry="5" fill="#d1c59a" opacity="0.15" transform="rotate(25 507.4 417.4)"/>
+<ellipse cx="629.5" cy="441.3" rx="10" ry="7" fill="#b3b780" opacity="0.06" transform="rotate(25 629.5 441.3)"/>
+<ellipse cx="436.2" cy="374.2" rx="27" ry="10" fill="#b3b780" opacity="0.13" transform="rotate(25 436.2 374.2)"/>
+<ellipse cx="546.6" cy="191.6" rx="12" ry="7" fill="#c7ae7f" opacity="0.11" transform="rotate(25 546.6 191.6)"/>
+<ellipse cx="901.6" cy="327.9" rx="20" ry="9" fill="#d1c59a" opacity="0.13" transform="rotate(25 901.6 327.9)"/>
+<ellipse cx="549.3" cy="261.4" rx="26" ry="7" fill="#c7ae7f" opacity="0.06" transform="rotate(25 549.3 261.4)"/>
+<ellipse cx="606.5" cy="470.4" rx="16" ry="9" fill="#c7ae7f" opacity="0.08" transform="rotate(25 606.5 470.4)"/>
+<path d="M666.0 233.8 Q600.0 293.2 514.6 350.4" stroke="#ddc7a6" stroke-width="24" opacity=".36" fill="none" stroke-linecap="round"/>
+<path d="M666.0 233.8 Q600.0 293.2 514.6 350.4" stroke="#eee0b8" stroke-width="2.2" stroke-dasharray="2 16" opacity=".5" fill="none"/>
+<path d="M510.8 348.2 Q549.6 405.4 600.0 460.4" stroke="#ddc7a6" stroke-width="24" opacity=".36" fill="none" stroke-linecap="round"/>
+<path d="M510.8 348.2 Q549.6 405.4 600.0 460.4" stroke="#eee0b8" stroke-width="2.2" stroke-dasharray="2 16" opacity=".5" fill="none"/>
+<path d="M790.1 286.6 Q673.7 339.4 561.2 381.2" stroke="#ddc7a6" stroke-width="24" opacity=".36" fill="none" stroke-linecap="round"/>
+<path d="M790.1 286.6 Q673.7 339.4 561.2 381.2" stroke="#eee0b8" stroke-width="2.2" stroke-dasharray="2 16" opacity=".5" fill="none"/>
+<path d="M499.1 258.0 Q576.7 328.4 693.1 412.0" stroke="#ddc7a6" stroke-width="24" opacity=".36" fill="none" stroke-linecap="round"/>
+<path d="M499.1 258.0 Q576.7 328.4 693.1 412.0" stroke="#eee0b8" stroke-width="2.2" stroke-dasharray="2 16" opacity=".5" fill="none"/>
+<ellipse cx="572.8" cy="308.6" rx="6" ry="3" fill="#e2cdac" opacity=".37"/>
+<ellipse cx="561.6" cy="321.0" rx="4" ry="4" fill="#e2cdac" opacity=".37"/>
+<ellipse cx="553.5" cy="331.5" rx="4" ry="2" fill="#e2cdac" opacity=".37"/>
+<ellipse cx="551.1" cy="338.9" rx="4" ry="4" fill="#e2cdac" opacity=".37"/>
+<ellipse cx="555.8" cy="342.2" rx="7" ry="2" fill="#e2cdac" opacity=".37"/>
+<ellipse cx="567.9" cy="341.3" rx="5" ry="3" fill="#e2cdac" opacity=".37"/>
+<ellipse cx="585.8" cy="337.1" rx="5" ry="2" fill="#e2cdac" opacity=".37"/>
+<ellipse cx="607.4" cy="330.9" rx="4" ry="4" fill="#e2cdac" opacity=".37"/>
+<ellipse cx="629.4" cy="324.4" rx="4" ry="2" fill="#e2cdac" opacity=".37"/>
+<ellipse cx="648.7" cy="319.5" rx="4" ry="4" fill="#e2cdac" opacity=".37"/>
+<ellipse cx="662.5" cy="317.6" rx="6" ry="3" fill="#e2cdac" opacity=".37"/>
+<ellipse cx="669.4" cy="319.7" rx="7" ry="2" fill="#e2cdac" opacity=".37"/>
+<ellipse cx="668.9" cy="326.0" rx="4" ry="2" fill="#e2cdac" opacity=".37"/>
+<ellipse cx="662.2" cy="335.8" rx="7" ry="2" fill="#e2cdac" opacity=".37"/>
+<ellipse cx="651.5" cy="347.8" rx="7" ry="3" fill="#e2cdac" opacity=".37"/>
+<ellipse cx="639.9" cy="360.3" rx="7" ry="2" fill="#e2cdac" opacity=".37"/>
+<ellipse cx="630.6" cy="371.6" rx="5" ry="3" fill="#e2cdac" opacity=".37"/>
+<ellipse cx="626.4" cy="379.9" rx="7" ry="3" fill="#e2cdac" opacity=".37"/>
+<ellipse cx="629.1" cy="384.4" rx="5" ry="4" fill="#e2cdac" opacity=".37"/>
+<ellipse cx="639.2" cy="384.7" rx="5" ry="4" fill="#e2cdac" opacity=".37"/>
+<ellipse cx="655.7" cy="381.3" rx="6" ry="2" fill="#e2cdac" opacity=".37"/>
+<ellipse cx="676.5" cy="375.5" rx="5" ry="4" fill="#e2cdac" opacity=".37"/>
+<ellipse cx="698.7" cy="368.9" rx="6" ry="2" fill="#e2cdac" opacity=".37"/>
+<ellipse cx="719.1" cy="363.3" rx="7" ry="4" fill="#e2cdac" opacity=".37"/>
+<ellipse cx="734.7" cy="360.5" rx="7" ry="4" fill="#e2cdac" opacity=".37"/>
+<ellipse cx="588.4" cy="207.4" rx="39" ry="18" fill="url(#pond)" stroke="#bac8ad" stroke-width="4" opacity=".96"/>
+<path d="M572.36 207.4q6 -3 12 0" fill="none" stroke="#c5e8ce" stroke-width="1.5" opacity=".6"/>
+<path d="M581.36 210.4q6 -3 12 0" fill="none" stroke="#c5e8ce" stroke-width="1.5" opacity=".6"/>
+<path d="M590.36 207.4q6 -3 12 0" fill="none" stroke="#c5e8ce" stroke-width="1.5" opacity=".6"/>
+<path d="M599.36 210.4q6 -3 12 0" fill="none" stroke="#c5e8ce" stroke-width="1.5" opacity=".6"/>
+<g class="petal-set" transform="translate(475.6 265.4) scale(0.6369274774508702)"><path d="M0 0 Q-2 -12 3 -22" fill="none" stroke="#375a45" stroke-width="2.3"/><ellipse cx="-9" cy="-10" rx="8" ry="3.8" transform="rotate(30 -9 -10)" fill="#63865e"/><ellipse cx="12" cy="-14" rx="7" ry="3.2" transform="rotate(-30 12 -14)" fill="#8cad75"/><circle cx="3" cy="-23" r="6.4" fill="#d8c6b9"/><circle cx="3" cy="-23" r="2" fill="#fff6ce"/></g>
+<g class="petal-set" transform="translate(496.7 259.0) scale(0.5851738830721077)"><path d="M0 0 Q-2 -12 3 -22" fill="none" stroke="#375a45" stroke-width="2.3"/><ellipse cx="-9" cy="-10" rx="8" ry="3.8" transform="rotate(30 -9 -10)" fill="#63865e"/><ellipse cx="12" cy="-14" rx="7" ry="3.2" transform="rotate(-30 12 -14)" fill="#8cad75"/><circle cx="3" cy="-23" r="6.4" fill="#f7b6a0"/><circle cx="3" cy="-23" r="2" fill="#fff6ce"/></g>
+<g class="petal-set" transform="translate(476.9 254.4) scale(0.547393336723574)"><path d="M0 0 Q-2 -12 3 -22" fill="none" stroke="#375a45" stroke-width="2.3"/><ellipse cx="-9" cy="-10" rx="8" ry="3.8" transform="rotate(30 -9 -10)" fill="#63865e"/><ellipse cx="12" cy="-14" rx="7" ry="3.2" transform="rotate(-30 12 -14)" fill="#8cad75"/><circle cx="3" cy="-23" r="6.4" fill="#f7b6a0"/><circle cx="3" cy="-23" r="2" fill="#fff6ce"/></g>
+<g class="petal-set" transform="translate(487.2 253.2) scale(0.5201705081382293)"><path d="M0 0 Q-2 -12 3 -22" fill="none" stroke="#375a45" stroke-width="2.3"/><ellipse cx="-9" cy="-10" rx="8" ry="3.8" transform="rotate(30 -9 -10)" fill="#63865e"/><ellipse cx="12" cy="-14" rx="7" ry="3.2" transform="rotate(-30 12 -14)" fill="#8cad75"/><circle cx="3" cy="-23" r="6.4" fill="#f7b6a0"/><circle cx="3" cy="-23" r="2" fill="#fff6ce"/></g>
+<g class="petal-set" transform="translate(474.3 247.2) scale(0.63869575721959)"><path d="M0 0 Q-2 -12 3 -22" fill="none" stroke="#375a45" stroke-width="2.3"/><ellipse cx="-9" cy="-10" rx="8" ry="3.8" transform="rotate(30 -9 -10)" fill="#63865e"/><ellipse cx="12" cy="-14" rx="7" ry="3.2" transform="rotate(-30 12 -14)" fill="#8cad75"/><circle cx="3" cy="-23" r="6.4" fill="#f7b6a0"/><circle cx="3" cy="-23" r="2" fill="#fff6ce"/></g>
+<g class="petal-set" transform="translate(487.2 313.4) scale(0.6429149747492575)"><path d="M0 0 Q-2 -12 3 -22" fill="none" stroke="#375a45" stroke-width="2.3"/><ellipse cx="-9" cy="-10" rx="8" ry="3.8" transform="rotate(30 -9 -10)" fill="#63865e"/><ellipse cx="12" cy="-14" rx="7" ry="3.2" transform="rotate(-30 12 -14)" fill="#8cad75"/><circle cx="3" cy="-23" r="6.4" fill="#f7b6a0"/><circle cx="3" cy="-23" r="2" fill="#fff6ce"/></g>
+<g class="petal-set" transform="translate(469.5 310.0) scale(0.7203032486486934)"><path d="M0 0 Q-2 -12 3 -22" fill="none" stroke="#375a45" stroke-width="2.3"/><ellipse cx="-9" cy="-10" rx="8" ry="3.8" transform="rotate(30 -9 -10)" fill="#63865e"/><ellipse cx="12" cy="-14" rx="7" ry="3.2" transform="rotate(-30 12 -14)" fill="#8cad75"/><circle cx="3" cy="-23" r="6.4" fill="#e6d28b"/><circle cx="3" cy="-23" r="2" fill="#fff6ce"/></g>
+<g class="petal-set" transform="translate(496.3 306.8) scale(0.46431137815209955)"><path d="M0 0 Q-2 -12 3 -22" fill="none" stroke="#375a45" stroke-width="2.3"/><ellipse cx="-9" cy="-10" rx="8" ry="3.8" transform="rotate(30 -9 -10)" fill="#63865e"/><ellipse cx="12" cy="-14" rx="7" ry="3.2" transform="rotate(-30 12 -14)" fill="#8cad75"/><circle cx="3" cy="-23" r="6.4" fill="#f7b6a0"/><circle cx="3" cy="-23" r="2" fill="#fff6ce"/></g>
+<g class="petal-set" transform="translate(484.1 315.9) scale(0.5290246637837)"><path d="M0 0 Q-2 -12 3 -22" fill="none" stroke="#375a45" stroke-width="2.3"/><ellipse cx="-9" cy="-10" rx="8" ry="3.8" transform="rotate(30 -9 -10)" fill="#63865e"/><ellipse cx="12" cy="-14" rx="7" ry="3.2" transform="rotate(-30 12 -14)" fill="#8cad75"/><circle cx="3" cy="-23" r="6.4" fill="#d8c6b9"/><circle cx="3" cy="-23" r="2" fill="#fff6ce"/></g>
+<g class="petal-set" transform="translate(474.0 307.8) scale(0.6221692367368059)"><path d="M0 0 Q-2 -12 3 -22" fill="none" stroke="#375a45" stroke-width="2.3"/><ellipse cx="-9" cy="-10" rx="8" ry="3.8" transform="rotate(30 -9 -10)" fill="#63865e"/><ellipse cx="12" cy="-14" rx="7" ry="3.2" transform="rotate(-30 12 -14)" fill="#8cad75"/><circle cx="3" cy="-23" r="6.4" fill="#d8c6b9"/><circle cx="3" cy="-23" r="2" fill="#fff6ce"/></g>
+<g class="petal-set" transform="translate(847.2 341.5) scale(0.6255124768592207)"><path d="M0 0 Q-2 -12 3 -22" fill="none" stroke="#375a45" stroke-width="2.3"/><ellipse cx="-9" cy="-10" rx="8" ry="3.8" transform="rotate(30 -9 -10)" fill="#63865e"/><ellipse cx="12" cy="-14" rx="7" ry="3.2" transform="rotate(-30 12 -14)" fill="#8cad75"/><circle cx="3" cy="-23" r="6.4" fill="#e6d28b"/><circle cx="3" cy="-23" r="2" fill="#fff6ce"/></g>
+<g class="petal-set" transform="translate(846.2 339.9) scale(0.4756566839915347)"><path d="M0 0 Q-2 -12 3 -22" fill="none" stroke="#375a45" stroke-width="2.3"/><ellipse cx="-9" cy="-10" rx="8" ry="3.8" transform="rotate(30 -9 -10)" fill="#63865e"/><ellipse cx="12" cy="-14" rx="7" ry="3.2" transform="rotate(-30 12 -14)" fill="#8cad75"/><circle cx="3" cy="-23" r="6.4" fill="#e6d28b"/><circle cx="3" cy="-23" r="2" fill="#fff6ce"/></g>
+<g class="petal-set" transform="translate(855.0 335.0) scale(0.5587210083921005)"><path d="M0 0 Q-2 -12 3 -22" fill="none" stroke="#375a45" stroke-width="2.3"/><ellipse cx="-9" cy="-10" rx="8" ry="3.8" transform="rotate(30 -9 -10)" fill="#63865e"/><ellipse cx="12" cy="-14" rx="7" ry="3.2" transform="rotate(-30 12 -14)" fill="#8cad75"/><circle cx="3" cy="-23" r="6.4" fill="#df917b"/><circle cx="3" cy="-23" r="2" fill="#fff6ce"/></g>
+<g class="petal-set" transform="translate(847.3 338.2) scale(0.7383196644872092)"><path d="M0 0 Q-2 -12 3 -22" fill="none" stroke="#375a45" stroke-width="2.3"/><ellipse cx="-9" cy="-10" rx="8" ry="3.8" transform="rotate(30 -9 -10)" fill="#63865e"/><ellipse cx="12" cy="-14" rx="7" ry="3.2" transform="rotate(-30 12 -14)" fill="#8cad75"/><circle cx="3" cy="-23" r="6.4" fill="#f7b6a0"/><circle cx="3" cy="-23" r="2" fill="#fff6ce"/></g>
+<g class="petal-set" transform="translate(865.5 340.5) scale(0.7190319441001698)"><path d="M0 0 Q-2 -12 3 -22" fill="none" stroke="#375a45" stroke-width="2.3"/><ellipse cx="-9" cy="-10" rx="8" ry="3.8" transform="rotate(30 -9 -10)" fill="#63865e"/><ellipse cx="12" cy="-14" rx="7" ry="3.2" transform="rotate(-30 12 -14)" fill="#8cad75"/><circle cx="3" cy="-23" r="6.4" fill="#e6d28b"/><circle cx="3" cy="-23" r="2" fill="#fff6ce"/></g>
+<g class="petal-set" transform="translate(812.3 412.2) scale(0.5157265307347937)"><path d="M0 0 Q-2 -12 3 -22" fill="none" stroke="#375a45" stroke-width="2.3"/><ellipse cx="-9" cy="-10" rx="8" ry="3.8" transform="rotate(30 -9 -10)" fill="#63865e"/><ellipse cx="12" cy="-14" rx="7" ry="3.2" transform="rotate(-30 12 -14)" fill="#8cad75"/><circle cx="3" cy="-23" r="6.4" fill="#f7b6a0"/><circle cx="3" cy="-23" r="2" fill="#fff6ce"/></g>
+<g class="petal-set" transform="translate(813.6 402.2) scale(0.6207799663425154)"><path d="M0 0 Q-2 -12 3 -22" fill="none" stroke="#375a45" stroke-width="2.3"/><ellipse cx="-9" cy="-10" rx="8" ry="3.8" transform="rotate(30 -9 -10)" fill="#63865e"/><ellipse cx="12" cy="-14" rx="7" ry="3.2" transform="rotate(-30 12 -14)" fill="#8cad75"/><circle cx="3" cy="-23" r="6.4" fill="#df917b"/><circle cx="3" cy="-23" r="2" fill="#fff6ce"/></g>
+<g class="petal-set" transform="translate(802.9 403.9) scale(0.712072271365588)"><path d="M0 0 Q-2 -12 3 -22" fill="none" stroke="#375a45" stroke-width="2.3"/><ellipse cx="-9" cy="-10" rx="8" ry="3.8" transform="rotate(30 -9 -10)" fill="#63865e"/><ellipse cx="12" cy="-14" rx="7" ry="3.2" transform="rotate(-30 12 -14)" fill="#8cad75"/><circle cx="3" cy="-23" r="6.4" fill="#df917b"/><circle cx="3" cy="-23" r="2" fill="#fff6ce"/></g>
+<g class="petal-set" transform="translate(826.4 397.9) scale(0.586797585412961)"><path d="M0 0 Q-2 -12 3 -22" fill="none" stroke="#375a45" stroke-width="2.3"/><ellipse cx="-9" cy="-10" rx="8" ry="3.8" transform="rotate(30 -9 -10)" fill="#63865e"/><ellipse cx="12" cy="-14" rx="7" ry="3.2" transform="rotate(-30 12 -14)" fill="#8cad75"/><circle cx="3" cy="-23" r="6.4" fill="#d8c6b9"/><circle cx="3" cy="-23" r="2" fill="#fff6ce"/></g>
+<g class="petal-set" transform="translate(799.2 399.1) scale(0.43702095109171896)"><path d="M0 0 Q-2 -12 3 -22" fill="none" stroke="#375a45" stroke-width="2.3"/><ellipse cx="-9" cy="-10" rx="8" ry="3.8" transform="rotate(30 -9 -10)" fill="#63865e"/><ellipse cx="12" cy="-14" rx="7" ry="3.2" transform="rotate(-30 12 -14)" fill="#8cad75"/><circle cx="3" cy="-23" r="6.4" fill="#df917b"/><circle cx="3" cy="-23" r="2" fill="#fff6ce"/></g>
+<g class="petal-set" transform="translate(582.6 424.4) scale(0.7127379752156431)"><path d="M0 0 Q-2 -12 3 -22" fill="none" stroke="#375a45" stroke-width="2.3"/><ellipse cx="-9" cy="-10" rx="8" ry="3.8" transform="rotate(30 -9 -10)" fill="#63865e"/><ellipse cx="12" cy="-14" rx="7" ry="3.2" transform="rotate(-30 12 -14)" fill="#8cad75"/><circle cx="3" cy="-23" r="6.4" fill="#df917b"/><circle cx="3" cy="-23" r="2" fill="#fff6ce"/></g>
+<g class="petal-set" transform="translate(607.0 425.8) scale(0.7260291067909364)"><path d="M0 0 Q-2 -12 3 -22" fill="none" stroke="#375a45" stroke-width="2.3"/><ellipse cx="-9" cy="-10" rx="8" ry="3.8" transform="rotate(30 -9 -10)" fill="#63865e"/><ellipse cx="12" cy="-14" rx="7" ry="3.2" transform="rotate(-30 12 -14)" fill="#8cad75"/><circle cx="3" cy="-23" r="6.4" fill="#f7b6a0"/><circle cx="3" cy="-23" r="2" fill="#fff6ce"/></g>
+<g class="petal-set" transform="translate(608.1 424.8) scale(0.423960683042467)"><path d="M0 0 Q-2 -12 3 -22" fill="none" stroke="#375a45" stroke-width="2.3"/><ellipse cx="-9" cy="-10" rx="8" ry="3.8" transform="rotate(30 -9 -10)" fill="#63865e"/><ellipse cx="12" cy="-14" rx="7" ry="3.2" transform="rotate(-30 12 -14)" fill="#8cad75"/><circle cx="3" cy="-23" r="6.4" fill="#d8c6b9"/><circle cx="3" cy="-23" r="2" fill="#fff6ce"/></g>
+<g class="petal-set" transform="translate(594.7 419.7) scale(0.5055161127765717)"><path d="M0 0 Q-2 -12 3 -22" fill="none" stroke="#375a45" stroke-width="2.3"/><ellipse cx="-9" cy="-10" rx="8" ry="3.8" transform="rotate(30 -9 -10)" fill="#63865e"/><ellipse cx="12" cy="-14" rx="7" ry="3.2" transform="rotate(-30 12 -14)" fill="#8cad75"/><circle cx="3" cy="-23" r="6.4" fill="#e6d28b"/><circle cx="3" cy="-23" r="2" fill="#fff6ce"/></g>
+<g class="petal-set" transform="translate(596.6 422.3) scale(0.7016295264766244)"><path d="M0 0 Q-2 -12 3 -22" fill="none" stroke="#375a45" stroke-width="2.3"/><ellipse cx="-9" cy="-10" rx="8" ry="3.8" transform="rotate(30 -9 -10)" fill="#63865e"/><ellipse cx="12" cy="-14" rx="7" ry="3.2" transform="rotate(-30 12 -14)" fill="#8cad75"/><circle cx="3" cy="-23" r="6.4" fill="#f7b6a0"/><circle cx="3" cy="-23" r="2" fill="#fff6ce"/></g>
+<g class="petal-set" transform="translate(407.2 369.8) scale(0.6605974794182872)"><path d="M0 0 Q-2 -12 3 -22" fill="none" stroke="#375a45" stroke-width="2.3"/><ellipse cx="-9" cy="-10" rx="8" ry="3.8" transform="rotate(30 -9 -10)" fill="#63865e"/><ellipse cx="12" cy="-14" rx="7" ry="3.2" transform="rotate(-30 12 -14)" fill="#8cad75"/><circle cx="3" cy="-23" r="6.4" fill="#e6d28b"/><circle cx="3" cy="-23" r="2" fill="#fff6ce"/></g>
+<g class="petal-set" transform="translate(405.6 370.0) scale(0.641434177941542)"><path d="M0 0 Q-2 -12 3 -22" fill="none" stroke="#375a45" stroke-width="2.3"/><ellipse cx="-9" cy="-10" rx="8" ry="3.8" transform="rotate(30 -9 -10)" fill="#63865e"/><ellipse cx="12" cy="-14" rx="7" ry="3.2" transform="rotate(-30 12 -14)" fill="#8cad75"/><circle cx="3" cy="-23" r="6.4" fill="#f7b6a0"/><circle cx="3" cy="-23" r="2" fill="#fff6ce"/></g>
+<g class="petal-set" transform="translate(412.1 376.0) scale(0.5886042655185114)"><path d="M0 0 Q-2 -12 3 -22" fill="none" stroke="#375a45" stroke-width="2.3"/><ellipse cx="-9" cy="-10" rx="8" ry="3.8" transform="rotate(30 -9 -10)" fill="#63865e"/><ellipse cx="12" cy="-14" rx="7" ry="3.2" transform="rotate(-30 12 -14)" fill="#8cad75"/><circle cx="3" cy="-23" r="6.4" fill="#f7b6a0"/><circle cx="3" cy="-23" r="2" fill="#fff6ce"/></g>
+<g class="petal-set" transform="translate(417.8 379.3) scale(0.6370937487579275)"><path d="M0 0 Q-2 -12 3 -22" fill="none" stroke="#375a45" stroke-width="2.3"/><ellipse cx="-9" cy="-10" rx="8" ry="3.8" transform="rotate(30 -9 -10)" fill="#63865e"/><ellipse cx="12" cy="-14" rx="7" ry="3.2" transform="rotate(-30 12 -14)" fill="#8cad75"/><circle cx="3" cy="-23" r="6.4" fill="#e6d28b"/><circle cx="3" cy="-23" r="2" fill="#fff6ce"/></g>
+<g class="petal-set" transform="translate(432.0 379.8) scale(0.5672725651643884)"><path d="M0 0 Q-2 -12 3 -22" fill="none" stroke="#375a45" stroke-width="2.3"/><ellipse cx="-9" cy="-10" rx="8" ry="3.8" transform="rotate(30 -9 -10)" fill="#63865e"/><ellipse cx="12" cy="-14" rx="7" ry="3.2" transform="rotate(-30 12 -14)" fill="#8cad75"/><circle cx="3" cy="-23" r="6.4" fill="#e6d28b"/><circle cx="3" cy="-23" r="2" fill="#fff6ce"/></g>
+<ellipse cx="624.5" cy="252.7" rx="84.1" ry="27.9" fill="#1b302a" opacity=".27"/>
+<polygon points="697.0,185.6 615.5,231.8 615.5,288.8 697.0,242.6" fill="#ccc6b3" />
+<polygon points="537.9,187.8 615.5,231.8 615.5,288.8 537.9,244.8" fill="#a19e90" />
+<polygon points="619.4,141.6 697.0,185.6 615.5,231.8 537.9,187.8" fill="#ccc6b3" />
+<polygon points="617.5,192.9 703.2,241.5 615.5,291.2 529.8,242.6" fill="none" stroke="#dcc8ab" stroke-width="1.4"/>
+<polygon points="617.5,128.5 671.0,122.5 562.4,184.1 516.6,185.7" fill="#c58065" stroke="#493d39" stroke-opacity=".30" stroke-width="1"/>
+<polygon points="671.0,122.5 718.3,185.7 617.5,242.9 562.4,184.1" fill="#9d655b" stroke="#493d39" stroke-opacity=".27" stroke-width="1"/>
+<path d="M642.8 138.5 L690.1 197.7" stroke="#f7e4bb" stroke-opacity=".21" stroke-width="1.6" fill="none"/>
+<path d="M619.9 151.4 L667.3 210.7" stroke="#f7e4bb" stroke-opacity=".21" stroke-width="1.6" fill="none"/>
+<path d="M596.3 164.8 L643.6 224.0" stroke="#f7e4bb" stroke-opacity=".21" stroke-width="1.6" fill="none"/>
+<polygon points="553.4,253.6 572.8,264.6 572.8,228.7 553.4,217.7" fill="#445e58" />
+<circle cx="567.4" cy="240.4" r="1.4" fill="#efcc89"/>
+<polygon points="589.1,247.0 598.4,252.3 598.4,235.2 589.1,229.9" fill="#e9c67a" stroke="#637165" stroke-width="3.5"/>
+<circle class="window-light" cx="592.2" cy="240.3" r="13" fill="#f3be73" opacity=".12"/>
+<polygon points="602.3,254.5 611.6,259.8 611.6,242.7 602.3,237.4" fill="#e9c67a" stroke="#637165" stroke-width="3.5"/>
+<circle class="window-light" cx="605.4" cy="247.7" r="13" fill="#f3be73" opacity=".12"/>
+<ellipse cx="770.0" cy="339.6" rx="98.4" ry="32.6" fill="#1b302a" opacity=".27"/>
+<polygon points="856.1,280.8 766.8,331.4 766.8,383.4 856.1,332.8" fill="#5c857d" />
+<polygon points="669.8,276.4 766.8,331.4 766.8,383.4 669.8,328.4" fill="#446862" />
+<polygon points="759.1,225.8 856.1,280.8 766.8,331.4 669.8,276.4" fill="#6e9388" />
+<polygon points="757.1,206.1 871.6,271.0 774.6,326.0 660.1,261.1" fill="#9ccac0" stroke="#d3d7b8" stroke-width="5" opacity=".89"/>
+<path d="M793.8 225.9 L696.8 280.9" stroke="#537b73" stroke-width="3.2"/>
+<path d="M830.4 246.6 L733.4 301.6" stroke="#537b73" stroke-width="3.2"/>
+<path d="M713.5 229.9 L827.9 294.8" stroke="#638f85" stroke-width="3.2"/>
+<path d="M679.5 249.1 L794.0 314.0" stroke="#638f85" stroke-width="3.2"/>
+<g class="greenhouse-growth">
+<g class="petal-set" transform="translate(739.7 290.2) scale(0.7)"><path d="M0 0 Q-2 -12 3 -22" fill="none" stroke="#375a45" stroke-width="2.3"/><ellipse cx="-9" cy="-10" rx="8" ry="3.8" transform="rotate(30 -9 -10)" fill="#63865e"/><ellipse cx="12" cy="-14" rx="7" ry="3.2" transform="rotate(-30 12 -14)" fill="#8cad75"/><circle cx="3" cy="-23" r="6.4" fill="#eddab7"/><circle cx="3" cy="-23" r="2" fill="#fff6ce"/></g>
+<g class="petal-set" transform="translate(809.5 321.0) scale(0.7)"><path d="M0 0 Q-2 -12 3 -22" fill="none" stroke="#375a45" stroke-width="2.3"/><ellipse cx="-9" cy="-10" rx="8" ry="3.8" transform="rotate(30 -9 -10)" fill="#63865e"/><ellipse cx="12" cy="-14" rx="7" ry="3.2" transform="rotate(-30 12 -14)" fill="#8cad75"/><circle cx="3" cy="-23" r="6.4" fill="#eddab7"/><circle cx="3" cy="-23" r="2" fill="#fff6ce"/></g>
+<g class="petal-set" transform="translate(794.0 356.2) scale(0.7)"><path d="M0 0 Q-2 -12 3 -22" fill="none" stroke="#375a45" stroke-width="2.3"/><ellipse cx="-9" cy="-10" rx="8" ry="3.8" transform="rotate(30 -9 -10)" fill="#63865e"/><ellipse cx="12" cy="-14" rx="7" ry="3.2" transform="rotate(-30 12 -14)" fill="#8cad75"/><circle cx="3" cy="-23" r="6.4" fill="#eddab7"/><circle cx="3" cy="-23" r="2" fill="#fff6ce"/></g>
+</g>
+<ellipse cx="459.6" cy="330.8" rx="82.0" ry="27.2" fill="#1b302a" opacity=".27"/>
+<polygon points="530.2,282.4 464.2,319.8 464.2,365.8 530.2,328.4" fill="#d7bd9b" />
+<polygon points="375.0,269.2 464.2,319.8 464.2,365.8 375.0,315.2" fill="#ad967f" />
+<polygon points="440.9,231.8 530.2,282.4 464.2,319.8 375.0,269.2" fill="#d7bd9b" />
+<polygon points="439.0,272.1 536.4,327.3 464.2,368.2 366.8,313.0" fill="none" stroke="#dcc8ab" stroke-width="1.4"/>
+<polygon points="439.0,218.7 498.2,215.9 405.1,268.7 353.6,267.1" fill="#526b67" stroke="#493d39" stroke-opacity=".30" stroke-width="1"/>
+<polygon points="498.2,215.9 551.5,282.5 466.1,330.9 405.1,268.7" fill="#384f4c" stroke="#493d39" stroke-opacity=".27" stroke-width="1"/>
+<path d="M472.8 230.3 L526.0 292.9" stroke="#f7e4bb" stroke-opacity=".21" stroke-width="1.6" fill="none"/>
+<path d="M454.3 240.8 L507.6 303.4" stroke="#f7e4bb" stroke-opacity=".21" stroke-width="1.6" fill="none"/>
+<path d="M435.2 251.6 L488.4 314.2" stroke="#f7e4bb" stroke-opacity=".21" stroke-width="1.6" fill="none"/>
+<polygon points="392.8,325.3 415.1,338.0 415.1,309.0 392.8,296.3" fill="#775048" />
+<circle cx="408.9" cy="317.4" r="1.4" fill="#efcc89"/>
+<polygon points="433.9,327.0 444.6,333.0 444.6,319.2 433.9,313.2" fill="#e9c67a" stroke="#637165" stroke-width="3.5"/>
+<circle class="window-light" cx="437.4" cy="322.1" r="13" fill="#f3be73" opacity=".12"/>
+<polygon points="449.0,335.6 459.7,341.6 459.7,327.8 449.0,321.8" fill="#e9c67a" stroke="#637165" stroke-width="3.5"/>
+<circle class="window-light" cx="452.6" cy="330.7" r="13" fill="#f3be73" opacity=".12"/>
+<g class="tree" transform="translate(530.2 218.4) scale(0.74)"><ellipse cx="8" cy="4" rx="35" ry="14" fill="#1f3d36" opacity=".35"/><path d="M-5 -1 Q0 -41 -4 -78" stroke="#63564d" stroke-width="14" stroke-linecap="round" fill="none"/><path d="M-2 -43L-25 -67 M0 -49L18 -67" fill="none" stroke="#63564d" stroke-width="7"/><ellipse cx="-17" cy="-83" rx="35" ry="29" fill="#284f42"/><ellipse cx="17" cy="-91" rx="41" ry="39" fill="#527c61"/><ellipse cx="-9" cy="-107" rx="36" ry="37" fill="#5e8b6c"/><ellipse cx="23" cy="-105" rx="23" ry="29" fill="#86a77a" opacity=".9"/><ellipse cx="-14" cy="-118" rx="20" ry="13" fill="#b8c09a" opacity=".17"/></g>
+<g class="tree" transform="translate(871.6 332.8) scale(0.78)"><ellipse cx="8" cy="4" rx="35" ry="14" fill="#1f3d36" opacity=".35"/><path d="M-5 -1 Q0 -41 -4 -78" stroke="#63564d" stroke-width="14" stroke-linecap="round" fill="none"/><path d="M-2 -43L-25 -67 M0 -49L18 -67" fill="none" stroke="#63564d" stroke-width="7"/><ellipse cx="-17" cy="-83" rx="35" ry="29" fill="#284f42"/><ellipse cx="17" cy="-91" rx="41" ry="39" fill="#7ba37b"/><ellipse cx="-9" cy="-107" rx="36" ry="37" fill="#5e8b6c"/><ellipse cx="23" cy="-105" rx="23" ry="29" fill="#86a77a" opacity=".9"/><ellipse cx="-14" cy="-118" rx="20" ry="13" fill="#b8c09a" opacity=".17"/></g>
+<polygon points="673.7,360.2 634.9,382.2 634.9,392.2 673.7,370.2" fill="#a07758" />
+<polygon points="572.8,347.0 634.9,382.2 634.9,392.2 572.8,357.0" fill="#80563f" />
+<polygon points="611.6,325.0 673.7,360.2 634.9,382.2 572.8,347.0" fill="#554c3a" />
+<polygon points="611.6,325.0 673.7,360.2 634.9,382.2 572.8,347.0" fill="#454d37" stroke="#af936c" stroke-width="3" stroke-linejoin="round"/>
+<g class="seed-growth">
+<path d="M616.8 335.9 q-3 -9 0 -15 M616.8 330.9 q-12 -14 -15 -4 q6 6 14 5 M616.8 326.9q9 -11 16 -3q-5 7 -16 9" fill="#8eb68a" stroke="#476b4a" stroke-width="1"/>
+<path d="M602.9 343.9 q-3 -9 0 -15 M602.9 338.9 q-12 -14 -15 -4 q6 6 14 5 M602.9 334.9q9 -11 16 -3q-5 7 -16 9" fill="#8eb68a" stroke="#476b4a" stroke-width="1"/>
+<path d="M633.0 345.1 q-3 -9 0 -15 M633.0 340.1 q-12 -14 -15 -4 q6 6 14 5 M633.0 336.1q9 -11 16 -3q-5 7 -16 9" fill="#8eb68a" stroke="#476b4a" stroke-width="1"/>
+<path d="M619.0 353.0 q-3 -9 0 -15 M619.0 348.0 q-12 -14 -15 -4 q6 6 14 5 M619.0 344.0q9 -11 16 -3q-5 7 -16 9" fill="#8eb68a" stroke="#476b4a" stroke-width="1"/>
+<path d="M649.1 354.3 q-3 -9 0 -15 M649.1 349.3 q-12 -14 -15 -4 q6 6 14 5 M649.1 345.3q9 -11 16 -3q-5 7 -16 9" fill="#8eb68a" stroke="#476b4a" stroke-width="1"/>
+<path d="M635.2 362.2 q-3 -9 0 -15 M635.2 357.2 q-12 -14 -15 -4 q6 6 14 5 M635.2 353.2q9 -11 16 -3q-5 7 -16 9" fill="#8eb68a" stroke="#476b4a" stroke-width="1"/>
+</g>
+<polygon points="658.2,395.4 619.4,417.4 619.4,427.4 658.2,405.4" fill="#a07758" />
+<polygon points="557.3,382.2 619.4,417.4 619.4,427.4 557.3,392.2" fill="#80563f" />
+<polygon points="596.1,360.2 658.2,395.4 619.4,417.4 557.3,382.2" fill="#554c3a" />
+<polygon points="596.1,360.2 658.2,395.4 619.4,417.4 557.3,382.2" fill="#454d37" stroke="#af936c" stroke-width="3" stroke-linejoin="round"/>
+<g class="seed-growth">
+<path d="M601.3 371.1 q-3 -9 0 -15 M601.3 366.1 q-12 -14 -15 -4 q6 6 14 5 M601.3 362.1q9 -11 16 -3q-5 7 -16 9" fill="#8eb68a" stroke="#476b4a" stroke-width="1"/>
+<path d="M587.4 379.1 q-3 -9 0 -15 M587.4 374.1 q-12 -14 -15 -4 q6 6 14 5 M587.4 370.1q9 -11 16 -3q-5 7 -16 9" fill="#8eb68a" stroke="#476b4a" stroke-width="1"/>
+<path d="M617.5 380.3 q-3 -9 0 -15 M617.5 375.3 q-12 -14 -15 -4 q6 6 14 5 M617.5 371.3q9 -11 16 -3q-5 7 -16 9" fill="#8eb68a" stroke="#476b4a" stroke-width="1"/>
+<path d="M603.5 388.2 q-3 -9 0 -15 M603.5 383.2 q-12 -14 -15 -4 q6 6 14 5 M603.5 379.2q9 -11 16 -3q-5 7 -16 9" fill="#8eb68a" stroke="#476b4a" stroke-width="1"/>
+<path d="M633.6 389.5 q-3 -9 0 -15 M633.6 384.5 q-12 -14 -15 -4 q6 6 14 5 M633.6 380.5q9 -11 16 -3q-5 7 -16 9" fill="#8eb68a" stroke="#476b4a" stroke-width="1"/>
+<path d="M619.6 397.4 q-3 -9 0 -15 M619.6 392.4 q-12 -14 -15 -4 q6 6 14 5 M619.6 388.4q9 -11 16 -3q-5 7 -16 9" fill="#8eb68a" stroke="#476b4a" stroke-width="1"/>
+</g>
+<polygon points="658.2,430.6 619.4,452.6 619.4,462.6 658.2,440.6" fill="#a07758" />
+<polygon points="557.3,417.4 619.4,452.6 619.4,462.6 557.3,427.4" fill="#80563f" />
+<polygon points="596.1,395.4 658.2,430.6 619.4,452.6 557.3,417.4" fill="#554c3a" />
+<polygon points="596.1,395.4 658.2,430.6 619.4,452.6 557.3,417.4" fill="#454d37" stroke="#af936c" stroke-width="3" stroke-linejoin="round"/>
+<g class="seed-growth">
+<path d="M601.3 406.3 q-3 -9 0 -15 M601.3 401.3 q-12 -14 -15 -4 q6 6 14 5 M601.3 397.3q9 -11 16 -3q-5 7 -16 9" fill="#8eb68a" stroke="#476b4a" stroke-width="1"/>
+<path d="M587.4 414.3 q-3 -9 0 -15 M587.4 409.3 q-12 -14 -15 -4 q6 6 14 5 M587.4 405.3q9 -11 16 -3q-5 7 -16 9" fill="#8eb68a" stroke="#476b4a" stroke-width="1"/>
+<path d="M617.5 415.5 q-3 -9 0 -15 M617.5 410.5 q-12 -14 -15 -4 q6 6 14 5 M617.5 406.5q9 -11 16 -3q-5 7 -16 9" fill="#8eb68a" stroke="#476b4a" stroke-width="1"/>
+<path d="M603.5 423.4 q-3 -9 0 -15 M603.5 418.4 q-12 -14 -15 -4 q6 6 14 5 M603.5 414.4q9 -11 16 -3q-5 7 -16 9" fill="#8eb68a" stroke="#476b4a" stroke-width="1"/>
+<path d="M633.6 424.7 q-3 -9 0 -15 M633.6 419.7 q-12 -14 -15 -4 q6 6 14 5 M633.6 415.7q9 -11 16 -3q-5 7 -16 9" fill="#8eb68a" stroke="#476b4a" stroke-width="1"/>
+<path d="M619.6 432.6 q-3 -9 0 -15 M619.6 427.6 q-12 -14 -15 -4 q6 6 14 5 M619.6 423.6q9 -11 16 -3q-5 7 -16 9" fill="#8eb68a" stroke="#476b4a" stroke-width="1"/>
+</g>
+<polygon points="557.3,382.2 518.5,404.2 518.5,414.2 557.3,392.2" fill="#a07758" />
+<polygon points="456.4,369.0 518.5,404.2 518.5,414.2 456.4,379.0" fill="#80563f" />
+<polygon points="495.2,347.0 557.3,382.2 518.5,404.2 456.4,369.0" fill="#554c3a" />
+<polygon points="495.2,347.0 557.3,382.2 518.5,404.2 456.4,369.0" fill="#454d37" stroke="#af936c" stroke-width="3" stroke-linejoin="round"/>
+<g class="seed-growth">
+<path d="M500.4 357.9 q-3 -9 0 -15 M500.4 352.9 q-12 -14 -15 -4 q6 6 14 5 M500.4 348.9q9 -11 16 -3q-5 7 -16 9" fill="#8eb68a" stroke="#476b4a" stroke-width="1"/>
+<path d="M486.5 365.9 q-3 -9 0 -15 M486.5 360.9 q-12 -14 -15 -4 q6 6 14 5 M486.5 356.9q9 -11 16 -3q-5 7 -16 9" fill="#8eb68a" stroke="#476b4a" stroke-width="1"/>
+<path d="M516.6 367.1 q-3 -9 0 -15 M516.6 362.1 q-12 -14 -15 -4 q6 6 14 5 M516.6 358.1q9 -11 16 -3q-5 7 -16 9" fill="#8eb68a" stroke="#476b4a" stroke-width="1"/>
+<path d="M502.6 375.0 q-3 -9 0 -15 M502.6 370.0 q-12 -14 -15 -4 q6 6 14 5 M502.6 366.0q9 -11 16 -3q-5 7 -16 9" fill="#8eb68a" stroke="#476b4a" stroke-width="1"/>
+<path d="M532.7 376.3 q-3 -9 0 -15 M532.7 371.3 q-12 -14 -15 -4 q6 6 14 5 M532.7 367.3q9 -11 16 -3q-5 7 -16 9" fill="#8eb68a" stroke="#476b4a" stroke-width="1"/>
+<path d="M518.8 384.2 q-3 -9 0 -15 M518.8 379.2 q-12 -14 -15 -4 q6 6 14 5 M518.8 375.2q9 -11 16 -3q-5 7 -16 9" fill="#8eb68a" stroke="#476b4a" stroke-width="1"/>
+</g>
+<g transform="translate(720.3 414.2)"><ellipse cy="-44" rx="25" ry="10" fill="#8eaaa4" stroke="#d1d7c4" stroke-width="3"/><path d="M-25 -44 L-25 -1Q0 18 25 -1L25 -44Z" fill="#537a7c"/><ellipse cy="-44" rx="24" ry="7" fill="#c3d1c1"/><path d="M-13 -30 L-13 -3 M13 -30 L13 -3" stroke="#b5c9bc" stroke-width="2" opacity=".5"/></g>
+<path d="M401.0 337.2 v-20" stroke="#b89568" stroke-width="5" stroke-linecap="round"/>
+<path d="M424.3 363.6 v-20" stroke="#b89568" stroke-width="5" stroke-linecap="round"/>
+<path d="M583.4 440.6 v-20" stroke="#b89568" stroke-width="5" stroke-linecap="round"/>
+<g class="person" transform="translate(526.3 291.0)"><ellipse cx="2" cy="4" rx="12" ry="4" fill="#29473c" opacity=".2"/><path d="M-2 -5L-6 3 M5 -5L8 4" stroke="#34474c" stroke-width="4.5" stroke-linecap="round"/><path d="M-8 -19Q0 -25 8 -19L6 -5Q-2 0 -7 -6Z" fill="#cf856a"/><circle cx="0" cy="-29" r="7.5" fill="#c89978"/><path d="M-8 -31Q0 -43 8 -30" fill="#424c44"/><path d="M-7 -17L-15 -5M7 -17L15 -10" stroke="#bd9a79" stroke-width="3.4" stroke-linecap="round"/></g>
+<g class="person" transform="translate(693.1 368.0)"><ellipse cx="2" cy="4" rx="12" ry="4" fill="#29473c" opacity=".2"/><path d="M-2 -5L-6 3 M5 -5L8 4" stroke="#34474c" stroke-width="4.5" stroke-linecap="round"/><path d="M-8 -19Q0 -25 8 -19L6 -5Q-2 0 -7 -6Z" fill="#f4c58f"/><circle cx="0" cy="-29" r="7.5" fill="#c89978"/><path d="M-8 -31Q0 -43 8 -30" fill="#424c44"/><path d="M-7 -17L-15 -5M7 -17L15 -10" stroke="#bd9a79" stroke-width="3.4" stroke-linecap="round"/></g>
+<g class="person" transform="translate(495.2 396.6)"><ellipse cx="2" cy="4" rx="12" ry="4" fill="#29473c" opacity=".2"/><path d="M-2 -5L-6 3 M5 -5L8 4" stroke="#34474c" stroke-width="4.5" stroke-linecap="round"/><path d="M-8 -19Q0 -25 8 -19L6 -5Q-2 0 -7 -6Z" fill="#6d92a4"/><circle cx="0" cy="-29" r="7.5" fill="#c89978"/><path d="M-8 -31Q0 -43 8 -30" fill="#424c44"/><path d="M-7 -17L-15 -5M7 -17L15 -10" stroke="#bd9a79" stroke-width="3.4" stroke-linecap="round"/></g>
+<g transform="translate(584.5 302.0)"><path d="M0 -3V-45" stroke="#685b4a" stroke-width="5"/><rect x="-14" y="-50" width="27" height="24" rx="3" fill="#c89a75" stroke="#f1d7a9" stroke-width="2"/><path d="M-12 -45L0 -34L12 -45" stroke="#fff0d5" stroke-width="1.6" fill="none"/></g>
+<g id="townLantern" transform="translate(646.6 368.0)"><ellipse cx="0" cy="-69" rx="55" ry="55" fill="url(#warmLight)" class="lantern-glow"/><path d="M0 0V-72" stroke="#575747" stroke-width="6"/><path d="M-7 -71L7 -71L8 -93L-8 -93Z" fill="#f6d794" stroke="#baa06c" stroke-width="3"/><path d="M-10 -93Q0 -110 10 -93" fill="none" stroke="#b9a477" stroke-width="3"/><circle cy="-82" r="4" fill="#fff6cc" class="lantern-flame"/></g>
+<g transform="translate(468.1 420.8)"><path d="M-26 -12L22 10L41 -4L-9 -26Z" fill="#cda782"/><path d="M-20 -5L23 15L23 27M34 1L34 18" stroke="#7a6858" stroke-width="6" stroke-linecap="round"/><path d="M-11 -28L-11 -45L38 -18L38 -3" fill="none" stroke="#97765b" stroke-width="7"/></g>
+<g transform="translate(390.5 350.4)"><ellipse cx="0" cy="-7" rx="11" ry="10" fill="#2b4844"/><path d="M-9 -13L-12 -28L-1 -20L10 -29L12 -13Z" fill="#2b4844"/><circle cx="-4" cy="-14" r="1.5" fill="#efc78a"/><circle cx="5" cy="-14" r="1.5" fill="#efc78a"/><path d="M9 -6Q24 -29 25 -12" stroke="#2b4844" stroke-width="4" stroke-linecap="round" fill="none"/></g>
+<circle cx="492.4" cy="487.4" r="0.7" fill="#466e56" opacity="0.43"/>
+<circle cx="596.2" cy="426.5" r="0.8" fill="#b6bd85" opacity="0.52"/>
+<circle cx="584.4" cy="399.0" r="1.0" fill="#6e9775" opacity="0.42"/>
+<circle cx="535.2" cy="474.9" r="1.3" fill="#6e9775" opacity="0.43"/>
+<circle cx="392.7" cy="343.0" r="1.1" fill="#6e9775" opacity="0.75"/>
+<circle cx="326.9" cy="378.7" r="1.6" fill="#f1cd94" opacity="0.57"/>
+<circle cx="629.1" cy="377.2" r="1.7" fill="#6e9775" opacity="0.62"/>
+<circle cx="589.5" cy="323.8" r="0.9" fill="#6e9775" opacity="0.34"/>
+<circle cx="369.0" cy="385.2" r="1.6" fill="#466e56" opacity="0.42"/>
+<circle cx="880.7" cy="335.4" r="1.3" fill="#6e9775" opacity="0.38"/>
+<circle cx="380.5" cy="367.9" r="1.4" fill="#466e56" opacity="0.51"/>
+<circle cx="502.1" cy="201.7" r="1.5" fill="#466e56" opacity="0.53"/>
+<circle cx="467.1" cy="391.1" r="1.8" fill="#b6bd85" opacity="0.61"/>
+<circle cx="311.8" cy="337.2" r="1.8" fill="#d9bda0" opacity="0.33"/>
+<circle cx="660.7" cy="463.5" r="0.9" fill="#f1cd94" opacity="0.63"/>
+<circle cx="693.3" cy="339.9" r="1.6" fill="#466e56" opacity="0.50"/>
+<circle cx="387.7" cy="256.2" r="1.7" fill="#f1cd94" opacity="0.57"/>
+<circle cx="648.2" cy="199.6" r="1.2" fill="#6e9775" opacity="0.72"/>
+<circle cx="851.5" cy="325.4" r="2.0" fill="#b6bd85" opacity="0.59"/>
+<circle cx="496.3" cy="498.1" r="0.6" fill="#d9bda0" opacity="0.66"/>
+<circle cx="678.4" cy="461.0" r="0.8" fill="#466e56" opacity="0.62"/>
+<circle cx="667.8" cy="494.2" r="1.0" fill="#6e9775" opacity="0.64"/>
+<circle cx="713.3" cy="326.8" r="1.6" fill="#466e56" opacity="0.68"/>
+<circle cx="535.9" cy="340.9" r="1.0" fill="#466e56" opacity="0.71"/>
+<circle cx="538.7" cy="235.0" r="1.9" fill="#f1cd94" opacity="0.70"/>
+<circle cx="630.3" cy="152.8" r="1.1" fill="#b6bd85" opacity="0.32"/>
+<circle cx="563.2" cy="401.5" r="1.9" fill="#d9bda0" opacity="0.62"/>
+<circle cx="322.7" cy="331.5" r="1.5" fill="#466e56" opacity="0.48"/>
+<circle cx="479.0" cy="299.2" r="1.6" fill="#466e56" opacity="0.67"/>
+<circle cx="667.1" cy="360.7" r="0.9" fill="#466e56" opacity="0.35"/>
+<circle cx="538.3" cy="348.6" r="0.8" fill="#b6bd85" opacity="0.43"/>
+<circle cx="818.7" cy="275.4" r="1.7" fill="#f1cd94" opacity="0.53"/>
+<circle cx="634.8" cy="258.0" r="1.3" fill="#f1cd94" opacity="0.50"/>
+<circle cx="457.6" cy="327.2" r="1.4" fill="#466e56" opacity="0.50"/>
+<circle cx="334.8" cy="296.5" r="1.2" fill="#466e56" opacity="0.43"/>
+<circle cx="891.2" cy="312.7" r="0.7" fill="#d9bda0" opacity="0.70"/>
+<circle cx="636.9" cy="217.5" r="1.2" fill="#466e56" opacity="0.32"/>
+<circle cx="818.2" cy="372.1" r="0.9" fill="#6e9775" opacity="0.49"/>
+<circle cx="670.6" cy="306.0" r="1.0" fill="#b6bd85" opacity="0.62"/>
+<circle cx="578.0" cy="391.3" r="1.2" fill="#466e56" opacity="0.61"/>
+<circle cx="718.7" cy="359.1" r="0.7" fill="#f1cd94" opacity="0.32"/>
+<circle cx="476.4" cy="291.3" r="0.8" fill="#f1cd94" opacity="0.40"/>
+<circle cx="716.3" cy="331.7" r="1.9" fill="#f1cd94" opacity="0.31"/>
+<circle cx="637.3" cy="275.4" r="1.1" fill="#466e56" opacity="0.53"/>
+<circle cx="454.7" cy="265.0" r="1.4" fill="#d9bda0" opacity="0.34"/>
+<circle cx="456.6" cy="459.8" r="1.4" fill="#b6bd85" opacity="0.54"/>
+<circle cx="801.4" cy="310.0" r="1.6" fill="#466e56" opacity="0.50"/>
+<circle cx="477.6" cy="373.0" r="0.7" fill="#6e9775" opacity="0.67"/>
+<circle cx="535.0" cy="313.4" r="1.0" fill="#f1cd94" opacity="0.67"/>
+<circle cx="551.7" cy="284.2" r="1.3" fill="#b6bd85" opacity="0.32"/>
+<circle cx="496.5" cy="490.8" r="1.5" fill="#466e56" opacity="0.42"/>
+<circle cx="612.4" cy="226.9" r="1.3" fill="#b6bd85" opacity="0.67"/>
+<circle cx="404.9" cy="416.1" r="1.0" fill="#6e9775" opacity="0.68"/>
+<circle cx="459.1" cy="219.1" r="0.7" fill="#b6bd85" opacity="0.37"/>
+<circle cx="559.9" cy="171.5" r="1.4" fill="#b6bd85" opacity="0.61"/>
+<circle cx="885.9" cy="349.5" r="1.6" fill="#466e56" opacity="0.42"/>
+<circle cx="705.4" cy="225.2" r="1.2" fill="#6e9775" opacity="0.62"/>
+<circle cx="668.9" cy="422.1" r="1.3" fill="#f1cd94" opacity="0.74"/>
+<circle cx="459.4" cy="449.1" r="0.7" fill="#d9bda0" opacity="0.41"/>
+<circle cx="861.5" cy="303.3" r="1.2" fill="#466e56" opacity="0.57"/>
+<circle cx="471.3" cy="358.8" r="0.7" fill="#f1cd94" opacity="0.49"/>
+<circle cx="294.9" cy="331.6" r="1.7" fill="#6e9775" opacity="0.75"/>
+<circle cx="721.3" cy="308.4" r="1.9" fill="#466e56" opacity="0.73"/>
+<circle cx="598.4" cy="427.5" r="1.7" fill="#d9bda0" opacity="0.74"/>
+<circle cx="463.7" cy="421.0" r="1.4" fill="#b6bd85" opacity="0.72"/>
+<circle cx="527.5" cy="284.7" r="1.3" fill="#b6bd85" opacity="0.37"/>
+<circle cx="456.2" cy="432.6" r="0.8" fill="#f1cd94" opacity="0.75"/>
+<circle cx="661.2" cy="419.1" r="1.6" fill="#6e9775" opacity="0.61"/>
+<circle cx="584.9" cy="152.6" r="1.4" fill="#466e56" opacity="0.73"/>
+<circle cx="659.8" cy="313.8" r="1.8" fill="#6e9775" opacity="0.70"/>
+<circle cx="456.0" cy="251.8" r="1.1" fill="#b6bd85" opacity="0.56"/>
+<circle cx="706.8" cy="237.6" r="1.0" fill="#6e9775" opacity="0.37"/>
+<circle cx="484.2" cy="371.7" r="0.9" fill="#466e56" opacity="0.66"/>
+<circle cx="701.0" cy="216.2" r="1.5" fill="#d9bda0" opacity="0.48"/>
+<circle cx="815.4" cy="298.8" r="1.2" fill="#466e56" opacity="0.32"/>
+<circle cx="488.8" cy="309.9" r="1.1" fill="#d9bda0" opacity="0.38"/>
+<circle cx="516.4" cy="395.3" r="1.1" fill="#d9bda0" opacity="0.65"/>
+<circle cx="484.1" cy="456.0" r="2.0" fill="#f1cd94" opacity="0.35"/>
+<circle cx="475.9" cy="218.1" r="0.9" fill="#d9bda0" opacity="0.56"/>
+<circle cx="635.0" cy="391.1" r="1.0" fill="#b6bd85" opacity="0.44"/>
+<circle cx="584.7" cy="391.3" r="1.2" fill="#d9bda0" opacity="0.31"/>
+<circle cx="512.6" cy="471.1" r="1.6" fill="#b6bd85" opacity="0.63"/>
+<circle cx="363.3" cy="418.6" r="1.3" fill="#466e56" opacity="0.60"/>
+<circle cx="759.2" cy="369.3" r="1.5" fill="#d9bda0" opacity="0.68"/>
+<circle cx="608.1" cy="362.7" r="1.3" fill="#466e56" opacity="0.34"/>
+<circle cx="575.4" cy="329.7" r="1.4" fill="#d9bda0" opacity="0.70"/>
+<circle cx="801.4" cy="385.2" r="2.0" fill="#466e56" opacity="0.63"/>
+<circle cx="468.3" cy="271.3" r="0.9" fill="#466e56" opacity="0.70"/>
+<circle cx="459.4" cy="423.7" r="1.0" fill="#b6bd85" opacity="0.51"/>
+<circle cx="635.4" cy="260.1" r="1.9" fill="#f1cd94" opacity="0.67"/>
+<circle cx="523.4" cy="491.1" r="0.8" fill="#f1cd94" opacity="0.57"/>
+<circle cx="467.2" cy="246.1" r="1.9" fill="#f1cd94" opacity="0.41"/>
+<circle cx="842.5" cy="390.8" r="1.5" fill="#d9bda0" opacity="0.56"/>
+<circle cx="754.8" cy="348.9" r="0.7" fill="#f1cd94" opacity="0.73"/>
+<circle cx="549.1" cy="192.9" r="0.9" fill="#b6bd85" opacity="0.70"/>
+<circle cx="684.1" cy="392.6" r="1.2" fill="#f1cd94" opacity="0.59"/>
+<circle cx="743.0" cy="421.4" r="1.2" fill="#d9bda0" opacity="0.59"/>
+<circle cx="636.0" cy="308.7" r="1.1" fill="#466e56" opacity="0.64"/>
+<circle cx="516.7" cy="326.6" r="2.0" fill="#6e9775" opacity="0.61"/>
+<circle cx="579.6" cy="261.2" r="0.7" fill="#d9bda0" opacity="0.64"/>
+<circle cx="856.7" cy="373.6" r="0.6" fill="#b6bd85" opacity="0.73"/>
+<circle cx="438.3" cy="250.5" r="1.2" fill="#466e56" opacity="0.31"/>
+<circle cx="420.2" cy="405.3" r="1.5" fill="#d9bda0" opacity="0.56"/>
+<circle cx="485.2" cy="259.6" r="0.7" fill="#6e9775" opacity="0.55"/>
+<circle cx="487.3" cy="231.6" r="1.1" fill="#b6bd85" opacity="0.41"/>
+<circle cx="289.4" cy="365.4" r="1.1" fill="#d9bda0" opacity="0.33"/>
+<circle cx="227.9" cy="346.0" r="0.8" fill="#f1cd94" opacity="0.40"/>
+<circle cx="549.2" cy="311.4" r="1.8" fill="#466e56" opacity="0.45"/>
+<circle cx="640.6" cy="283.5" r="1.8" fill="#d9bda0" opacity="0.75"/>
+<circle cx="667.6" cy="480.5" r="2.0" fill="#d9bda0" opacity="0.55"/>
+<circle cx="850.9" cy="325.6" r="1.5" fill="#f1cd94" opacity="0.46"/>
+<circle cx="871.5" cy="374.9" r="1.9" fill="#d9bda0" opacity="0.69"/>
+<circle cx="395.0" cy="320.6" r="1.2" fill="#6e9775" opacity="0.52"/>
+<circle cx="443.2" cy="432.2" r="1.3" fill="#f1cd94" opacity="0.71"/>
+<circle cx="589.7" cy="389.4" r="0.8" fill="#6e9775" opacity="0.38"/>
+<circle cx="410.5" cy="391.8" r="0.7" fill="#b6bd85" opacity="0.53"/>
+<circle cx="278.6" cy="359.8" r="2.0" fill="#d9bda0" opacity="0.31"/>
+<circle cx="631.5" cy="496.7" r="0.8" fill="#b6bd85" opacity="0.74"/>
+</g>
+<path d="M213.0 442.0l18.0 12.1" stroke="#738b7a" opacity=".14" stroke-width="1.2"/>
+<path d="M224.3 448.3l14.6 24.8" stroke="#738b7a" opacity=".14" stroke-width="1.2"/>
+<path d="M235.7 454.6l17.2 15.2" stroke="#738b7a" opacity=".14" stroke-width="1.2"/>
+<path d="M247.0 460.9l17.5 19.3" stroke="#738b7a" opacity=".14" stroke-width="1.2"/>
+<path d="M258.3 467.2l11.3 13.3" stroke="#738b7a" opacity=".14" stroke-width="1.2"/>
+<path d="M269.7 473.5l16.8 21.7" stroke="#738b7a" opacity=".14" stroke-width="1.2"/>
+<path d="M281.0 479.8l12.6 18.8" stroke="#738b7a" opacity=".14" stroke-width="1.2"/>
+<path d="M292.3 486.1l16.4 13.8" stroke="#738b7a" opacity=".14" stroke-width="1.2"/>
+<path d="M303.7 492.4l16.0 19.5" stroke="#738b7a" opacity=".14" stroke-width="1.2"/>
+<path d="M315.0 498.7l17.4 17.5" stroke="#738b7a" opacity=".14" stroke-width="1.2"/>
+<path d="M326.3 505.0l11.9 13.6" stroke="#738b7a" opacity=".14" stroke-width="1.2"/>
+<path d="M337.7 511.3l12.0 20.7" stroke="#738b7a" opacity=".14" stroke-width="1.2"/>
+<path d="M349.0 517.6l17.6 24.9" stroke="#738b7a" opacity=".14" stroke-width="1.2"/>
+<path d="M360.3 523.9l10.1 24.7" stroke="#738b7a" opacity=".14" stroke-width="1.2"/>
+<path d="M371.7 530.2l8.8 22.4" stroke="#738b7a" opacity=".14" stroke-width="1.2"/>
+<path d="M383.0 536.5l10.0 18.4" stroke="#738b7a" opacity=".14" stroke-width="1.2"/>
+<path d="M394.3 542.8l15.6 23.6" stroke="#738b7a" opacity=".14" stroke-width="1.2"/>
+<path d="M405.7 549.1l14.0 13.2" stroke="#738b7a" opacity=".14" stroke-width="1.2"/>
+<path d="M417.0 555.4l8.3 17.1" stroke="#738b7a" opacity=".14" stroke-width="1.2"/>
+<path d="M428.3 561.7l15.0 23.2" stroke="#738b7a" opacity=".14" stroke-width="1.2"/>
+<path d="M439.7 568.0l16.5 11.1" stroke="#738b7a" opacity=".14" stroke-width="1.2"/>
+<path d="M451.0 574.3l9.8 19.6" stroke="#738b7a" opacity=".14" stroke-width="1.2"/>
+<path d="M462.3 580.6l15.2 12.4" stroke="#738b7a" opacity=".14" stroke-width="1.2"/>
+<path d="M473.7 586.9l14.1 11.6" stroke="#738b7a" opacity=".14" stroke-width="1.2"/>
+<path d="M485.0 593.2l10.1 17.4" stroke="#738b7a" opacity=".14" stroke-width="1.2"/>
+<path d="M496.3 599.5l13.0 14.5" stroke="#738b7a" opacity=".14" stroke-width="1.2"/>
+<path d="M507.7 605.8l11.1 24.4" stroke="#738b7a" opacity=".14" stroke-width="1.2"/>
+<path d="M519.0 612.1l14.7 17.5" stroke="#738b7a" opacity=".14" stroke-width="1.2"/>
+<path d="M530.3 618.4l13.2 18.8" stroke="#738b7a" opacity=".14" stroke-width="1.2"/>
+<path d="M541.7 624.7l10.7 13.1" stroke="#738b7a" opacity=".14" stroke-width="1.2"/>
+<path d="M650.0 620.0l13.5 14.4" stroke="#c5c6ac" opacity=".12" stroke-width="1.1"/>
+<path d="M663.8 612.2l14.6 12.2" stroke="#c5c6ac" opacity=".12" stroke-width="1.1"/>
+<path d="M677.5 604.4l7.6 4.5" stroke="#c5c6ac" opacity=".12" stroke-width="1.1"/>
+<path d="M691.2 596.6l11.1 13.9" stroke="#c5c6ac" opacity=".12" stroke-width="1.1"/>
+<path d="M705.0 588.8l10.3 4.8" stroke="#c5c6ac" opacity=".12" stroke-width="1.1"/>
+<path d="M718.8 581.0l6.9 11.5" stroke="#c5c6ac" opacity=".12" stroke-width="1.1"/>
+<path d="M732.5 573.2l12.2 12.4" stroke="#c5c6ac" opacity=".12" stroke-width="1.1"/>
+<path d="M746.2 565.5l9.7 6.7" stroke="#c5c6ac" opacity=".12" stroke-width="1.1"/>
+<path d="M760.0 557.7l14.3 9.4" stroke="#c5c6ac" opacity=".12" stroke-width="1.1"/>
+<path d="M773.8 549.9l7.9 6.8" stroke="#c5c6ac" opacity=".12" stroke-width="1.1"/>
+<path d="M787.5 542.1l7.7 9.5" stroke="#c5c6ac" opacity=".12" stroke-width="1.1"/>
+<path d="M801.2 534.3l10.9 5.1" stroke="#c5c6ac" opacity=".12" stroke-width="1.1"/>
+<path d="M815.0 526.5l13.4 7.5" stroke="#c5c6ac" opacity=".12" stroke-width="1.1"/>
+<path d="M828.8 518.7l9.2 5.7" stroke="#c5c6ac" opacity=".12" stroke-width="1.1"/>
+<path d="M842.5 510.9l14.8 4.8" stroke="#c5c6ac" opacity=".12" stroke-width="1.1"/>
+<path d="M856.2 503.1l12.5 10.3" stroke="#c5c6ac" opacity=".12" stroke-width="1.1"/>
+<path d="M870.0 495.3l7.8 10.1" stroke="#c5c6ac" opacity=".12" stroke-width="1.1"/>
+<path d="M883.8 487.5l9.9 14.2" stroke="#c5c6ac" opacity=".12" stroke-width="1.1"/>
+<path d="M897.5 479.8l13.6 6.9" stroke="#c5c6ac" opacity=".12" stroke-width="1.1"/>
+<path d="M911.2 472.0l8.7 9.0" stroke="#c5c6ac" opacity=".12" stroke-width="1.1"/>
+<path d="M925.0 464.2l11.4 14.1" stroke="#c5c6ac" opacity=".12" stroke-width="1.1"/>
+<path d="M938.8 456.4l6.9 14.3" stroke="#c5c6ac" opacity=".12" stroke-width="1.1"/>
+<path d="M952.5 448.6l10.9 9.0" stroke="#c5c6ac" opacity=".12" stroke-width="1.1"/>
+<path d="M966.2 440.8l6.3 9.0" stroke="#c5c6ac" opacity=".12" stroke-width="1.1"/>
+<circle class="firefly firefly-0" cx="673.1" cy="385.7" r="3" fill="#f5d39b" opacity=".0"/>
+<circle class="firefly firefly-1" cx="545.4" cy="329.7" r="2" fill="#f5d39b" opacity=".0"/>
+<circle class="firefly firefly-2" cx="633.6" cy="396.6" r="2" fill="#f5d39b" opacity=".0"/>
+<circle class="firefly firefly-3" cx="584.3" cy="318.5" r="1" fill="#f5d39b" opacity=".0"/>
+<circle class="firefly firefly-0" cx="540.5" cy="358.8" r="3" fill="#f5d39b" opacity=".0"/>
+<circle class="firefly firefly-1" cx="664.8" cy="325.3" r="2" fill="#f5d39b" opacity=".0"/>
+<circle class="firefly firefly-2" cx="602.5" cy="288.3" r="1" fill="#f5d39b" opacity=".0"/>
+<circle class="firefly firefly-3" cx="638.7" cy="279.5" r="3" fill="#f5d39b" opacity=".0"/>
+<circle class="firefly firefly-0" cx="567.2" cy="227.7" r="1" fill="#f5d39b" opacity=".0"/>
+<circle class="firefly firefly-1" cx="434.6" cy="299.9" r="2" fill="#f5d39b" opacity=".0"/>
+<circle class="firefly firefly-2" cx="646.0" cy="228.4" r="1" fill="#f5d39b" opacity=".0"/>
+<circle class="firefly firefly-3" cx="659.4" cy="302.1" r="2" fill="#f5d39b" opacity=".0"/>
+<circle class="firefly firefly-0" cx="666.8" cy="250.5" r="3" fill="#f5d39b" opacity=".0"/>
+<circle class="firefly firefly-1" cx="636.4" cy="219.4" r="2" fill="#f5d39b" opacity=".0"/>
+<circle class="firefly firefly-2" cx="491.0" cy="286.7" r="2" fill="#f5d39b" opacity=".0"/>
+<circle class="firefly firefly-3" cx="596.1" cy="308.5" r="1" fill="#f5d39b" opacity=".0"/>
+<circle class="firefly firefly-0" cx="571.3" cy="271.2" r="1" fill="#f5d39b" opacity=".0"/>
+<circle class="firefly firefly-1" cx="485.2" cy="280.4" r="1" fill="#f5d39b" opacity=".0"/>
+<circle class="firefly firefly-2" cx="494.1" cy="283.2" r="1" fill="#f5d39b" opacity=".0"/>
+<circle class="firefly firefly-3" cx="578.1" cy="371.8" r="3" fill="#f5d39b" opacity=".0"/>
+
+<!-- A mischievous tiny visitor lives in this miniature. Purely an easter egg. -->
+<g id="miaCatArt" transform="translate(458 459)">
+  <ellipse cx="1" cy="14" rx="26" ry="8" fill="#16292a" opacity=".37"/>
+  <path class="mia-tail" d="M18 7 Q42 10 39 -13 Q35 -26 27 -16" fill="none" stroke="#1d3033" stroke-width="10" stroke-linecap="round"/>
+  <ellipse cx="0" cy="-1" rx="23" ry="17" fill="#1d3033" stroke="#344b45" stroke-width="1.8"/>
+  <path d="M-17 -12L-14 -31L-3 -21L10 -23L22 -32L22 -8" fill="#182a2e" stroke="#344b45" stroke-width="2"/>
+  <path d="M-12 -22L-13 -28L-6 -21M14 -22L20 -28L19 -21" fill="#aa7972"/>
+  <ellipse cx="-9" cy="-5" rx="3.8" ry="3" fill="#d8bc79"/><ellipse cx="9" cy="-5" rx="3.8" ry="3" fill="#d8bc79"/>
+  <g class="mia-eyes"><ellipse cx="-9" cy="-5" rx="1" ry="2.8" fill="#18222a"/><ellipse cx="9" cy="-5" rx="1" ry="2.8" fill="#18222a"/></g>
+  <path d="M-3 3L0 6L3 3 M0 6L0 9M-6 9Q0 13 6 9" stroke="#c89d85" fill="none" stroke-width="1.3" stroke-linecap="round"/>
+  <path d="M-6 7L-25 3M-6 10L-25 12M7 7L27 4M7 10L27 14" stroke="#80988b" stroke-width="1" fill="none"/>
+  <ellipse cx="-11" cy="13" rx="6" ry="3" fill="#344345"/><ellipse cx="12" cy="13" rx="6" ry="3" fill="#344345"/>
+  <circle id="catHalo" cx="0" cy="-6" r="31" fill="none" stroke="#e9cf9e" opacity="0" stroke-width="1.4"/>
+</g>
+<!-- Delicate motion gives life without introducing randomised story outcomes. -->
+<g class="scene-butterfly" transform="translate(613 375)"><path d="M0 0Q-17 -18 -14 -2Q-15 11 -2 3Q-11 18 0 7Q12 18 3 3Q16 9 14 -3Q12 -17 2 0Z" fill="#e5d3a6" opacity=".9"/><path d="M0 -5L0 9" stroke="#5c7e6c" stroke-width="1"/></g>
+<g class="scene-butterfly second" transform="translate(724 267) scale(.75)"><path d="M0 0Q-17 -18 -14 -2Q-15 11 -2 3Q-11 18 0 7Q12 18 3 3Q16 9 14 -3Q12 -17 2 0Z" fill="#f4aa8d" opacity=".85"/></g>
+<g class="garden-wisps"><circle cx="525" cy="371" r="2"/><circle cx="569" cy="342" r="3"/><circle cx="667" cy="333" r="2"/><circle cx="626" cy="403" r="2.3"/><circle cx="764" cy="302" r="2"/></g>
+<!-- The public invitation brings a tangible string of tiny lanterns. -->
+<g class="celebration-lanterns">
+  <path d="M572 308Q645 338 718 306" stroke="#e8e1b2" stroke-width="2.2" fill="none" opacity=".9"/>
+  <g class="lantern-pendant" transform="translate(599 315)"><path d="M0 0V10" stroke="#e8d9a9" stroke-width="1.7"/><circle cy="17" r="14" fill="url(#warmLight)" opacity=".62"/><path d="M-5 10L4 10L7 17L0 25L-7 17Z" fill="#eed59e" stroke="#c79b76" stroke-width="1.5"/></g>
+  <g class="lantern-pendant" transform="translate(627 320)"><path d="M0 0V11" stroke="#e8d9a9" stroke-width="1.7"/><circle cy="19" r="14" fill="url(#warmLight)" opacity=".75"/><path d="M-6 11L5 11L7 19L-1 28L-7 19Z" fill="#e9a596" stroke="#bd806b" stroke-width="1.4"/></g>
+  <g class="lantern-pendant" transform="translate(657 323)"><path d="M0 0V13" stroke="#e8d9a9" stroke-width="1.7"/><circle cy="21" r="14" fill="url(#warmLight)" opacity=".75"/><path d="M-6 12L6 12L7 20L0 29L-7 21Z" fill="#f4dea7" stroke="#bea375" stroke-width="1.4"/></g>
+  <g class="lantern-pendant" transform="translate(683 319)"><path d="M0 0V10" stroke="#e8d9a9" stroke-width="1.7"/><circle cy="18" r="14" fill="url(#warmLight)" opacity=".75"/><path d="M-5 10L5 10L7 18L0 27L-7 18Z" fill="#d2d6a7" stroke="#aaa97b" stroke-width="1.4"/></g>
+</g>
+<!-- A held privacy boundary also changes the visual language of the world. -->
+<g class="protection-ribbon" transform="translate(636 195)">
+  <circle r="27" fill="none" stroke="#f1d9a1" opacity=".5" stroke-width="1.4" stroke-dasharray="3 5"/>
+  <path d="M0 -16L14 -9V2Q10 13 0 19Q-10 13 -14 2V-9Z" fill="#4f7160" stroke="#e9d2a0" stroke-width="2"/>
+  <path d="M-5 2L-1 7L7 -3" fill="none" stroke="#f5ead0" stroke-linecap="round" stroke-width="2.3"/>
+</g>
+</svg></div>
+      <svg id="wovenLines" class="woven-lines" viewBox="0 0 1200 740" aria-hidden="true" preserveAspectRatio="xMidYMid meet"></svg>
+      <div id="worldEffects" class="world-effects" aria-hidden="true">
+        <div class="scene-effect growth-effects" id="growEffect"><svg viewBox="0 0 160 90" aria-hidden="true"><path d="M16 71C13 43 6 27 0 13M60 86C47 57 51 34 55 2M124 82Q107 63 112 27" fill="none" stroke="#d5dea0" stroke-width="2"/><path d="M18 51Q1 36 0 46Q2 54 18 56M10 30Q29 17 24 30Q20 34 11 36M52 57Q27 38 32 52Q41 65 54 65M50 35Q75 23 71 38Q63 48 51 44M111 61Q86 51 90 63Q97 72 113 67M110 45Q135 23 133 42Q128 50 110 50" fill="#b6c69c"/><circle cx="3" cy="12" r="6" fill="#f8d4af"/><circle cx="56" cy="7" r="7" fill="#e6a783"/><circle cx="112" cy="30" r="8" fill="#f3d69e"/></svg></div>
+        <div class="scene-effect lantern-effect" id="lanternEffect">✦ &nbsp; ✧</div>
+      </div>
+      <button class="world-pin" type="button" data-step="g1" data-short="Seeds" style="left:48.4%;top:50.2%;" aria-label="Explore the garden beds"><span class="pin-beam"></span><span class="pin-core"><span class="pin-icon">✳</span></span><span class="pin-tag">GARDEN BEDS</span></button>
+      <button class="world-pin" type="button" data-step="g2" data-short="Names" style="left:53.3%;top:21.6%;" aria-label="Explore the workshop"><span class="pin-beam"></span><span class="pin-core"><span class="pin-icon">⌂</span></span><span class="pin-tag">THE WORKSHOP</span></button>
+      <button class="world-pin" type="button" data-step="g3" data-short="Invite" style="left:53.9%;top:36.9%;" aria-label="Explore the lantern square"><span class="pin-beam"></span><span class="pin-core"><span class="pin-icon">✦</span></span><span class="pin-tag">THE SQUARE</span></button>
+      <button class="world-pin" type="button" data-step="g4" data-short="Tools" style="left:63.9%;top:30.5%;" aria-label="Explore the greenhouse"><span class="pin-beam"></span><span class="pin-core"><span class="pin-icon">◈</span></span><span class="pin-tag">THE GREENHOUSE</span></button>
+      <button class="world-pin" type="button" data-step="g5" data-short="Story" style="left:39.3%;top:53.8%;" aria-label="Explore the neighbourhood bench"><span class="pin-beam"></span><span class="pin-core"><span class="pin-icon">≋</span></span><span class="pin-tag">THE BENCH</span></button>
+      <button type="button" id="miaButton" class="cat-hotspot" aria-label="Pet the sleeping cat" title="A little creature is napping here"><span class="cat-label">??</span></button>
+      <div class="trail-stage" id="trailStage" data-mode="idle" aria-label="The Lost Light, a small interactive puzzle">
+        <svg id="trailArt" class="trail-art" viewBox="0 0 1200 740" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="trailGold" x1="0" x2="1" y1="0" y2="0"><stop stop-color="#f6e6aa"/><stop offset=".52" stop-color="#e4b974"/><stop offset="1" stop-color="#b6e9c5"/></linearGradient>
+            <filter id="trailGlow"><feGaussianBlur stdDeviation="7"/></filter>
+            <radialGradient id="travellerAura"><stop stop-color="#fff1ba" stop-opacity=".78"/><stop offset="1" stop-color="#ffdf9a" stop-opacity="0"/></radialGradient>
+          </defs>
+          <path id="trailPathGlow" fill="none" stroke="#e7c388" stroke-width="19" stroke-linecap="round" filter="url(#trailGlow)" opacity=".52"/>
+          <path id="trailComplete" fill="none" stroke="url(#trailGold)" stroke-width="4.2" stroke-linecap="round"/>
+          <path id="trailLiveGlow" fill="none" stroke="#f9e6a6" stroke-width="15" stroke-linecap="round" filter="url(#trailGlow)" opacity=".5"/>
+          <path id="trailLive" fill="none" stroke="#ffedb4" stroke-width="3" stroke-linecap="round" stroke-dasharray="4 7"/>
+          <g id="trailBulbs"></g>
+          <g id="trailTraveller" transform="translate(322 387)">
+            <circle cx="0" cy="-13" r="45" fill="url(#travellerAura)"/>
+            <ellipse cy="12" rx="13" ry="5" fill="#092321" opacity=".3"/>
+            <path d="M-12 -11Q-13 -19 -6 -21Q0 -29 8 -20Q14 -16 11 -10L10 6Q0 12 -9 6Z" fill="#e4c9a6" stroke="#3f534e" stroke-width="1.1"/>
+            <circle cx="0" cy="-21" r="6" fill="#ffe5bf"/><path d="M-7 -22Q-5 -30 2 -28Q9 -27 9 -21" fill="#3b5150"/>
+            <path d="M-6 7L-8 12M6 7L8 12" stroke="#3c514e" stroke-width="2.2" stroke-linecap="round"/>
+            <circle class="traveller-light" cx="0" cy="-12" r="4" fill="#ffe9a7"/>
+          </g>
+        </svg>
+        <button type="button" id="trailTrigger" class="trail-trigger" aria-label="Play The Lost Light quest" style="left:26.9%;top:52.3%"><span class="trail-trigger-icon">✧</span><span class="trail-trigger-copy"><b>A LOST LIGHT</b><small>Play a little quest ↗</small></span></button>
+        <button type="button" data-trail-post="0" class="trail-knot" style="left:26.9%;top:52.3%" aria-label="The starting thread. Drag this to lantern one" hidden><span>✳</span></button>
+        <button type="button" data-trail-post="1" class="trail-knot" style="left:41.9%;top:57.2%" aria-label="First lantern post; connect the glowing thread" hidden><span>1</span></button>
+        <button type="button" data-trail-post="2" class="trail-knot" style="left:52.9%;top:46.1%" aria-label="Second lantern post; connect the glowing thread" hidden><span>2</span></button>
+        <button type="button" data-trail-post="3" class="trail-knot" style="left:66.3%;top:45.8%" aria-label="Third lantern post; bring the light home" hidden><span>3</span></button>
+        <button type="button" id="trailShortcut" class="trail-shortcut" style="left:59.5%;top:60.8%" aria-label="Inspect a private-data shortcut" hidden><span>♧</span><span class="shortcut-title">shortcut?</span></button>
+      </div>
+    </div>
+  </div>
+  <div id="trailGuide" class="trail-guide" hidden role="status" aria-live="polite">
+    <div class="trail-guide-head"><span>✷ &nbsp; A LITTLE SIDE QUEST</span><button type="button" id="trailExit" aria-label="Exit the lantern quest">×</button></div>
+    <h2>Give the light<br><em>a way home.</em></h2>
+    <p id="trailHelp">Drag from the glowing knot to the next numbered post. Or simply tap the posts in order.</p>
+    <div class="trail-guide-bottom"><span id="trailTally">○ &nbsp; ○ &nbsp; ○</span><span id="trailProgress">0 / 3 LIGHTS</span></div>
+  </div>
+  <div id="trailReward" class="trail-reward" hidden role="status" aria-live="polite">
+    <div class="reward-mark">✧</div><span class="reward-kicker">FIRST WONDER UNLOCKED</span>
+    <h2>A little light<br><em>made it home.</em></h2>
+    <p>You made a welcoming path — without asking for a single private name. The lanterns will remember.</p>
+    <div class="reward-controls"><button id="rewardContinue" type="button">Keep exploring <span>↗</span></button><button id="rewardReplay" type="button">Watch the little walk ↺</button></div>
+  </div>
+  <div class="quest-chip" id="questChip" aria-live="polite"><span class="quest-symbol">✧</span><div class="quest-labels"><span id="questKicker">A NOTE FROM THE NEIGHBOURHOOD</span><strong id="questText">Someone left the first thread loose.</strong></div><button id="questGo" type="button" aria-label="Find the next encounter">Find it <span>↗</span></button></div>
+  <div id="voiceBubble" class="voice-bubble" role="status" aria-live="polite"><span class="voice-sigil" id="voiceSigil">✳</span><div><span class="voice-speaker" id="voiceSpeaker">THE NEIGHBOURHOOD</span><p id="voiceText">Every small choice changes something.</p></div><button type="button" id="voiceDismiss" aria-label="Dismiss message">×</button></div>
+  <div class="seed-ritual" id="seedRitual" hidden aria-label="Plant a symbolic seed"><div class="seed-kicker">A GIFT FROM THIS LITTLE WORLD <span>✳</span></div><div class="seed-content"><button type="button" id="seedToken" aria-label="Drag this seed onto the garden beds or tap it to plant"><span class="seed-drawing"><span class="seed-shine"></span>✦</span></button><div class="seed-story"><strong>The first seed.</strong><p>Drag it to the garden beds. Or tap to plant.</p></div><button type="button" id="seedLater" class="seed-later">Later</button></div></div>
+  <svg id="threadOverlay" class="thread-overlay" aria-hidden="true" preserveAspectRatio="none"><defs><linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f5dabb"/><stop offset="1" stop-color="#b7f3d9"/></linearGradient></defs><path id="threadShadow"/><path id="threadPath"/></svg>
+  <div class="bottom-hud">
+    <div class="thread-well">
+      <button type="button" class="spool" id="spool" aria-label="Drag this thread onto a glowing spot in the miniature world"><span class="spool-inner"><svg viewBox="0 0 60 60" aria-hidden="true"><path d="M13 20q17-19 34 0q12 18-10 26Q16 53 13 31q0-9 16-11q18-2 18 13Q43 47 26 41q-9-5-4-13q7-8 16-2" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><circle cx="47" cy="32" r="4" fill="currentColor"/></svg></span></button>
+      <div class="thread-copy"><div class="thread-heading">One thread changes things</div><div class="thread-sub" id="hudHint">Play the lost-light quest · or explore the world</div></div>
+    </div>
+    <div class="mission-progress"><span id="progressGlyph" class="progress-glyph">◌◌◌◌◌</span><span id="progressText">0 of 5 encounters</span></div>
+    <div class="stage-note">A HANDCRAFTED PLAYABLE SIMULATION <span class="star-sep">✳</span> NO REAL ACTIONS</div>
+  </div>
+  <div class="world-toast" role="status" aria-live="polite" id="worldToast"></div>
+  <div class="mobile-pan-hint" id="mobilePanHint">↔ Swipe to explore the miniature</div>
+</main>
+<section id="decisionLayer" class="decision-layer" hidden aria-label="Decision scene">
+ <div id="decisionBackdrop" class="decision-backdrop"></div>
+ <div class="decision-panel" role="dialog" aria-modal="true" aria-labelledby="decisionTitle">
+  <button class="close-circle" id="decisionClose" type="button" aria-label="Close this letter">×</button>
+  <div class="letter-upper"><div class="letter-kicker"><span id="letterNumber">NOTE 01 / 05</span><span class="letter-seal">✳</span></div><span class="mini-dash"></span><span id="letterLocation">GARDEN BEDS</span></div>
+  <h2 id="decisionTitle">An invitation to begin.</h2>
+  <div id="letterMessage" class="letter-message"></div>
+  <div class="letter-border"></div><div id="sceneDetail" class="scene-detail" hidden></div>
+  <div id="evaluation" class="evaluation"></div>
+  <div id="decisionButtons" class="decision-buttons"></div><div id="replanNote" class="replan-note" hidden></div>
+  <button id="explainBtn" class="explain-btn" type="button" aria-expanded="false">Why does this matter? <span>↗</span></button>
+  <div id="explainText" class="explain-text" hidden></div>
+  <div id="policyControls" class="policy-controls" hidden>
+   <div class="policy-topline"><strong>The boundaries you set</strong><button id="policyClose" type="button">Close</button></div>
+   <label class="policy-row"><span><b>Protect personal details</b><small>No names or phone lists shared</small></span><input id="privacyToggle" type="checkbox" checked><span class="switch"></span></label>
+   <label class="policy-row"><span><b>Ask before public actions</b><small>Invitations require a human yes</small></span><input id="approvalToggle" type="checkbox" checked><span class="switch"></span></label>
+   <label class="budget-row"><span><b>Spending ceiling</b><small>Simulated budget, per mission</small></span><span id="budgetValue">€140</span></label><input id="budgetRange" type="range" min="40" max="320" value="140" step="20">
+   <p>Changing a boundary never makes a real-world action happen. Sensitive disclosures and spending still require explicit consent.</p>
+  </div>
+  <div class="letter-foot">LOCAL EXPERIMENT <span>·</span> YOU REMAIN IN CONTROL</div>
+ </div>
+</section>
+<section class="journal-overlay" id="journalLayer" hidden aria-label="Field journal">
+ <div class="journal-backdrop" id="journalBackdrop"></div>
+ <div class="journal-sheet" role="dialog" aria-modal="true" aria-labelledby="journalTitle"><div class="sheet-top"><span>AN OBJECT FROM THE WORLD</span><button type="button" id="journalClose" aria-label="Close field journal">×</button></div>
+ <div class="journal-mark">✳</div><div class="journal-topnote">THE COMMONS FIELD JOURNAL / VOL. 01</div><h2 id="journalTitle">Every choice<br><em>leaves a trace.</em></h2><p class="journal-intro">A record of what you permitted, what you refused, and why. The trail can be checked for alterations; it doesn't prove that events happened outside this little world.</p>
+ <div id="smallWonders" class="small-wonders" hidden><span>SMALL WONDERS FOUND</span><strong id="wonderText"></strong></div><div id="journalEntries" class="journal-entries"><p class="empty-journal">No decisions yet. The first page is yours.</p></div>
+ <div class="journal-integrity"><span id="integrityStatus">Not checked yet</span><button id="verifyBtn" type="button">Check the trail ↗</button></div>
+ <div class="journal-actions"><button type="button" id="exportBtn">Take a copy ↓</button><label class="import-control" for="importInput">Check a saved copy ↑</label><input type="file" id="importInput" accept=".json,application/json" hidden></div>
+ <button type="button" class="restart" id="resetBtn">Begin the world again ↻</button><div class="journal-bottom">A hash chain is a tamper-evidence mechanism, not an independent witness.</div>
+ </div>
+</section>
+<div id="finishLayer" class="finish-layer" hidden><div class="finish-body"><span class="finish-star">✳</span><div class="finish-kicker">THE END OF CHAPTER ONE</div><h2 id="finishHeading">Not every thread<br>needs to be <em>pulled.</em></h2><p id="finishStory">Sometimes care means acting. Sometimes it means asking. And sometimes it means knowing where to stop.</p><div id="finishMemento" class="finish-memento">✳ &nbsp; five little moments</div><button type="button" id="finishJournal">Open your field journal ↗</button><button type="button" id="finishClose">Stay a little longer</button></div></div>
+</div>
+<script type="module">/** COMMONS / INTENT LAB — deterministic local simulation core.
+ * No network, wallet, blockchain, LLM or real-world action. */
+const SEED_POLICIES = Object.freeze({ privacy:true, approval:true, limit:140 });
+
+const MISSIONS = {
+  garden: {
+    id:'garden', number:'01', badge:'FOOD SOVEREIGNTY', location:'BERLIN · COMMUNITY GARDEN',
+    short:'The garden we grow', subtitle:'Turn an overlooked space into a place to grow.',
+    tagline:'A neighbourhood garden, begun with care.',
+    intention:'Help our neighbourhood start a shared edible garden. Find support and invite people in — without exposing private information or spending money without consent.',
+    accent:'#a9debb', accent2:'#d4e6a6', metric:'promising leads', icon:'✳',
+    visual:'garden',
+    steps:[
+      {id:'g1', agent:'SCOUT', kind:'research', title:'Find a way to begin', detail:'Compare three fictional small-grant opportunities and create an eligibility shortlist.', explain:'Public research is within the current mandate. Nothing is submitted and no funds change hands.', outcome:'3 opportunities shortlisted', metric:3, source:'Synthetic programme catalogue', seconds:'00:08', tags:['Research','Low risk']},
+      {id:'g2', agent:'BRIDGE', kind:'data', private:true, title:'Share the resident contact list', detail:'A fictional partner requests names and phone numbers to speed up volunteer recruitment.', explain:'The request crosses a privacy boundary. Convenience is not permission.', outcome:'Private contacts withheld', source:'Synthetic partner request', seconds:'00:13', tags:['Personal data','Sensitive']},
+      {id:'g3', agent:'STORY', kind:'external', external:true, title:'Invite the neighbourhood', detail:'Publish a warm public invitation using no private contact information.', explain:'Public publishing is an external action. A human should decide before it happens.', outcome:'Invitation approved for simulated publication', source:'Generated demonstration copy', seconds:'00:22', tags:['Public action','Human gate']},
+      {id:'g4', agent:'STEWARD', kind:'spend', cost:180, title:'Reserve twelve planting kits', detail:'Commit a simulated €180 for seeds, soil and community planting kits.', explain:'The proposed spend exceeds the default €140 ceiling. The limit exists to stop helpful enthusiasm becoming unauthorised spending.', outcome:'€180 simulated kit reservation', source:'Fictional supplier quote', seconds:'00:31', tags:['Money','Approval gate']},
+      {id:'g5', agent:'WITNESS', kind:'draft', title:'Create a public progress note', detail:'Draft a transparent summary of discoveries, approvals and the boundaries respected.', explain:'Drafting a report is reversible and local. No public posting happens.', outcome:'Evidence note prepared', source:'Local audit trail', seconds:'00:46', tags:['Evidence','Reversible']},
+    ]
+  },
+  meals: {
+    id:'meals', number:'02', badge:'MUTUAL AID', location:'BERLIN · COMMUNITY KITCHEN',
+    short:'A seat for everyone', subtitle:'Make generosity easier to coordinate.',
+    tagline:'A shared table, with dignity at its heart.',
+    intention:'Help neighbours organise a plant-based community supper. Connect offers of food and time. Protect guests’ dignity and keep all expenses accountable.',
+    accent:'#e5c2a5', accent2:'#edcf9b', metric:'useful matches', icon:'◈', visual:'meals',
+    steps:[
+      {id:'m1',agent:'SCOUT',kind:'research',title:'Find ingredient offers',detail:'Match four fictional donations of vegetables, grains and produce to a sample menu.',explain:'The system only searches simulated public offers, without contacting real people.',outcome:'4 donation matches found',metric:4,source:'Synthetic donation board',seconds:'00:07',tags:['Matching','Reversible']},
+      {id:'m2',agent:'BRIDGE',kind:'data',private:true,title:'Reveal guest dietary profiles',detail:'A sponsor requests guests’ names and individual dietary information.',explain:'Guests did not consent to their details being shared with a sponsor.',outcome:'Guest information protected',source:'Synthetic sponsor request',seconds:'00:15',tags:['Sensitive data','Blocked']},
+      {id:'m3',agent:'STORY',kind:'external',external:true,title:'Invite community volunteers',detail:'Prepare a public call for helpers without using contact lists.',explain:'Inviting the public affects others beyond this browser. Human review is required when enabled.',outcome:'Volunteer invitation simulated',source:'Local invitation draft',seconds:'00:24',tags:['Outreach','Human gate']},
+      {id:'m4',agent:'STEWARD',kind:'spend',cost:85,title:'Buy the missing staples',detail:'Approve a fictional €85 purchase of rice, oil and spices within the defined limit.',explain:'The cost fits the budget, but any financial commitment still deserves explicit consent.',outcome:'€85 fictional purchase approved',source:'Synthetic shopping list',seconds:'00:34',tags:['Money','Human gate']},
+      {id:'m5',agent:'WITNESS',kind:'draft',title:'Write the cooking run sheet',detail:'Prepare a volunteer-friendly timetable with ingredient quantities and open questions.',explain:'This is a private draft, not an order or claim that meals were served.',outcome:'Kitchen run sheet prepared',source:'Local plan draft',seconds:'00:47',tags:['Coordination','Reversible']},
+    ]
+  },
+  shade: {
+    id:'shade', number:'03', badge:'CLIMATE RESILIENCE',location:'BERLIN · SUMMER STREETS',
+    short:'A cooler corner of the city', subtitle:'Care for people before the heat arrives.',
+    tagline:'Small acts of foresight can change a summer.',
+    intention:'Help a local group prepare welcoming cooling spots for a future hot day. Make information accessible, protect vulnerable neighbours and require human oversight.',
+    accent:'#b9dbe9',accent2:'#e4c7a0',metric:'places mapped',icon:'☼',visual:'shade',
+    steps:[
+      {id:'s1',agent:'SCOUT',kind:'research',title:'Map possible cooling places',detail:'Review five fictional shaded places, water points and public rooms.',explain:'Exploring sample open data is a reversible research action.',outcome:'5 hypothetical places mapped',metric:5,source:'Synthetic Berlin map',seconds:'00:06',tags:['Mapping','Research']},
+      {id:'s2',agent:'BRIDGE',kind:'data',private:true,title:'Expose a vulnerable-resident map',detail:'Join named residents to personal medical needs for targeted outreach.',explain:'The usefulness of a map does not override residents’ rights to privacy.',outcome:'Sensitive location data withheld',source:'Fictional resident registry',seconds:'00:17',tags:['Privacy','Sensitive']},
+      {id:'s3',agent:'STORY',kind:'external',external:true,title:'Share the public cool-spots guide',detail:'Publish a simulated accessible guide using place-level, non-personal information.',explain:'Even a beneficial public announcement needs an accountable publisher.',outcome:'Cooling guide simulated',source:'Generated accessibility checklist',seconds:'00:25',tags:['Publishing','Human gate']},
+      {id:'s4',agent:'STEWARD',kind:'spend',cost:160,title:'Arrange water refill equipment',detail:'Reserve fictional €160 water-station equipment for a community event.',explain:'The current default ceiling is €140. Spending beyond it requires changing the budget and then approving.',outcome:'€160 hypothetical equipment reserve',source:'Fictional equipment estimate',seconds:'00:36',tags:['Spending','Budget']},
+      {id:'s5',agent:'WITNESS',kind:'draft',title:'Draft the day-of checklist',detail:'Write a clear plan for volunteers, contingencies and accessible communication.',explain:'Planning is allowed; whether the event is effective remains to be verified in the real world.',outcome:'Day-of checklist prepared',source:'Local activity log',seconds:'00:48',tags:['Planning','Evidence']},
+    ]
+  }
+};
+
+function evaluate(action, policy, spent=0){
+  if(action.private && policy.privacy){return {status:'BLOCK',rule:'DATA MINIMISATION',why:'Personal data cannot be shared under your privacy boundary.',detail:'Keep the request blocked or change the policy to study the trade-off.'};}
+  if(action.cost && spent+action.cost>policy.limit){return {status:'BLOCK',rule:'BUDGET CEILING',why:`€${action.cost} would exceed your €${policy.limit} authorisation limit${spent?` (already committed €${spent})`:''}.`,detail:'Raise your hypothetical budget ceiling to reconsider — never an actual payment.'};}
+  if(action.private){return {status:'REVIEW',rule:'SENSITIVE DATA',why:'Privacy protection is off, but sharing personal details still requires explicit consent in this simulator.',detail:'No real personal information exists in this demo.'};}
+  if(action.cost){return {status:'REVIEW',rule:'FINANCIAL CONSENT',why:`€${action.cost} is within budget. Financial commitments still require a human yes.`,detail:'This approval is recorded locally; no money moves.'};}
+  if(action.external && policy.approval){return {status:'REVIEW',rule:'HUMAN AUTHORITY',why:'This action would affect people outside the agent. The human stays in charge.',detail:'Approval is simulated; nothing will be sent or published.'};}
+  if(action.external){return {status:'ALLOW',rule:'OPEN AUTHORITY',why:'You disabled the external-action approval gate. The simulator would permit this action without review.',detail:'No external action actually occurs.'};}
+  return {status:'ALLOW',rule:'WITHIN MANDATE',why:'Research and drafts are reversible and do not disclose information or commit resources.',detail:'The result remains local and explicitly simulated.'};
+}
+
+function summarise(events){
+  const done=events.filter(e=>e.eventType==='ACTION');
+  return {
+    executed:done.filter(e=>e.decision==='EXECUTED'||e.decision==='APPROVED').length,
+    reviewed:done.filter(e=>e.decision==='APPROVED'||e.decision==='DECLINED').length,
+    blocked:done.filter(e=>e.decision==='BLOCKED').length,
+    declined:done.filter(e=>e.decision==='DECLINED').length,
+    spent:done.filter(e=>e.decision==='APPROVED'||e.decision==='EXECUTED').reduce((sum,e)=>sum+(e.cost||0),0),
+    leads:done.filter(e=>e.decision==='EXECUTED'||e.decision==='APPROVED').reduce((sum,e)=>sum+(e.metric||0),0)
+  };
+}
+
+function canonical(value){
+  if(Array.isArray(value))return '['+value.map(canonical).join(',')+']';
+  if(value && typeof value==='object')return '{'+Object.keys(value).sort().map(k=>JSON.stringify(k)+':'+canonical(value[k])).join(',')+'}';
+  return JSON.stringify(value);
+}
+function sha256Fallback(content){
+  // Small, dependency-free SHA-256 implementation for local file:// previews.
+  // SHA-256 constants follow FIPS 180-4; compare against known fixtures in tests.
+  const K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+  let H=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+  const raw=Array.from(new TextEncoder().encode(content));const bitLen=raw.length*8;raw.push(0x80);while(raw.length%64!==56)raw.push(0);
+  const high=Math.floor(bitLen/0x100000000),low=bitLen>>>0;
+  for(let i=3;i>=0;i--)raw.push((high>>>(i*8))&255);
+  for(let i=3;i>=0;i--)raw.push((low>>>(i*8))&255);
+  const rotr=(n,b)=>(n>>>b)|(n<<(32-b));
+  for(let off=0;off<raw.length;off+=64){
+    const w=new Uint32Array(64);
+    for(let t=0;t<16;t++)w[t]=(raw[off+4*t]<<24)|(raw[off+4*t+1]<<16)|(raw[off+4*t+2]<<8)|raw[off+4*t+3];
+    for(let t=16;t<64;t++){let a=w[t-15],b=w[t-2];w[t]=((w[t-16]+(rotr(a,7)^rotr(a,18)^(a>>>3)))+(w[t-7]+(rotr(b,17)^rotr(b,19)^(b>>>10))))>>>0;}
+    let [a,b,c,d,e,f,g,h]=H;
+    for(let t=0;t<64;t++){
+      let t1=(h+(rotr(e,6)^rotr(e,11)^rotr(e,25)))>>>0;
+      t1=(t1+((e&f)^(~e&g)))>>>0;t1=(t1+K[t]+w[t])>>>0;
+      const t2=((rotr(a,2)^rotr(a,13)^rotr(a,22))+((a&b)^(a&c)^(b&c)))>>>0;
+      h=g;g=f;f=e;e=(d+t1)>>>0;d=c;c=b;b=a;a=(t1+t2)>>>0;
+    }
+    H=H.map((x,i)=>(x+[a,b,c,d,e,f,g,h][i])>>>0);
+  }
+  return H.map(n=>n.toString(16).padStart(8,'0')).join('');
+}
+async function sha256(content){
+  if(!globalThis.crypto?.subtle) return sha256Fallback(content);
+  const buffer=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(content));
+  return Array.from(new Uint8Array(buffer)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+async function seal(previous,event){
+  const record={...event,prevHash:previous?.hash||'GENESIS'};
+  return {...record,hash:await sha256(canonical(record))};
+}
+async function verifyChain(events){
+  let prev='GENESIS';
+  for(let i=0;i<events.length;i++){
+    const {hash,...payload}=events[i];
+    if(payload.prevHash!==prev)return {valid:false,index:i+1,message:'Link to previous event is broken'};
+    const digest=await sha256(canonical(payload));
+    if(digest!==hash)return {valid:false,index:i+1,message:'Event contents no longer match its fingerprint'};
+    prev=hash;
+  }
+  return {valid:true,events:events.length,root:prev,message:events.length?'Hash chain internally consistent':'No events recorded yet'};
+}
+
+const $=(id)=>document.getElementById(id);
+const nodes=Array.from(document.querySelectorAll('.world-pin'));
+const steps=MISSIONS.garden.steps;
+const byId=Object.fromEntries(steps.map(s=>[s.id,s]));
+const views={
+ g1:{n:'01',loc:'THE GARDEN BEDS',title:'The first little yes.',note:'There is an empty patch of ground waiting for something good. Shall we look for small grants and practical ways to bring it to life?',source:'Researching fictional funding opportunities does not contact anyone or commit funds.',yes:'Look for a beginning',no:'Maybe later'},
+ g2:{n:'02',loc:'THE WORKSHOP',title:'A shortcut with a cost.',note:'A partner offers to invite everyone for us. All they need is the residents’ private names and phone numbers. Faster, perhaps. But whose permission do we have?',source:'The list in this story is fictional. The trade-off—helpful coordination versus privacy—is real.',yes:'Share the list',no:'Keep their trust'},
+ g3:{n:'03',loc:'THE LANTERN SQUARE',title:'A light in the square.',note:'We could invite neighbours with a public notice instead. No private contacts, just an open invitation. May we put it up?',source:'Even a friendly public message is an external action that someone should authorise.',yes:'Approve the invitation',no:'Not yet'},
+ g4:{n:'04',loc:'THE GREENHOUSE',title:'Twelve little beginnings.',note:'Seeds, planting kits and soil are ready to reserve. The total is €180, though the spending boundary you set may say otherwise.',source:'A fictional supplier quote. No purchase is made in this experience.',yes:'Approve the kits',no:'Keep the boundary'},
+ g5:{n:'05',loc:'THE BENCH',title:'Write what happened.',note:'The lovely part isn’t just what the garden received. It’s what we chose not to take. Shall we make an honest note of both?',source:'A private local summary that never claims the garden was built in the real world.',yes:'Write the field note',no:'Leave it for now'}
+};
+
+let policy={...SEED_POLICIES}, events=[], selected=null, audioCtx=null, soundOn=false, toneNodes=[], soundBuffers=[], audioTimer=null;
+let lastFocused=null, recording=false, drag=null, toastHandle=null, endSeen=false;
+let seedPlanted=false, seedDeferred=false, seedDrag=null, seedGhost=null, catPets=0, planScaled=false, bubbleHandle=null;
+let lanternDone=false,trailActive=false,trailIndex=0;
+const cast={g1:{name:'ADA · THE GARDENER',line:'Every garden begins with someone believing in the ground.',sigil:'✳'},g2:{name:'NICO · THE NEIGHBOUR',line:'A good invitation doesn’t need a secret list.',sigil:'⌂'},g3:{name:'LEA · THE ORGANISER',line:'A door can be open without knowing everyone’s name.',sigil:'✦'},g4:{name:'ELI · THE MAKER',line:'What if eight beautiful beginnings were enough?',sigil:'◈'},g5:{name:'THE JOURNAL KEEPER',line:'Remember the no as carefully as the yes.',sigil:'≋'}};
+const prefix='commons-threadworld-v05';
+try{const v=JSON.parse(localStorage.getItem(prefix)||'null');if(v){policy={...SEED_POLICIES,...v.policy};events=Array.isArray(v.events)?v.events:[];endSeen=!!v.endSeen;seedPlanted=!!v.seedPlanted;catPets=Math.max(0,Math.min(3,Number(v.catPets)||0));planScaled=!!v.planScaled;lanternDone=!!v.lanternDone&&events.some(e=>e.eventType==='PLAY'&&e.stepId==='lost-light'&&e.decision==='GUIDED');trailIndex=lanternDone?3:Math.max(0,Math.min(2,Number(v.trailIndex)||0))}}catch{}
+const outcome=(id)=>events.findLast?.(x=>x.eventType==='ACTION'&&x.stepId===id) || [...events].reverse().find(x=>x.eventType==='ACTION'&&x.stepId===id);
+const resolved=()=>steps.filter(x=>outcome(x.id)).length;
+const getAction=(id)=>id==='g4'&&planScaled?{...byId.g4,cost:120,title:'Reserve eight planting kits',detail:'Use a reduced synthetic offer: eight planting kits for €120 instead of twelve for €180.',outcome:'€120 simulated eight-kit reservation'}:byId[id];
+const escapeHTML=(txt)=>String(txt??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const save=()=>{try{localStorage.setItem(prefix,JSON.stringify({policy,events,endSeen,seedPlanted,catPets,planScaled,lanternDone,trailIndex}))}catch{}};
+function speak(name,message,sigil='✳'){if(!$('seedRitual').hidden)return;const b=$('voiceBubble');$('voiceSpeaker').textContent=name;$('voiceText').textContent=message;$('voiceSigil').textContent=sigil;b.classList.add('is-on');clearTimeout(bubbleHandle);bubbleHandle=setTimeout(()=>b.classList.remove('is-on'),6200)}
+function toast(message){const el=$('worldToast');el.textContent=message;el.classList.add('is-on');clearTimeout(toastHandle);toastHandle=setTimeout(()=>el.classList.remove('is-on'),3500)}
+function render(){
+ nodes.forEach(n=>{
+  const o=outcome(n.dataset.step);n.classList.toggle('is-done',!!o&&['EXECUTED','APPROVED'].includes(o.decision));n.classList.toggle('is-protected',!!o&&o.decision==='BLOCKED');n.classList.toggle('is-blocked',!!o&&o.decision==='DECLINED');
+  n.classList.remove('is-next');if(o)n.querySelector('.pin-icon').textContent=['EXECUTED','APPROVED'].includes(o.decision)?'✓':o.decision==='BLOCKED'?'◇':'–';else n.querySelector('.pin-icon').textContent=({g1:'✳',g2:'⌂',g3:'✦',g4:'◈',g5:'≋'})[n.dataset.step];
+ });
+ const next=steps.find(s=>!outcome(s.id));if(next){document.querySelector(`[data-step="${next.id}"]`)?.classList.add('is-next');$('hudHint').textContent=resolved()?'Choose another glowing place':'Pull toward a glowing place · or tap one'}else $('hudHint').textContent='Your world is yours to wander';
+ const gift=!!outcome('g1')&&['APPROVED','EXECUTED'].includes(outcome('g1').decision)&&!seedPlanted;
+ $('seedRitual').hidden=!gift||seedDeferred||trailActive||!$('decisionLayer').hidden||!$('journalLayer').hidden;
+ $('world').dataset.seedTarget=String(gift&&!seedDeferred);$('world').dataset.catWarmed=String(catPets>=3);$('app').dataset.ritual=gift&&!seedDeferred?'open':'closed';
+ if(gift){$('questKicker').textContent='A SMALL GIFT IS WAITING';$('questText').textContent='Plant the first seed.';$('questGo').firstChild.textContent='Plant it ';}
+ else if(!lanternDone){$('questKicker').textContent='✷ A LITTLE SIDE QUEST';$('questText').textContent='A small light has lost its way.';$('questGo').firstChild.textContent='Play it ';}
+ else if(next){$('questKicker').textContent=`THREAD ${views[next.id].n} / 05 · ${views[next.id].loc}`;$('questText').textContent=views[next.id].title;$('questGo').firstChild.textContent='Find it ';}
+ else{$('questKicker').textContent='YOUR WORLD REMEMBERS';$('questText').textContent='Every thread left its trace.';$('questGo').firstChild.textContent='Read it ';}
+ const r=resolved();$('journalCount').textContent=String(events.filter(x=>x.eventType==='ACTION').length);$('progressGlyph').textContent=steps.map(s=>outcome(s.id)?'●':'◌').join('');$('progressText').textContent=`${r} of 5 encounters`;
+ $('world').dataset.grown=String(seedPlanted);$('world').dataset.protected=String(outcome('g2')?.decision==='BLOCKED');$('world').dataset.invited=String(!!outcome('g3')&&['APPROVED','EXECUTED'].includes(outcome('g3')?.decision));$('world').dataset.kits=String(!!outcome('g4')&&['APPROVED','EXECUTED'].includes(outcome('g4')?.decision));$('world').dataset.notes=String(!!outcome('g5')&&['APPROVED','EXECUTED'].includes(outcome('g5')?.decision));
+ const points={g1:[581,372],g2:[639,160],g3:[647,273],g4:[767,226],g5:[472,398]},[sx,sy]=[590,448];
+ $('wovenLines').innerHTML=steps.map(s=>{const o=outcome(s.id);if(!o)return '';const [x,y]=points[s.id],good=['APPROVED','EXECUTED'].includes(o.decision),protectedBoundary=o.decision==='BLOCKED',ex=good?x:sx+(x-sx)*.68,ey=good?y:sy+(y-sy)*.68;
+  return `<path class="${good?'allowed':protectedBoundary?'protected':'blocked'}" d="M${sx} ${sy} Q${(sx+ex)/2+24} ${(sy+ey)/2-22} ${ex} ${ey}"/><circle class="${good?'':protectedBoundary?'protected':'blocked'}" cx="${ex}" cy="${ey}" r="3.8"/>`}).join('');
+ $('privacyToggle').checked=policy.privacy;$('approvalToggle').checked=policy.approval;$('budgetRange').value=String(policy.limit);$('budgetValue').textContent=`€${policy.limit}`;
+ renderTrail();
+}
+async function verifyPersisted(){if(!events.length)return;try{const result=await verifyChain(events);if(!result.valid){toast('This world’s saved journal has been altered. Inspect it before continuing.');$('integrityStatus').textContent='⚠ The saved trail does not verify.';document.body.dataset.tampered='true'}}catch{toast('The local journal could not be checked.')}}
+
+function openStep(id){if(recording||trailActive)return;const action=getAction(id);if(!action)return;selected=id;lastFocused=document.activeElement;
+ $('decisionLayer').hidden=false;$('seedRitual').hidden=true;$('voiceBubble').classList.remove('is-on');document.querySelector(`[data-step="${id}"]`)?.setAttribute('data-selected','true');$('world').classList.add('in-focus');
+ $('letterNumber').textContent=`ENCOUNTER ${views[id].n} / 05`;$('letterLocation').textContent=views[id].loc;$('decisionTitle').textContent=views[id].title;
+ const message=id==='g4'&&planScaled?'The full twelve-kit offer costs €180. We found a smaller beginning: eight kits, €120. It fits the original ceiling — if you choose to authorise it.':views[id].note;
+ $('letterMessage').innerHTML=`<p>${escapeHTML(message)}</p>`;
+ $('sceneDetail').hidden=false;$('sceneDetail').textContent=`${cast[id].name}: “${cast[id].line}”`;
+ $('explainBtn').setAttribute('aria-expanded','false');$('explainText').hidden=true;$('policyControls').hidden=true;
+ updateDecisionCard();playChime('open');setTimeout(()=>$('decisionClose').focus(),40);
+}
+function updateDecisionCard(){if(!selected)return;const action=getAction(selected),o=outcome(selected),ev=evaluate(action,policy,summarise(events).spent);
+ const note=$('replanNote');note.hidden=!(selected==='g4'&&planScaled&&!o);if(!note.hidden)note.innerHTML='<strong>A gentler way forward</strong>Eight kits · €120 · same spending boundary. Fewer kits, no new authority. A human still decides.';
+ $('evaluation').className='evaluation '+(ev.status==='BLOCK'?'block':ev.status==='REVIEW'?'review':'allow');
+ const icons={BLOCK:'×',REVIEW:'◉',ALLOW:'✓'};const labels={BLOCK:'A boundary is holding.',REVIEW:'A human decision is needed.',ALLOW:'This is within your boundaries.'};
+ $('evaluation').innerHTML=`<span class="evaluation-marker">${icons[ev.status]}</span><div><div class="evaluation-title">${o?'This encounter is already recorded.':labels[ev.status]}</div><div class="evaluation-text">${escapeHTML(o?`Recorded as ${o.decision.toLowerCase()} in your field journal.`:ev.why)}</div></div>`;
+ $('explainText').textContent=`${ev.rule}: ${action.explain} ${views[selected].source} ${ev.detail}`;
+ const btns=$('decisionButtons');btns.innerHTML='';
+ const add=(text,type,handler)=>{const b=document.createElement('button');b.type='button';b.textContent=text;b.className=type;b.addEventListener('click',handler);btns.append(b)};
+ if(o){add('Return to the world','primary',closeStep);add('See the journal','',()=>{closeStep();openJournal()});return}
+ if(ev.status==='BLOCK'){
+  if(selected==='g4'&&!planScaled&&ev.rule==='BUDGET CEILING'&&policy.limit>=120){
+   add('Try 8 kits · €120','alternative',replanSmaller);add('Respect the limit','primary',()=>decide('BLOCKED'));
+  }else add(selected==='g4'?'Respect the limit':'Protect their privacy','primary',()=>decide('BLOCKED'));
+  add(selected==='g4'?'Change the ceiling':'Explore the rule','',()=>{$('policyControls').hidden=false;$(selected==='g4'?'budgetRange':'privacyToggle').focus()});
+ }else if(ev.status==='REVIEW'){ 
+  add(selected==='g2'?'Consent to share (simulation)':views[selected].yes,'primary',()=>decide('APPROVED'));
+  add(views[selected].no,'',()=>decide('DECLINED'));
+  if(selected==='g4'&&planScaled)add('Compare 12-kit offer','revisit',restoreFullPlan);
+ }else{
+  add(views[selected].yes,'primary',()=>decide('EXECUTED'));
+  add(views[selected].no,'',closeStep);
+ }
+}
+function closeStep(){if(recording)return;$('decisionLayer').hidden=true;$('world').classList.remove('in-focus');document.querySelectorAll('[data-selected]').forEach(x=>x.removeAttribute('data-selected'));selected=null;lastFocused?.focus?.();render();}
+async function appendEvent(event){const last=events.length?events.at(-1):null;const result=await verifyChain(events);if(!result.valid){toast('Saved journal integrity is broken. Reset the world to create new entries.');return false}
+ events.push(await seal(last,{seq:events.length+1,when:new Date().toISOString(),simulated:true,...event}));save();return true;}
+function sparkle(node){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;const r=node.getBoundingClientRect(),a=$('sceneArea').getBoundingClientRect();for(let i=0;i<14;i++){const sp=document.createElement('span');sp.className='spark';sp.style.left=`${r.left+r.width/2-a.left+(Math.random()-.5)*20}px`;sp.style.top=`${r.top+r.height/2-a.top+(Math.random()-.5)*20}px`;sp.style.setProperty('--dx',`${(Math.random()-.5)*180}px`);sp.style.setProperty('--dy',`${(Math.random()-.5)*180}px`);$('sceneArea').append(sp);setTimeout(()=>sp.remove(),1200)}}
+async function decide(decision){if(recording||!selected)return;recording=true;const id=selected,action=getAction(id),ev=evaluate(action,policy,summarise(events).spent);
+ if(decision==='APPROVED'&&ev.status!=='REVIEW'||decision==='EXECUTED'&&ev.status!=='ALLOW'||decision==='BLOCKED'&&ev.status!=='BLOCK'){recording=false;updateDecisionCard();toast('The rule changed. Review this choice again.');return}
+ const ok=await appendEvent({eventType:'ACTION',stepId:id,title:action.title,decision,rule:ev.rule,why:ev.why,detail:action.detail,source:action.source,cost:decision==='APPROVED'||decision==='EXECUTED'?action.cost||0:0,metric:decision==='EXECUTED'?action.metric||0:0,policy:{...policy}});recording=false;
+ if(!ok)return;
+ closeStep();render();const node=document.querySelector(`[data-step="${id}"]`);
+ if(decision==='APPROVED'||decision==='EXECUTED'){sparkle(node);playChime('success');
+   const messages={g1:'A path to a beginning. And something small has appeared for you.',g2:'The fictional list would be shared. Your decision is recorded.',g3:'The public notice has its human yes. The lantern begins to glow.',g4:`${action.cost===120?'Eight':'Twelve'} fictional kits reserved, €${action.cost}. Nothing was purchased.`,g5:'A careful record. The last page is written.'};speak(cast[id].name,messages[id],cast[id].sigil);if(id!=='g1')toast('The miniature world remembers your choice.');}
+ else {playChime('boundary');const messages={g2:'Their names stay with them. Perhaps an open invitation instead?',g4:'The spending boundary holds. An idea can wait.',g3:'No invitation goes out without your yes.',g1:'Sometimes the ground can wait.',g5:'An unfinished note is still a truthful one.'};speak(cast[id].name,messages[id],cast[id].sigil);toast(decision==='BLOCKED'?'A boundary kept. That matters.':'You chose to wait.');}
+ render();
+ if(resolved()===5&&!endSeen){endSeen=true;save();setTimeout(()=>{prepareEnding();$('finishLayer').hidden=false;playChime('success')},1900)}
+}
+
+// Episode mechanics: rules remain authoritative; exploration is visibly simulated.
+async function replanSmaller(){if(recording||!selected||selected!=='g4'||planScaled||outcome('g4'))return;recording=true;const ok=await appendEvent({eventType:'REPLAN',decision:'PROPOSED',stepId:'g4',fromKits:12,toKits:8,fromCost:180,toCost:120,reason:'Reduce scope rather than automatically expanding financial authority.'});recording=false;if(!ok)return;planScaled=true;save();render();$('letterMessage').innerHTML='<p>The greenhouse found a smaller beginning: eight planting kits for €120, not twelve for €180. The spending limit stays exactly where you placed it.</p>';updateDecisionCard();speak('ELI · THE MAKER','A smaller yes can still be a lovely beginning.','#');playChime('open')}
+async function restoreFullPlan(){if(recording||!planScaled||outcome('g4'))return;recording=true;const ok=await appendEvent({eventType:'REPLAN',decision:'RESTORED',stepId:'g4',fromKits:8,toKits:12,fromCost:120,toCost:180});recording=false;if(!ok)return;planScaled=false;save();render();$('letterMessage').innerHTML=`<p>${escapeHTML(views.g4.note)}</p>`;updateDecisionCard()}
+function prepareEnding(){const protectedNames=outcome('g2')?.decision==='BLOCKED';const invited=['APPROVED','EXECUTED'].includes(outcome('g3')?.decision);const kits=outcome('g4');const kitCount=['APPROVED','EXECUTED'].includes(kits?.decision)?kits.cost===120?8:12:0;
+ $('finishHeading').innerHTML=protectedNames?'The kindest thread<br>was the one you <em>didn’t pull.</em>':'You made the world<br>a little more <em>human.</em>';
+ $('finishStory').textContent=[protectedNames?'You kept private names private.':'You explored the difficult question of consent.',invited?'You gave the public invitation a human yes.':'You let an invitation wait.',kitCount?`You authorised ${kitCount} fictional planting kits.`:'You kept the spending boundary intact.',seedPlanted?'And one small seed found its place.':'The first seed is still waiting for you.'].join(' ');
+ $('finishMemento').textContent=`✳    ${protectedNames?'a boundary protected':'a difficult choice'}    ·    ${kitCount?`${kitCount} symbolic kits`:'no simulated purchase'}${lanternDone?'    ·    the lost light guided home':''}`;
+}
+$('questGo').addEventListener('click',()=>{if(!lanternDone){startTrail();return;}const gift=!!outcome('g1')&&['APPROVED','EXECUTED'].includes(outcome('g1').decision)&&!seedPlanted;if(gift){seedDeferred=false;render();$('seedToken').focus();return;}const next=steps.find(s=>!outcome(s.id));if(next)openStep(next.id);else openJournal()});
+$('voiceDismiss').addEventListener('click',()=>$('voiceBubble').classList.remove('is-on'));
+$('seedLater').addEventListener('click',()=>{seedDeferred=true;render();speak('ADA · THE GARDENER','The seed can wait. No rush in a real garden either.','✳')});
+function clearSeedDrag(){seedDrag=null;seedGhost?.remove();seedGhost=null;$('seedToken').classList.remove('dragging');const pin=document.querySelector('[data-step="g1"]');pin?.classList.remove('is-near')}
+async function plantSeed(){if(recording||seedPlanted||!['APPROVED','EXECUTED'].includes(outcome('g1')?.decision))return;recording=true;const ok=await appendEvent({eventType:'PLAY',stepId:'g1',decision:'PLANTED',title:'Planted a symbolic seed in the miniature world',simulated:true,why:'A playful illustration of the decision to begin; not real planting or evidence of impact.'});recording=false;if(!ok)return;seedPlanted=true;seedDeferred=false;save();render();const pin=document.querySelector('[data-step="g1"]');sparkle(pin);setTimeout(()=>sparkle(pin),400);playChime('seed');speak('ADA · THE GARDENER','Look at that. Even a small beginning changes the landscape.','✳');toast('A tiny beginning took root.');}
+function seedDropNear(x,y){const pin=document.querySelector('[data-step="g1"]'),r=pin.getBoundingClientRect();return Math.hypot(x-(r.left+r.width/2),y-(r.top+r.height/2))<(innerWidth<620?110:95)}
+$('seedToken').addEventListener('pointerdown',e=>{if(e.button!==undefined&&e.button!==0||recording)return;seedDrag={pointerId:e.pointerId,x:e.clientX,y:e.clientY,moved:false};e.currentTarget.setPointerCapture(e.pointerId);e.currentTarget.classList.add('dragging');e.preventDefault()});
+$('seedToken').addEventListener('pointermove',e=>{if(!seedDrag||e.pointerId!==seedDrag.pointerId)return;seedDrag.moved||=Math.hypot(e.clientX-seedDrag.x,e.clientY-seedDrag.y)>12;if(!seedDrag.moved)return;const r=$('sceneArea').getBoundingClientRect();if(!seedGhost){seedGhost=document.createElement('div');seedGhost.className='seed-trail';seedGhost.textContent='✦';$('sceneArea').append(seedGhost)}seedGhost.style.left=`${e.clientX-r.left}px`;seedGhost.style.top=`${e.clientY-r.top}px`;document.querySelector('[data-step="g1"]').classList.toggle('is-near',seedDropNear(e.clientX,e.clientY))});
+$('seedToken').addEventListener('pointerup',async e=>{if(!seedDrag||e.pointerId!==seedDrag.pointerId)return;const moved=seedDrag.moved,near=seedDropNear(e.clientX,e.clientY);clearSeedDrag();if(!moved||near)await plantSeed();else{playChime('boundary');toast('The beds are glowing — try dropping your seed there.')}});
+$('seedToken').addEventListener('pointercancel',clearSeedDrag);$('seedToken').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();plantSeed()}});
+$('miaButton').querySelector('.cat-label').textContent='A small mystery';
+$('miaButton').addEventListener('click',async()=>{if(recording)return;catPets=Math.min(3,catPets+1);if(catPets===3&&!events.some(x=>x.eventType==='PLAY'&&x.stepId==='mia')){recording=true;const ok=await appendEvent({eventType:'PLAY',stepId:'mia',decision:'FRIEND',title:'Made a fictional black cat your friend',simulated:true});recording=false;if(!ok)return;}save();render();playChime('cat');playPurr();const msgs=['Mrrp. You found me.','Another scritch? Well, if you insist.','You passed the cat inspection. Welcome to the neighbourhood.'];speak('MIA · LOCAL EXPERT',msgs[catPets-1],'☾');$('miaButton').querySelector('.cat-label').textContent=catPets===3?'Mia · Friend':'Pet the little cat';sparkle($('miaButton'))});
+
+// A small interactive thread: optional drag gesture; every encounter also works by ordinary click, touch, Tab and Enter.
+function lineTo(x0,y0,x1,y1){const k=Math.max(40,Math.abs(x1-x0)*.28);const d=`M${x0.toFixed(1)} ${y0.toFixed(1)} C${(x0+k).toFixed(1)} ${(y0-120).toFixed(1)}, ${(x1-k).toFixed(1)} ${(y1+100).toFixed(1)}, ${x1.toFixed(1)} ${y1.toFixed(1)}`;$('threadPath').setAttribute('d',d);$('threadShadow').setAttribute('d',d)}
+function lineClear(){$('threadPath').setAttribute('d','');$('threadShadow').setAttribute('d','')}
+function nodeNear(x,y){let best=null,dist=85;for(const n of nodes){const r=n.getBoundingClientRect(),d=Math.hypot(x-(r.left+r.width/2),y-(r.top+r.height/2));if(d<dist){dist=d;best=n}}return best}
+$('spool').addEventListener('pointerdown',e=>{if(drag||e.button!==undefined&&e.button!==0)return;const r=$('spool').getBoundingClientRect();drag={owner:e.pointerId,startX:r.left+r.width/2,startY:r.top+r.height/2,px:e.clientX,py:e.clientY,moved:false};$('spool').setPointerCapture(e.pointerId);$('spool').classList.add('dragging');e.preventDefault();});
+$('spool').addEventListener('pointermove',e=>{if(!drag||e.pointerId!==drag.owner)return;drag.moved ||=Math.hypot(e.clientX-drag.px,e.clientY-drag.py)>12;const target=nodeNear(e.clientX,e.clientY);const sr=$('sceneArea').getBoundingClientRect(),x1=target?target.getBoundingClientRect().left+target.offsetWidth/2:e.clientX,y1=target?target.getBoundingClientRect().top+target.offsetHeight/2:e.clientY;
+ lineTo(drag.startX-sr.left,drag.startY-sr.top,x1-sr.left,y1-sr.top);nodes.forEach(n=>n.classList.toggle('is-near',n===target));});
+function finishDrag(e){if(!drag||e.pointerId!==drag.owner)return;const target=nodeNear(e.clientX,e.clientY),wasMoved=drag.moved;drag=null;lineClear();$('spool').classList.remove('dragging');nodes.forEach(n=>n.classList.remove('is-near'));if(target&&wasMoved)openStep(target.dataset.step);else if(!wasMoved){const next=steps.find(x=>!outcome(x.id));if(next){openStep(next.id)}else openJournal()}}
+$('spool').addEventListener('pointerup',finishDrag);$('spool').addEventListener('pointercancel',e=>{if(!drag||e.pointerId!==drag.owner)return;drag=null;lineClear();$('spool').classList.remove('dragging')});
+nodes.forEach(n=>n.addEventListener('click',()=>openStep(n.dataset.step)));
+$('decisionClose').addEventListener('click',closeStep);$('decisionBackdrop').addEventListener('click',closeStep);
+$('explainBtn').addEventListener('click',()=>{const x=$('explainText');x.hidden=!x.hidden;$('explainBtn').setAttribute('aria-expanded',String(!x.hidden));});$('policyClose').addEventListener('click',()=>{$('policyControls').hidden=true});
+async function updatePolicy(name,value){if(document.body.dataset.tampered==='true'){toast('This journal cannot be extended until its integrity is repaired.');return}
+ policy[name]=value;await appendEvent({eventType:'POLICY',decision:'CHANGED',field:name,value});save();render();updateDecisionCard();playChime('open')}
+$('privacyToggle').addEventListener('change',e=>updatePolicy('privacy',e.target.checked));$('approvalToggle').addEventListener('change',e=>updatePolicy('approval',e.target.checked));
+$('budgetRange').addEventListener('input',e=>{$('budgetValue').textContent=`€${e.target.value}`});$('budgetRange').addEventListener('change',e=>updatePolicy('limit',Number(e.target.value)));
+
+async function openJournal(){lastFocused=document.activeElement;$('journalLayer').hidden=false;renderJournal();setTimeout(()=>$('journalClose').focus(),40)}
+function closeJournal(){$('journalLayer').hidden=true;lastFocused?.focus?.();}
+function renderJournal(){const actions=events.filter(e=>e.eventType==='ACTION'),box=$('journalEntries');
+ const wonders=[];if(seedPlanted)wonders.push('A seed planted (symbolically)');if(catPets>=3)wonders.push('A sleepy cat made a friend');if(planScaled)wonders.push('An eight-kit counterproposal');if(lanternDone)wonders.push('The Lost Light · a traveller guided without private data');
+ $('smallWonders').hidden=!wonders.length;$('wonderText').textContent=wonders.join(' · ');
+ if(!actions.length)box.innerHTML='<p class="empty-journal">No decisions yet. The first page is yours.</p>';
+ else box.innerHTML=actions.map((e,i)=>`<article class="journal-entry" data-decision="${escapeHTML(e.decision)}"><div class="entry-icon">${e.decision==='APPROVED'||e.decision==='EXECUTED'?'✓':'–'}</div><div class="entry-main"><b>${escapeHTML(views[e.stepId]?.title||e.title)}</b><p>${escapeHTML(e.why)}</p><div class="entry-meta">${escapeHTML(e.decision)} · ENCOUNTER ${escapeHTML(views[e.stepId]?.n||String(i+1).padStart(2,'0'))} · SIMULATED</div></div></article>`).join('');
+ $('integrityStatus').textContent='Your journal is local. Check the hash chain.';
+}
+$('journalBtn').addEventListener('click',openJournal);$('journalClose').addEventListener('click',closeJournal);$('journalBackdrop').addEventListener('click',closeJournal);
+$('verifyBtn').addEventListener('click',async()=>{try{const result=await verifyChain(events);$('integrityStatus').textContent=result.valid?`✓ Internally consistent · ${result.events} record${result.events===1?'':'s'}`:`✕ Inconsistent at record ${result.index}`;playChime(result.valid?'success':'boundary')}catch{$('integrityStatus').textContent='Could not check integrity in this browser'}});
+$('exportBtn').addEventListener('click',()=>{const data={schema:'commons.threadworld.v0.5',description:'A fictional local experience. Hash-chain integrity, not independent real-world evidence.',exportedAt:new Date().toISOString(),policy,events};const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='commons-field-journal.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);playChime('open')});
+$('importInput').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;try{const text=await file.text();const data=JSON.parse(text);if(!Array.isArray(data.events))throw Error('Missing events array');const result=await verifyChain(data.events);$('integrityStatus').textContent=result.valid?`✓ Saved copy intact · ${result.events} record${result.events===1?'':'s'}`:`✕ Saved copy altered at record ${result.index}`;playChime(result.valid?'success':'boundary')}catch(e){$('integrityStatus').textContent='Could not read or verify this saved copy'}e.target.value=''});
+$('resetBtn').addEventListener('click',()=>{if(!confirm('Begin again? This will clear this browser’s local journal and policy choices. Download a copy first if you want to keep them.'))return;events=[];policy={...SEED_POLICIES};endSeen=false;seedPlanted=false;seedDeferred=false;catPets=0;planScaled=false;lanternDone=false;trailIndex=0;trailActive=false;$('trailReward').hidden=true;delete document.body.dataset.tampered;save();render();renderJournal();closeJournal();toast('One little world. One new beginning.')});
+$('finishJournal').addEventListener('click',()=>{$('finishLayer').hidden=true;openJournal()});$('finishClose').addEventListener('click',()=>{$('finishLayer').hidden=true});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(trailActive)return;if(!$('journalLayer').hidden)closeJournal();else if(!$('decisionLayer').hidden)closeStep();else if(!$('finishLayer').hidden)$('finishLayer').hidden=true}if(e.key.toLowerCase()==='j'&&!(e.target instanceof HTMLInputElement)&&!e.altKey&&!e.metaKey&&!e.ctrlKey&&$('journalLayer').hidden&&$('decisionLayer').hidden)openJournal()});
+// Gentle optional WebAudio ambience. The experience is silent until the user asks to hear it.
+function initSound(){if(audioCtx)return;const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;audioCtx=new AC();const ambient=audioCtx.createGain();ambient.gain.value=.014;ambient.connect(audioCtx.destination);[130.81,196,261.63].forEach((f,i)=>{const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type=i===2?'sine':'triangle';o.frequency.value=f/(i+1)*1.0001;g.gain.value=i===0?.18:i===1?.08:.05;o.connect(g).connect(ambient);o.start();toneNodes.push(o)});
+ const n=audioCtx.sampleRate*2;const buffer=audioCtx.createBuffer(1,n,audioCtx.sampleRate);const data=buffer.getChannelData(0);let last=0;for(let i=0;i<n;i++){const white=Math.random()*2-1;last=(last+.018*white)/1.018;data[i]=last*1.1}const noise=audioCtx.createBufferSource();noise.buffer=buffer;noise.loop=true;const lowpass=audioCtx.createBiquadFilter();lowpass.type='lowpass';lowpass.frequency.value=400;const g=audioCtx.createGain();g.gain.value=.12;noise.connect(lowpass).connect(g).connect(ambient);noise.start();toneNodes.push(noise);soundBuffers.push(ambient);}
+function playPurr(){if(!soundOn||!audioCtx)return;const now=audioCtx.currentTime;const carrier=audioCtx.createOscillator(),pulses=audioCtx.createOscillator(),volume=audioCtx.createGain(),wobble=audioCtx.createGain();carrier.type='triangle';carrier.frequency.value=64;pulses.type='sine';pulses.frequency.value=23;wobble.gain.value=.028;volume.gain.setValueAtTime(.0001,now);volume.gain.exponentialRampToValueAtTime(.035,now+.11);volume.gain.exponentialRampToValueAtTime(.0001,now+.85);pulses.connect(wobble).connect(volume.gain);carrier.connect(volume).connect(audioCtx.destination);pulses.start(now);carrier.start(now);pulses.stop(now+.86);carrier.stop(now+.86)}
+function playChime(mode){if(!soundOn||!audioCtx)return;const now=audioCtx.currentTime;const pitches=mode==='success'?[523.25,659.25,783.99]:mode==='seed'?[392,493.88,587.33,783.99]:mode==='cat'?[329.63,440]:mode==='boundary'?[392,329.63]:mode==='open'?[440,523.25]:mode==='trail1'?[392,523.25,587.33]:mode==='trail2'?[493.88,587.33,698.46]:mode==='trail3'?[587.33,783.99,987.77]:[440];pitches.forEach((freq,i)=>{const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type='sine';o.frequency.setValueAtTime(freq,now+i*.075);g.gain.setValueAtTime(0,now+i*.075);g.gain.linearRampToValueAtTime(.042,now+i*.075+.014);g.gain.exponentialRampToValueAtTime(.0001,now+i*.075+.42);o.connect(g).connect(audioCtx.destination);o.start(now+i*.075);o.stop(now+i*.075+.44)})}
+$('soundBtn').addEventListener('click',async()=>{soundOn=!soundOn;if(soundOn){initSound();await audioCtx?.resume();playChime('success')}else if(audioCtx)await audioCtx.suspend();$('soundBtn').setAttribute('aria-pressed',String(soundOn));$('soundBtn').querySelector('span').textContent=soundOn?'Sound on':'Sound off';});
+$('dayBtn').addEventListener('click',()=>{const isBlue=$('app').dataset.sky==='blue';$('app').dataset.sky=isBlue?'dusk':'blue';$('dayBtn').setAttribute('aria-pressed',String(!isBlue));$('dayBtn').querySelector('span').textContent=isBlue?'Blue hour':'Golden hour';playChime('open')});
+// Pointer parallax moves the entire diorama as one object, keeping buttons and illustration aligned.
+$('sceneArea').addEventListener('pointermove',e=>{if(matchMedia('(prefers-reduced-motion: reduce)').matches||drag||trailActive||!$('decisionLayer').hidden)return;if(e.pointerType==='touch')return;const r=$('sceneArea').getBoundingClientRect(),nx=(e.clientX-r.left)/r.width-.5,ny=(e.clientY-r.top)/r.height-.5;$('world').style.translate=`${(nx*13).toFixed(1)}px ${(ny*9).toFixed(1)}px`});
+$('sceneArea').addEventListener('pointerleave',()=>{$('world').style.translate='0px 0px'});
+if(innerWidth<=620){const w=$('worldWindow');requestAnimationFrame(()=>{w.scrollLeft=Math.max(0,(780-w.clientWidth)*.43)})}
+
+// The Lost Light — a small, embodied puzzle that introduces the Commons idea through play.
+// This layer never sends data, contacts neighbours, or changes a real-world system.
+const TRAIL_POINTS=[{x:322,y:387},{x:503,y:423},{x:635,y:341},{x:796,y:339}];
+const TRAIL_NS='http://www.w3.org/2000/svg';
+const trailKnots=Array.from(document.querySelectorAll('[data-trail-post]'));
+let trailDrag=null,travellerFrame=null,trailPlayToken=0;
+function ropePart(a,b){const cx=(a.x+b.x)/2,cy=(a.y+b.y)/2+Math.min(38,Math.abs(a.x-b.x)*.16);return `M${a.x} ${a.y} Q${cx.toFixed(1)} ${cy.toFixed(1)} ${b.x} ${b.y}`}
+function ropePath(segments){return Array.from({length:segments},(_,i)=>ropePart(TRAIL_POINTS[i],TRAIL_POINTS[i+1])).join(' ')}
+function pointFromPointer(e){const r=$('world').getBoundingClientRect();return{x:(e.clientX-r.left)*1200/r.width,y:(e.clientY-r.top)*740/r.height}}
+function pointDistance(a,b){return Math.hypot(a.x-b.x,a.y-b.y)}
+function travellerAt(point){$('trailTraveller').setAttribute('transform',`translate(${point.x.toFixed(2)} ${point.y.toFixed(2)})`)}
+function trailBurstAt(point){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;for(let i=0;i<17;i++){const angle=i/17*Math.PI*2,dist=34+Math.random()*38,el=document.createElement('span');el.className='trail-burst';el.style.left=`${point.x/12}%`;el.style.top=`${point.y/7.4}%`;el.style.setProperty('--dx',`${(Math.cos(angle)*dist).toFixed(1)}px`);el.style.setProperty('--dy',`${(Math.sin(angle)*dist).toFixed(1)}px`);$('trailStage').append(el);setTimeout(()=>el.remove(),1000)}}
+function trailBulbs(){const path=$('trailComplete'),len=path.getTotalLength();if(!len){$('trailBulbs').innerHTML='';return}const count=Math.max(2,Math.round(len/23));let markup='';for(let i=1;i<count;i++){const p=path.getPointAtLength(i*len/count);markup+=`<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${(i%3===0?4.0:2.7)}" style="animation-delay:-${((i*7)%25)/10}s"/>`}$('trailBulbs').innerHTML=markup}
+function renderTrail(){
+ const stage=$('trailStage');stage.dataset.mode=trailActive?'active':lanternDone?'done':'idle';
+ $('world').dataset.puzzle=trailActive?'active':'idle';$('app').dataset.trail=trailActive?'active':lanternDone?'done':'idle';
+ const count=lanternDone?3:trailIndex,stroke=ropePath(count);
+ $('trailComplete').setAttribute('d',stroke);$('trailPathGlow').setAttribute('d',stroke);
+ if(!trailDrag){$('trailLive').setAttribute('d','');$('trailLiveGlow').setAttribute('d','');stage.dataset.dragging='false'}
+ trailBulbs();
+ $('trailTrigger').hidden=trailActive||lanternDone;
+ trailKnots.forEach(btn=>{const i=Number(btn.dataset.trailPost);btn.hidden=!trailActive;btn.classList.toggle('is-lit',i<trailIndex);btn.classList.toggle('is-next',i===trailIndex+1);btn.classList.toggle('is-current',i===trailIndex);btn.classList.toggle('is-locked',i>trailIndex+1);btn.querySelector('span').textContent=i===0?'✳':i<trailIndex?'✓':String(i)});
+ $('trailShortcut').hidden=!trailActive;
+ $('trailGuide').hidden=!trailActive;
+ if(trailActive){$('trailProgress').textContent=`${trailIndex} / 3 LIGHTS`;$('trailTally').textContent=Array.from({length:3},(_,i)=>i<trailIndex?'✷':'○').join('  ')}
+ if(!trailActive){if(!travellerFrame)travellerAt(lanternDone?TRAIL_POINTS[3]:TRAIL_POINTS[0])}
+}
+function startTrail(){if(lanternDone){showTrailReplay();return}if(!$('decisionLayer').hidden||!$('journalLayer').hidden){toast('Finish or close your letter before beginning this little quest.');return}trailActive=true;$('trailReward').hidden=true;$('voiceBubble').classList.remove('is-on');$('seedRitual').hidden=true;render();setTimeout(()=>trailKnots[trailIndex]?.focus({preventScroll:true}),70);playChime('open')}
+function exitTrail(){if(trailDrag)return;trailActive=false;render();toast('The unfinished thread will wait for you.');$('trailTrigger').focus({preventScroll:true})}
+function traceTo(point){const from=TRAIL_POINTS[trailIndex],target=TRAIL_POINTS[trailIndex+1];const near=pointDistance(point,target)<73,d=ropePart(from,near?target:point);$('trailLive').setAttribute('d',d);$('trailLiveGlow').setAttribute('d',d);trailKnots[trailIndex+1]?.classList.toggle('is-near',near);$('trailShortcut').classList.toggle('is-blocked',pointDistance(point,{x:714,y:450})<68)}
+function clearTrailDrag(){trailDrag=null;$('trailStage').dataset.dragging='false';$('trailLive').setAttribute('d','');$('trailLiveGlow').setAttribute('d','');trailKnots.forEach(b=>b.classList.remove('is-near'));$('trailShortcut').classList.remove('is-blocked')}
+function privateShortcut(){if(!trailActive)return;const ev=evaluate(getAction('g2'),policy,summarise(events).spent);$('trailShortcut').classList.add('is-blocked');setTimeout(()=>$('trailShortcut').classList.remove('is-blocked'),700);playChime('boundary');const message=ev.status==='BLOCK'?'That shortcut asks for private names. Your boundary protects them.':'That shortcut would require personal information and consent. The public path needs neither.';$('trailHelp').textContent=message;toast('A gentler route is right there. ✳')}
+async function connectTrail(){if(!trailActive||recording||trailIndex>=3||document.body.dataset.tampered==='true')return;const next=trailIndex+1;trailIndex=next;save();render();trailBurstAt(TRAIL_POINTS[next]);if(navigator.vibrate)try{navigator.vibrate(next===3?[12,30,30]:12)}catch{}playChime(`trail${next}`);
+ if(next===1)$('trailHelp').textContent='Beautiful. One little light knows the way. Connect the next post.';
+ if(next===2)$('trailHelp').textContent='You found the long way round. It takes no private names. One more light!';
+ if(next<3)return;
+ recording=true;const ok=await appendEvent({eventType:'PLAY',stepId:'lost-light',decision:'GUIDED',title:'Guided a small light along a privacy-preserving public path',simulated:true,rule:'NO PRIVATE DATA REQUIRED',why:'Three symbolic lanterns were connected in a local mini-game; no personal information was collected, no real-world action occurred.'});recording=false;
+ if(!ok){trailIndex=2;render();return}
+ lanternDone=true;trailActive=false;save();render();$('trailReward').hidden=true;$('app').classList.add('trail-celebrating');
+ await walkTraveller();$('app').classList.remove('trail-celebrating');$('trailReward').hidden=false;playChime('success');trailBurstAt(TRAIL_POINTS[3]);toast('Wonder unlocked · The Lost Light');
+}
+function walkTraveller(){const token=++trailPlayToken;cancelAnimationFrame(travellerFrame);travellerFrame=null;const path=$('trailComplete');const length=path.getTotalLength();if(!length||matchMedia('(prefers-reduced-motion: reduce)').matches){travellerAt(TRAIL_POINTS[3]);return Promise.resolve()}return new Promise(resolve=>{const begin=performance.now(),duration=3550;function tick(now){if(token!==trailPlayToken){travellerFrame=null;resolve();return}const t=Math.min(1,(now-begin)/duration),ease=t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;travellerAt(path.getPointAtLength(length*ease));if(t<1)travellerFrame=requestAnimationFrame(tick);else{travellerFrame=null;resolve()}}travellerFrame=requestAnimationFrame(tick)})}
+function showTrailReplay(){if(!lanternDone)return;$('trailReward').hidden=true;walkTraveller().then(()=>$('trailReward').hidden=false)}
+$('trailTrigger').addEventListener('click',startTrail);
+$('trailExit').addEventListener('click',exitTrail);
+$('trailShortcut').addEventListener('click',privateShortcut);
+$('rewardContinue').addEventListener('click',()=>{$('trailReward').hidden=true;toast('The whole neighbourhood is ready for you.');$('questGo').focus({preventScroll:true})});
+$('rewardReplay').addEventListener('click',showTrailReplay);
+trailKnots.forEach(btn=>{
+ const idx=Number(btn.dataset.trailPost);
+ btn.addEventListener('click',()=>{if(!trailActive)return;if(idx===trailIndex+1)connectTrail();else if(idx===trailIndex)toast('Drag this glow to the next light, or tap the next numbered post.');else if(idx>trailIndex+1)toast('One light at a time. Follow the nearest glow.')});
+ btn.addEventListener('pointerdown',e=>{if(!trailActive||idx!==trailIndex||e.button!==0&&e.pointerType==='mouse')return;trailDrag={owner:e.pointerId,from:pointFromPointer(e),moved:false};try{btn.setPointerCapture(e.pointerId)}catch{}e.preventDefault();$('trailStage').dataset.dragging='true'});
+ btn.addEventListener('pointermove',e=>{if(!trailDrag||e.pointerId!==trailDrag.owner)return;const p=pointFromPointer(e);if(pointDistance(p,trailDrag.from)>12)trailDrag.moved=true;if(trailDrag.moved)traceTo(p)});
+ btn.addEventListener('pointerup',e=>{if(!trailDrag||trailDrag.owner!==e.pointerId)return;const target=pointFromPointer(e),wasMoved=trailDrag.moved,correct=pointDistance(target,TRAIL_POINTS[trailIndex+1])<79,shortcut=pointDistance(target,{x:714,y:450})<68;clearTrailDrag();if(wasMoved&&correct)connectTrail();else if(wasMoved&&shortcut)privateShortcut();else if(wasMoved){playChime('boundary');$('trailHelp').textContent='The thread springs back gently. Try the next glowing post.'}});
+ btn.addEventListener('pointercancel',e=>{if(trailDrag?.owner!==e.pointerId)return;clearTrailDrag()});
+});
+// The puzzle is fully keyboard and touch accessible. Esc closes it without losing connected posts.
+document.addEventListener('keydown',e=>{if(!trailActive)return;if(e.key==='Escape'){e.preventDefault();clearTrailDrag();exitTrail()}else if((e.key==='ArrowRight'||e.key==='ArrowDown')&&!(e.target instanceof HTMLInputElement)){e.preventDefault();trailKnots[trailIndex+1]?.focus({preventScroll:true})}});
+render();verifyPersisted();
+</script>
+</body>
+</html>
