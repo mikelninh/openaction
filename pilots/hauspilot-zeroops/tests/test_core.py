@@ -47,3 +47,12 @@ def test_multi_tenant_and_fail_closed():
     assert client.post("/api/cases/"+r.json()["id"]+"/approve",headers=h).status_code==503
     assert client.post("/api/webhooks/stripe",content=b"{}").status_code==401
     assert client.post("/api/webhooks/resend",content=b"{}").status_code==401
+
+def test_actionrail_api_never_executes_sensitive_action():
+    t=client.post("/api/demo/register",json={"company":"Security Tester","email":"security_tester@demo.de"}).json()
+    headers={"Authorization":"Bearer "+t["access_token"]}
+    result=client.post("/api/actions/evaluate",headers=headers,json={"action":"spend_money","confidence":1,"input_trusted":True})
+    assert result.status_code==200
+    assert result.json()["verdict"]=="REVIEW"
+    assert result.json()["executed"] is False
+    assert client.post("/api/actions/evaluate",json={"action":"classify"}).status_code==401
