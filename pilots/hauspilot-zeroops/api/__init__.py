@@ -1,0 +1,1 @@
+# HausPilot ZeroOps application package.
