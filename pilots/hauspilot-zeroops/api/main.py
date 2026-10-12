@@ -68,6 +68,11 @@ class CaseIn(BaseModel):
     body: str = Field(min_length=1, max_length=8000)
     source_id: str | None = Field(default=None, max_length=128)
 
+class PolicyEvaluation(BaseModel):
+    action: str = Field(min_length=1, max_length=80)
+    confidence: float = Field(default=0, ge=0, le=1)
+    input_trusted: bool = False
+
 class Feedback(BaseModel):
     case_id: str
     verdict: str = Field(pattern='^(accepted|corrected|unsafe)$')
@@ -248,6 +253,20 @@ def receipts(authorization:str|None=Header(default=None)):
     t=auth(authorization)
     with db() as c:rows=c.execute('SELECT action,previous_hash,hash,payload,created FROM receipts WHERE tenant_id=? ORDER BY rowid DESC LIMIT 100',(t['id'],)).fetchall()
     return {'receipts':[dict(x) for x in rows]}
+
+@app.post('/api/actions/evaluate')
+def evaluate_action(item:PolicyEvaluation, authorization:str|None=Header(default=None)):
+    """Horizon 2: authenticated policy evaluation, never permission or execution.
+
+    Caller cannot assert human approval. A REVIEW verdict is not executable.
+    """
+    tenant=auth(authorization)
+    decision=decide(item.action,confidence=item.confidence,input_trusted=item.input_trusted,
+                    policy_enabled=bool(tenant['automation_enabled']),has_customer_approval=False)
+    write_receipt(tenant['id'],{'type':'policy_evaluation','action':item.action,'verdict':decision.verdict,
+                                 'policy_version':decision.policy_version})
+    return {'verdict':decision.verdict,'reason':decision.reason,'policy_version':decision.policy_version,
+            'executed':False,'customer_approval_required':decision.verdict=='REVIEW'}
 
 @app.get('/api/metrics')
 def metrics(authorization:str|None=Header(default=None)):
