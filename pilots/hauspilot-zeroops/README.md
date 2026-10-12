@@ -54,7 +54,7 @@ pytest -q
 
 ## API endpoints
 
-`GET /api/health` · `POST /api/signup/request` · `GET /api/signup/verify` · `POST /api/demo/register` (local mode) · `GET /api/account` · `GET /api/billing/link` · `POST /api/webhooks/stripe` · `POST /api/webhooks/resend` · `GET/POST /api/cases` · `POST /api/cases/{case_id}/approve` · `GET /api/receipts` · `GET /api/metrics`
+`GET /api/health` · `POST /api/signup/request` · `GET /api/signup/verify` · `POST /api/demo/register` (local mode) · `GET /api/account` · `GET /api/billing/link` · `POST /api/webhooks/stripe` · `POST /api/webhooks/resend` · `GET/POST /api/cases` · `POST /api/cases/{case_id}/approve` · `GET /api/receipts` · `GET /api/metrics` · `POST /api/actions/evaluate`
 
 ## Architecture
 
