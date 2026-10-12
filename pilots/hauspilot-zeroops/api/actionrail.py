@@ -94,4 +94,4 @@ def draft_reply(kind: str, name: str = '') -> str:
         'Maintenance': 'Vielen Dank für Ihren Hinweis. Ihre technische Anfrage wurde erfasst und zur weiteren Prüfung eingeordnet. Ein Termin wurde noch nicht vereinbart.',
         'General': 'Vielen Dank für Ihre Nachricht. Wir haben Ihre Anfrage erhalten und prüfen die nächsten Schritte.'
     }
-    return f'{greeting}\\n\\n{messages[kind]}\\n\\nFreundliche Grüße\\nIhr Hausverwaltungs-Team'
+    return f'{greeting}\n\n{messages[kind]}\n\nFreundliche Grüße\nIhr Hausverwaltungs-Team'
